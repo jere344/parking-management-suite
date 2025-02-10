@@ -3,25 +3,26 @@ using System.Windows.Media.Imaging;
 
 namespace wisecorp.Models.DBModels;
 
-public class Account : BaseModel
+public class User : BaseModel
 {
-    public int RoleId { get; set; }
     public string Email { get; set; } // we login with email
     public string Password { get; set; }
-    public DateTime EmploymentDate { get; set; }
-    public string FullName { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public DateTime AccountCreationDate { get; set; }
+    public DateTime? AccountDisableDate { get; set; }
     public string Phone { get; set; }
 
-    // base64
+
+    // Picture is a base64 string
     public string Picture { get; set; }
-
-
     /// <summary>
     /// Obtient l'image de profil de l'utilisateur
     /// </summary>
     public BitmapImage ProfilePicture
-    { 
-        get {
+    {
+        get
+        {
             if (string.IsNullOrEmpty(Picture))
             {
                 return new BitmapImage(new Uri("pack://application:,,,/Resources/DefaultProfilePicture.webp"));
