@@ -36,4 +36,7 @@ public class User : BaseModel
             return image;
         }
     }
+
+    // Navigation properties
+    public virtual ICollection<SessionToken> SessionTokens { get; set; }
 }

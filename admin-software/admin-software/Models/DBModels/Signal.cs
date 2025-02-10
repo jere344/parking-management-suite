@@ -5,7 +5,7 @@ public class Signal : BaseModel
     public int HospitalId { get; set; }
     public string SignalType { get; set; }
     public string Value { get; set; }
-    public DateTime SignalDate { get; set; }
+    public TimeSpan Duration { get; set; }
     
     // Navigation properties
     public Hospital Hospital { get; set; }

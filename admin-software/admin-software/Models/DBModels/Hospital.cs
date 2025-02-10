@@ -28,4 +28,7 @@ public class Hospital : BaseModel
         }
     }
 
+    // Navigation Properties
+    public virtual ICollection<Ticket> Tickets { get; set; }
+    public virtual ICollection<Signal> Signals { get; set; }
 }
