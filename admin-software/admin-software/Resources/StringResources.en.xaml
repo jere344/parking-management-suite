@@ -6,6 +6,11 @@
     <system:String x:Key="entrepriseShort">BestTickets</system:String>
     <system:String x:Key="entrepriseSentence">Revolutionize time sheets</system:String>
 
+    <system:String x:Key="firstName">First Name</system:String>
+    <system:String x:Key="lastName">Last Name</system:String>
+    <system:String x:Key="accountCreationDate">Account Creation Date :</system:String>
+    <system:String x:Key="accountDisableDate">Account Disable Date :</system:String>
+
     <system:String x:Key="settings">Settings</system:String>
     <system:String x:Key="yourAccount">Your Account</system:String>
     <system:String x:Key="fullName">Full Name</system:String>
@@ -178,6 +183,11 @@
     <system:String x:Key="refuse">Refuse</system:String>
 
     <system:String x:Key="desription">Desciption</system:String>
+
+    <system:String x:Key="newAccountMessage">The new account password is: </system:String>
+    <system:String x:Key="newAccountMessage2">. Please login and change it as soon as possible.</system:String>
+    <system:String x:Key="newAccount">New Account</system:String>
+    <system:String x:Key="isDisabled">Is Disabled : </system:String>
 
 
 </ResourceDictionary>

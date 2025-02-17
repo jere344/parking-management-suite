@@ -33,6 +33,7 @@ public class DataSeeder
                 Phone = "123456789",
             }
             );
+            context.SaveChanges();
         }
     }
 

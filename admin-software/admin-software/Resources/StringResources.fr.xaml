@@ -6,6 +6,11 @@
     <system:String x:Key="entrepriseShort">BestTickets</system:String>
     <system:String x:Key="entrepriseSentence">Révolutionne les feuilles de temps</system:String>
 
+    <system:String x:Key="firstName">Prénom</system:String>
+    <system:String x:Key="lastName">Nom</system:String>
+    <system:String x:Key="accountCreationDate">Date de création :</system:String>
+    <system:String x:Key="accountDisableDate">Date de désactivation :</system:String>
+
     <system:String x:Key="settings">Paramètres</system:String>
     <system:String x:Key="yourAccount">Votre compte</system:String>
     <system:String x:Key="fullName">Nom complet</system:String>
@@ -174,6 +179,10 @@
     <system:String x:Key="refuse">Refuser</system:String>
 
     <system:String x:Key="desription">Desciption</system:String>
+    <system:String x:Key="newAccountMessage">Le mot de passe du nouveau compte est : </system:String>
+    <system:String x:Key="newAccountMessage2">. Veuillez vous connecter et le changer dès que possible.</system:String>
+    <system:String x:Key="newAccount">Nouveau compte</system:String>
+    <system:String x:Key="isDisabled">Est désactivé : </system:String>
 
 
 </ResourceDictionary>

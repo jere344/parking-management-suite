@@ -17,9 +17,17 @@ public class User : BaseModel
 
     // Picture is a base64 string
     public string Picture { get; set; }
-    /// <summary>
-    /// Obtient l'image de profil de l'utilisateur
-    /// </summary>
+
+    // Navigation properties
+    public virtual ICollection<SessionToken> SessionTokens { get; set; }
+
+    // Computed properties
+    [System.ComponentModel.DataAnnotations.Schema.NotMapped]
+    public bool IsDisabled { 
+        get => AccountDisableDate != null;
+        set => AccountDisableDate = (value == true) ? DateTime.Now : null;
+    }
+    public string FullName => $"{FirstName} {LastName}";
     public BitmapImage ProfilePicture
     {
         get
@@ -37,7 +45,4 @@ public class User : BaseModel
             return image;
         }
     }
-
-    // Navigation properties
-    public virtual ICollection<SessionToken> SessionTokens { get; set; }
 }

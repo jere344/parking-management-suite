@@ -45,11 +45,6 @@
 
                 <TextBlock Grid.Row="1" Text="{DynamicResource password}" TextAlignment="Right" Margin="0,25,25,0"></TextBlock>
                 <PasswordBox materialDesign:HintAssist.Hint="Mots de passe" Grid.Row="1" Grid.Column="1" Width="150" Margin="0,25,0,0" x:Name="PasswordBox" behaviors:PasswordBehavior.IsAttached="True"/>
-                <TextBlock Grid.Row="2" Grid.Column="1" Text="{DynamicResource iForgotMyPassword}" TextAlignment="Right" Margin="0,5,0,0" TextDecorations="Underline" Foreground="{DynamicResource MaterialDesignBody}" Cursor="Hand">
-                    <TextBlock.InputBindings>
-                        <MouseBinding Gesture="LeftClick" Command="{Binding ForgotPasswordCommand}" />
-                    </TextBlock.InputBindings>
-                </TextBlock>
 
                 <TextBlock Grid.Row="3"  Grid.ColumnSpan="2" Foreground="Red" Text="{Binding ErrorMessage, UpdateSourceTrigger=PropertyChanged}" />
 
