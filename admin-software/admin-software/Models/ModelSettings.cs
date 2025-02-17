@@ -6,7 +6,7 @@ using System.Threading;
 using System.Windows;
 using System.Globalization;
 
-namespace wisecorp.Models;
+namespace admintickets.Models;
 
 public class ModelSettings
 {

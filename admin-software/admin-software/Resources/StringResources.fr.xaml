@@ -2,8 +2,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=mscorlib">
     <system:String x:Key="timeSheet">Feuille de temps</system:String>
-    <system:String x:Key="entreprise">WiseCorp Inc.</system:String>
-    <system:String x:Key="entrepriseShort">WiseCorp</system:String>
+    <system:String x:Key="entreprise">BestTickets Inc.</system:String>
+    <system:String x:Key="entrepriseShort">BestTickets</system:String>
     <system:String x:Key="entrepriseSentence">Révolutionne les feuilles de temps</system:String>
 
     <system:String x:Key="settings">Paramètres</system:String>

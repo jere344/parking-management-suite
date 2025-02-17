@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using wisecorp.ViewModels;
+using admintickets.ViewModels;
 
-namespace wisecorp.Behaviors
+namespace admintickets.Behaviors
 {
     //S'occupe du lien entre la password box et le view model
     public static class PasswordBehavior

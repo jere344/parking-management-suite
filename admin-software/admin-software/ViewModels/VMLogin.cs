@@ -3,13 +3,13 @@ using CommunityToolkit.Mvvm.Input;
 using System.Windows;
 using System.Security.Principal;
 using System.Windows.Input;
-using wisecorp.Context;
-using wisecorp.Models;
-using wisecorp.Models.DBModels;
+using admintickets.Context;
+using admintickets.Models;
+using admintickets.Models.DBModels;
 using System.Security;
 using System.Runtime.InteropServices;
 
-namespace wisecorp.ViewModels;
+namespace admintickets.ViewModels;
 
 public class VMLogin : ObservableObject
 {
@@ -45,28 +45,20 @@ public class VMLogin : ObservableObject
         get { return errorMessage; }
     }
 
-    private readonly WisecorpContext context;
+    private readonly BestTicketContext context;
 
     public VMLogin()
     {
         errorMessage = "";
-        context = new WisecorpContext();
+        context = new BestTicketContext();
         Login = new RelayCommand(Login_Execute);
-        ForgotPasswordCommand = new RelayCommand(ForgotPassword_Execute);
     }
 
-    public VMLogin(WisecorpContext context)
+    public VMLogin(BestTicketContext context)
     {
         errorMessage = "";
         this.context = context;
         Login = new RelayCommand(Login_Execute);
-        ForgotPasswordCommand = new RelayCommand(ForgotPassword_Execute);
-    }
-
-    public ICommand ForgotPasswordCommand { get; }
-    private void ForgotPassword_Execute()
-    {
-        ((MainWindow)Application.Current.MainWindow).NavigateTo("Views/ViewForgotPassword.xaml", email);
     }
 
 
@@ -78,8 +70,8 @@ public class VMLogin : ObservableObject
     public ICommand Login { get; }
     private void Login_Execute()
     {
-        if(Email == null ) { errorMessage = "Le courriel ne peut pas etre vide."; }
-        if(Email == null && Password == null) { errorMessage = "Le mot de passe et le courriel ne peuvent pas etre vide."; }
+        if (Email == null) { errorMessage = "Le courriel ne peut pas etre vide."; }
+        if (Email == null && Password == null) { errorMessage = "Le mot de passe et le courriel ne peuvent pas etre vide."; }
         if (securePassword == null || securePassword.Length == 0)
         {
             errorMessage = "Le mot de passe ne peut pas etre vide.";
@@ -90,22 +82,22 @@ public class VMLogin : ObservableObject
         {
             errorMessage = "";
 
-            Account? account = context.Login(Email, ConvertToUnsecureString(securePassword));
+            User? user = context.Login(Email, ConvertToUnsecureString(securePassword));
 
-            if(account == null) { errorMessage = "Le mot de passe ou le courriel sont incorrect"; BadLogin(); }
-
-            if(account != null) 
+            if (user == null)
             {
-                SuccessfullLogin(account);
+                errorMessage = "Le mot de passe ou le courriel sont incorrect";
+            }
+            else
+            {
                 MainWindow main = (MainWindow)Application.Current.MainWindow;
                 if (rememberMe)
                 {
-                    SaveCredentials(account);
+                    SaveCredentials(user);
                 }
                 main.NavigationController.NavigateHome();
-            } 
+            }
         }
-
 
 
         OnPropertyChanged(nameof(ErrorMessage));
@@ -135,53 +127,18 @@ public class VMLogin : ObservableObject
     /// Enregistre les informations d'identification de l'utilisateur dans la base de données.
     /// Crée un nouveau jeton de session avec un identifiant de compte, un jeton unique et une date d'expiration.
     /// </summary>
-    /// <param name="account">L'objet Account contenant les informations du compte utilisateur.</param>
-    private void SaveCredentials(Account account)
+    private void SaveCredentials(User user)
     {
-        SessionToken sessionToken = new() {
-            AccountId = account.Id,
+        SessionToken sessionToken = new()
+        {
+            UserId = user.Id,
             Token = Guid.NewGuid().ToString(),
-            ExpirationDate = DateTime.Now.AddDays(5) 
+            ExpirationDate = DateTime.Now.AddDays(5)
         };
 
         context.SessionTokens.Add(sessionToken);
         context.SaveChanges();
 
         ((App)Application.Current).SavedSettings["SessionToken"] = sessionToken.Token;
-    }
-
-    /// <summary>
-    /// Logs un login réussi dans la base de donnée
-    /// </summary>
-    /// <param name="account">le compte qui a reussi le login</param>
-    private void SuccessfullLogin(Account account)
-    {
-       SecurityLog log = new SecurityLog 
-       { 
-            Account = account,
-            Code = SecurityLog.LoginSuccess,
-            Date = DateTime.Now,
-            Ip = App.GetIPAddress(),
-            Description = ""
-       };
-        context.SecurityLogs.Add(log);
-        context.SaveChanges();
-    }
-
-    /// <summary>
-    /// Log une mauvaise connexion dans la base de donnée de logs
-    /// </summary>
-    private void BadLogin()
-    {
-        SecurityLog log = new SecurityLog
-        {
-            Account = null,
-            Code = SecurityLog.LoginFailed,
-            Date = DateTime.Now,
-            Ip = App.GetIPAddress(),
-            Description = $"Tentative de connexion avec le courriel {Email}"
-        };
-        context.SecurityLogs.Add(log);
-        context.SaveChanges();
     }
 }

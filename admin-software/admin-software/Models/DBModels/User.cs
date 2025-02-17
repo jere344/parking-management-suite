@@ -1,7 +1,8 @@
 using System.IO;
 using System.Windows.Media.Imaging;
 
-namespace wisecorp.Models.DBModels;
+namespace admintickets.Models.DBModels;
+
 
 public class User : BaseModel
 {

@@ -1,4 +1,4 @@
-namespace wisecorp;
+namespace admintickets;
 
 using System;
 using System.Collections.Generic;
@@ -39,7 +39,7 @@ public class NavigationController : INotifyPropertyChanged
 
     public bool HasPermission(string uri)
     {
-        string permission = App.Current.ConnectedAccount?.Role?.Name ?? "Guest";
+        string permission = App.Current.ConnectedUser != null ? "Admin" : "Guest";
         return !Routes.ViewInfos.ContainsKey(uri) || (int)Routes.ViewInfos[uri]["Permission"] <= Routes.PermissionsLevels[permission];
     }
 
@@ -126,7 +126,7 @@ public class NavigationController : INotifyPropertyChanged
 
     public void NavigateHome()
     {
-        string permission = App.Current.ConnectedAccount?.Role?.Name ?? "Guest";
+        string permission = App.Current.ConnectedUser != null ? "Admin" : "Guest";
         _NavigateTo(Routes.HomeViews[permission]);
 
         OnPropertyChanged(nameof(CanGoBack));

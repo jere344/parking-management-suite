@@ -1,12 +1,12 @@
 using System.Windows;
 using System.Windows.Controls;
 using System;
-using wisecorp.ViewModels;
+using admintickets.ViewModels;
 using System.Windows.Navigation;
 using System.Threading;
 using System.Globalization;
 
-namespace wisecorp.Views;
+namespace admintickets.Views;
 
 public partial class ViewLogin : Page
 {
@@ -20,6 +20,6 @@ public partial class ViewLogin : Page
 
     private void Page_Loaded(object sender, RoutedEventArgs e)
     {
-        ((MainWindow)Application.Current.MainWindow).SetWindowInfos("WiseCorp - Login", 600, 600);
+        ((MainWindow)Application.Current.MainWindow).SetWindowInfos("BestTicket - Login", 600, 600);
     }
 }

@@ -11,12 +11,12 @@ using MaterialDesignThemes.Wpf;
 using MaterialDesignColors;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using wisecorp.Context;
+using admintickets.Context;
 using Microsoft.EntityFrameworkCore;
-using wisecorp.Models.DBModels;
+using admintickets.Models.DBModels;
 using System.Net;
 
-namespace wisecorp;
+namespace admintickets;
 
 /// <summary>
 /// Interaction logic for App.xaml
@@ -24,15 +24,15 @@ namespace wisecorp;
 public partial class App : Application
 {
     new public static App Current => (App)Application.Current;
-    private Account? _connectedAccount;
-    public Account? ConnectedAccount { 
-        get => _connectedAccount;
+    private User? _connectedUser;
+    public User? ConnectedUser { 
+        get => _connectedUser;
         set {
-            _connectedAccount = value;
+            _connectedUser = value;
             ((MainWindow)Current.MainWindow).ChangeAccount();
         }
     }
-    private WisecorpContext context = new();
+    private BestTicketContext context = new();
 
     public System.Collections.IDictionary SavedSettings => (System.Collections.IDictionary?)Current.Properties["SavedSettings"] ?? throw new Exception("SavedSettings not found");
 
@@ -94,7 +94,6 @@ public partial class App : Application
 
         // we load ((App)Current).SavedSettings from settings.json
         // we can load it at startup
-        if (System.IO.File.Exists("settings.json"))
         if (System.IO.File.Exists("settings.json"))
         {
             string json = System.IO.File.ReadAllText("settings.json");
@@ -158,48 +157,11 @@ public partial class App : Application
         // if we have a session token, we load the account
         if (SavedSettings.Contains("SessionToken") && SavedSettings["SessionToken"] != null)
         {
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var sessionToken = context.SessionTokens.FirstOrDefault(t => t.Token == SavedSettings["SessionToken"].ToString());
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
             if (sessionToken != null && sessionToken.ExpirationDate > DateTime.Now)
             {
-                _connectedAccount = sessionToken.Account;
+                _connectedUser = sessionToken.User;
             }
         }
-    }
-
-    /// <summary>
-    /// Vas chercher l'adresse IP du l'ordinateur du user, utile pour les logs
-    /// </summary>
-    /// <returns>l'adresse IP</returns>
-    public static string GetIPAddress()
-    {
-        string hostName = Dns.GetHostName();
-        IPAddress[] addresses = Dns.GetHostAddresses(hostName);
-
-        foreach (IPAddress address in addresses)
-        {
-            if (address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-            {
-                return address.ToString();
-            }
-        }
-
-        return "Unable to determine IP Address";
-    }
-
-    public SecurityLog LogAction(string code, string description)
-    {
-        SecurityLog log = new()
-        {
-            AccountId = ConnectedAccount?.Id,
-            Code = code,
-            Date = DateTime.Now,
-            Ip = GetIPAddress(),
-            Description = description
-        };
-        context.SecurityLogs.Add(log);
-        context.SaveChanges();
-        return log;
     }
 }

@@ -6,7 +6,7 @@ using MaterialDesignThemes.Wpf;
 
 public class DynamicViewInfoDictionary : Dictionary<string, object>
 {
-    public new object this[string key]
+    public new object? this[string key]
     {
         get
         {
@@ -59,25 +59,6 @@ public static class Routes
                 { "Title", () => (string)Application.Current.FindResource("admin") },
                 { "Icon", PackIconKind.ShieldAccountOutline },
                 { "Permission", 3 }
-            }
-        },
-        {
-            "Views/Admin/ViewSecurityLogs.xaml",
-            new()
-            {
-                { "Title", () => (string)Application.Current.FindResource("securityLogs") },
-                { "Icon", PackIconKind.Security },
-                { "Permission", 3 }
-            }
-        },
-        {
-            "Views/ViewForgotPassword.xaml",
-            new()
-            {
-                { "Title", () => (string)Application.Current.FindResource("iForgotMyPassword") },
-                { "Icon", PackIconKind.AccountKeyOutline },
-                { "Permission", 0 },
-                { "Hidden", true }
             }
         },
         {

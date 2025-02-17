@@ -1,10 +1,10 @@
-﻿<Window x:Class="wisecorp.MainWindow"
+﻿<Window x:Class="admintickets.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:wisecorp"
-        xmlns:viewmodel="clr-namespace:wisecorp.ViewModels"
+        xmlns:local="clr-namespace:admintickets"
+        xmlns:viewmodel="clr-namespace:admintickets.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow"
         Height="450"
@@ -125,7 +125,7 @@
                 </Button>
 
                 <TextBlock Grid.Column="4"
-                           Text="WiseCorp"
+                           Text="BestTickets"
                            Foreground="{DynamicResource MaterialDesignBody}"
                            FontSize="20"
                            VerticalAlignment="Center"

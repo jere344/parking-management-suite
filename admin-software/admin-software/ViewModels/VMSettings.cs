@@ -4,12 +4,12 @@ using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using CommunityToolkit.Mvvm.ComponentModel;
-using wisecorp.Models;
+using admintickets.Models;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 
 
-namespace wisecorp.ViewModels;
+namespace admintickets.ViewModels;
 
 public class VMSettings : ObservableObject
 {

@@ -1,33 +1,33 @@
 using CommunityToolkit.Mvvm.ComponentModel;
-using wisecorp.Models.DBModels;
+using admintickets.Models.DBModels;
 using System.Windows;
-using wisecorp.Context;
+using admintickets.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 
-namespace wisecorp.ViewModels;
+namespace admintickets.ViewModels;
 
 public partial class VMAdmin : ObservableObject
 {
-    private List<Account>? accounts;
+    private List<User>? users;
 
 
 
-    private ObservableCollection<Account>? filteredAccounts;
-    public ObservableCollection<Account>? FilteredAccounts
+    private ObservableCollection<User>? filteredUsers;
+    public ObservableCollection<User>? FilteredUsers
     {
-        get { return filteredAccounts; }
-        set { filteredAccounts = value; }
+        get { return filteredUsers; }
+        set { filteredUsers = value; }
     }
 
 
-    private Account? selectedAccount;
-    public Account? SelectedAccount
+    private User? selectedUser;
+    public User? SelectedUser
     {
-        get { return selectedAccount; }
-        set { selectedAccount = value; }
+        get { return selectedUser; }
+        set { selectedUser = value; }
     }
 
 
@@ -40,12 +40,12 @@ public partial class VMAdmin : ObservableObject
         set
         {
             filterText = value;
-            FilterAccounts();
+            FilterUsers();
         }
     }
 
 
-    private readonly WisecorpContext context;
+    private readonly BestTicketContext context;
 
     private bool displayDisabled = false;
     public bool DisplayDisabled
@@ -54,7 +54,7 @@ public partial class VMAdmin : ObservableObject
         set
         {
             displayDisabled = value;
-            FilterAccounts();
+            FilterUsers();
         }
     }
 
@@ -63,7 +63,7 @@ public partial class VMAdmin : ObservableObject
 
     public VMAdmin()
     {
-        context = new WisecorpContext();
+        context = new BestTicketContext();
 
         _ = InitializeAsync();
 
@@ -76,46 +76,35 @@ public partial class VMAdmin : ObservableObject
     /// <returns></returns>
     private async Task InitializeAsync()
     {
-        await GetAccounts();
-        FilterAccounts();
+        await GetUsers();
+        FilterUsers();
     }
 
     /// <summary>
     /// Permet d'initialiser la liste des comptes
     /// </summary>
     /// <returns></returns>
-    private async Task GetAccounts()
+    private async Task GetUsers()
     {
-        accounts = await context.Accounts.ToListAsync();
-        filteredAccounts = new ObservableCollection<Account>(accounts);
-        OnPropertyChanged(nameof(FilteredAccounts));
-        SelectedAccount = accounts.FirstOrDefault();
+        users = await context.Users.ToListAsync();
+        filteredUsers = new ObservableCollection<User>(users);
+        OnPropertyChanged(nameof(FilteredUsers));
+        SelectedUser = users.FirstOrDefault();
     }
 
 
     /// <summary>
     /// Permet de filtrer les comptes pour la recherche
     /// </summary>
-    public void FilterAccounts()
+    public void FilterUsers()
     {
-        var f = accounts ?? new List<Account>();
+        var f = users ?? new List<User>();
 
         if(!string.IsNullOrEmpty(filterText))
-            f = f.Where(a => a.FullName.ToLower().Contains(filterText.ToLower())).ToList();
+            f = f.Where(a => (a.FirstName + " " + a.LastName).ToLower().Contains(filterText.ToLower())).ToList();
 
-        filteredAccounts = new ObservableCollection<Account>(f);
-        OnPropertyChanged(nameof(FilteredAccounts));
-    }
-
-
-    /// <summary>
-    /// Permet de rediriger a la fenêytre de création de compte
-    /// </summary>
-    [RelayCommand]
-    public static void RedirectToAdd()
-    {
-        var mainWindow = (MainWindow)App.Current.MainWindow;
-        mainWindow.NavigateTo("Views/Admin/ViewAjoutAcc.xaml");
+        filteredUsers = new ObservableCollection<User>(f);
+        OnPropertyChanged(nameof(FilteredUsers));
     }
 
 
@@ -124,15 +113,15 @@ public partial class VMAdmin : ObservableObject
     // / </summary>
     private void DeleteImage_Execute()
     {
-        if (selectedAccount != null)
+        if (selectedUser != null)
         {
             MessageBoxResult result = MessageBox.Show((string)Application.Current.FindResource("deleteImageMessage"), (string)Application.Current.FindResource("deleteImage"), MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.No)
                 return;
-            selectedAccount.Picture = string.Empty;
+            selectedUser.Picture = string.Empty;
             context.SaveChanges();
-            OnPropertyChanged(nameof(selectedAccount));
-            FilterAccounts();
+            OnPropertyChanged(nameof(selectedUser));
+            FilterUsers();
         }
     }
     

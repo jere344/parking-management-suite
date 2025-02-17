@@ -10,7 +10,7 @@ using MaterialDesignThemes.Wpf;
 
 
 
-namespace wisecorp
+namespace admintickets
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -51,7 +51,7 @@ namespace wisecorp
         {
             if (uri == "Views/Logout.xaml")
             {
-                App.Current.ConnectedAccount = null;
+                App.Current.ConnectedUser = null;
                 // we also need to clear remember me on logout
                 App.Current.SavedSettings["SessionToken"] = null;
                 NavigateTo(Routes.HomeViews["Guest"]);
@@ -76,7 +76,7 @@ namespace wisecorp
             LeftDrawerStackPanel.Items.Clear();
 
             // Get the permission level of the connected user or default to "Guest"
-            string permission = App.Current.ConnectedAccount?.Role?.Name ?? "Guest";
+            string permission = App.Current.ConnectedUser != null ? "Admin" : "Guest";
 
             // Loop through all views and add buttons for those the user has access to
             foreach (var view in Routes.ViewInfos)
@@ -135,7 +135,7 @@ namespace wisecorp
         {
             Process.Start(new ProcessStartInfo
             {
-                FileName = "https://github.com/jere344/wisecorp-timesheet",
+                FileName = "https://github.com/jere344/parking-ticket",
                 UseShellExecute = true
             });
         }
@@ -165,7 +165,7 @@ namespace wisecorp
         private void Test(object sender, RoutedEventArgs e)
         {
             // check if the user is connected
-            if (App.Current.ConnectedAccount == null)
+            if (App.Current.ConnectedUser == null)
             {
                 MessageBox.Show((string)Application.Current.FindResource("must_be_connected"), (string)Application.Current.FindResource("error"), MessageBoxButton.OK, MessageBoxImage.Error);
                 return;

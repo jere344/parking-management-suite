@@ -1,4 +1,4 @@
-namespace wisecorp.Models.DBModels;
+namespace admintickets.Models.DBModels;
 
 public class TicketPayment : BaseModel
 {

@@ -1,15 +1,15 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace wisecorp.Helpers;
+namespace admintickets.Helpers;
 
 public static class CryptographyHelper
 {
     /// <summary>
-    /// Hache un mot de passe en utilisant PBKDF2 avec un sel aléatoire
+    /// Hache un mot de passe en utilisant PBKDF2 avec un sel alï¿½atoire
     /// </summary>
-    /// <param name="input">Le mot de passe à hacher</param>
-    /// <returns>Le mot de passe haché sous forme de chaîne Base64</returns>
+    /// <param name="input">Le mot de passe ï¿½ hacher</param>
+    /// <returns>Le mot de passe hachï¿½ sous forme de chaï¿½ne Base64</returns>
     public static string HashPassword(string input)
     {
         // Generate a random salt
@@ -33,10 +33,10 @@ public static class CryptographyHelper
     }
 
     /// <summary>
-    /// Vérifie si un mot de passe correspond à un hachage donné
+    /// Vï¿½rifie si un mot de passe correspond ï¿½ un hachage donnï¿½
     /// </summary>
-    /// <param name="input">Le mot de passe à vérifier</param>
-    /// <param name="hashedPassword">Le hachage du mot de passe à comparer</param>
+    /// <param name="input">Le mot de passe ï¿½ vï¿½rifier</param>
+    /// <param name="hashedPassword">Le hachage du mot de passe ï¿½ comparer</param>
     /// <returns>True si le mot de passe correspond, sinon False</returns>
     public static bool VerifyPassword(string input, string hashedPassword)
     {
@@ -64,10 +64,10 @@ public static class CryptographyHelper
     }
 
     /// <summary>
-    /// Génère une chaîne aléatoire de caractères alphanumériques
+    /// Gï¿½nï¿½re une chaï¿½ne alï¿½atoire de caractï¿½res alphanumï¿½riques
     /// </summary>
-    /// <param name="length">La longueur de la chaîne à générer</param>
-    /// <returns>Une chaîne aléatoire de la longueur spécifiée</returns>
+    /// <param name="length">La longueur de la chaï¿½ne ï¿½ gï¿½nï¿½rer</param>
+    /// <returns>Une chaï¿½ne alï¿½atoire de la longueur spï¿½cifiï¿½e</returns>
     public static string GenerateRandomString(int length)
     {
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

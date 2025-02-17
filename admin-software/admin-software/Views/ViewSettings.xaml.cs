@@ -1,12 +1,12 @@
 using System.Windows;
 using System.Windows.Controls;
 using System;
-using wisecorp.ViewModels;
+using admintickets.ViewModels;
 using System.Windows.Navigation;
 using System.Threading;
 using System.Globalization;
 
-namespace wisecorp.Views;
+namespace admintickets.Views;
 
 public partial class ViewSettings : Page
 {

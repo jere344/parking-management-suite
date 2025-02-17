@@ -2,18 +2,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using System.Windows;
-using wisecorp.Models.DBModels;
-using wisecorp.Helpers;
+using admintickets.Models.DBModels;
+using admintickets.Helpers;
 using System.Diagnostics;
 
-namespace wisecorp.Context;
+namespace admintickets.Context;
 
-public class WisecorpContext : DbContext
+public class BestTicketContext : DbContext
 {
-    public DbSet<Account> Accounts { get; set; }
-    public DbSet<VerificationCode> VerificationCodes { get; set; }
+    public DbSet<User> Users { get; set; }
     public DbSet<SessionToken> SessionTokens { get; set; }
-    public DbSet<SecurityLog> SecurityLogs { get; set; }
 
     private bool isDebug = false;
 
@@ -22,8 +20,8 @@ public class WisecorpContext : DbContext
     {
         isDebug = true;
     }
-    public WisecorpContext() { }
-    public WisecorpContext(DbContextOptions<WisecorpContext> options): base(options) { }
+    public BestTicketContext() { }
+    public BestTicketContext(DbContextOptions<BestTicketContext> options): base(options) { }
 
     /// <summary>
     /// Configure le contexte de la base de donn�es
@@ -63,46 +61,19 @@ public class WisecorpContext : DbContext
     /// <param name="email">L'email de l'utilisateur</param>
     /// <param name="password">Le mot de passe de l'utilisateur</param>
     /// <returns>Le compte de l'utilisateur s'il est authentifi�, sinon null</returns>
-    public Account? Login(string email, string password)
+    public User? Login(string email, string password)
     {
-        var account = Accounts.FirstOrDefault(a => a.Email == email);
-        if (account == null)
+        var user = Users.FirstOrDefault(a => a.Email == email);
+        if (user == null)
         {
             return null;
         }
-        if (CryptographyHelper.VerifyPassword(password, account.Password))
+        if (CryptographyHelper.VerifyPassword(password, user.Password))
         {
-            App.Current.ConnectedAccount = account;
-            return account;
+            App.Current.ConnectedUser = user;
+            return user;
         }
         return null;
-    }
-
-
-
-    /// <summary>
-    /// G�n�re un code de v�rification pour un compte donn�
-    /// </summary>
-    /// <param name="account">Le compte pour lequel g�n�rer le code</param>
-    /// <returns>Le code de v�rification g�n�r�</returns>
-    public VerificationCode GenerateVerificationCode(Account account)
-    {
-        // if there is already a verification code for this account, delete it
-        var existingCode = VerificationCodes.FirstOrDefault(c => c.AccountId == account.Id);
-        if (existingCode != null)
-        {
-            VerificationCodes.Remove(existingCode);
-        }
-        var code = new VerificationCode
-        {
-            AccountId = account.Id,
-            Code = CryptographyHelper.GenerateRandomString(8),
-            ExpirationDate = DateTime.Now.AddMinutes(5)
-        };
-        VerificationCodes.Add(code);
-        SaveChanges();
-
-        return code;
     }
 }
 

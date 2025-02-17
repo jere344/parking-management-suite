@@ -1,7 +1,7 @@
-using wisecorp.Models.DBModels;
-using wisecorp.Helpers;
+using admintickets.Models.DBModels;
+using admintickets.Helpers;
 
-namespace wisecorp.Context;
+namespace admintickets.Context;
 
 public class DataSeeder
 {
@@ -9,7 +9,7 @@ public class DataSeeder
     /// Initialise la base de donn�es avec des donn�es de d�part
     /// </summary>
     /// <param name="context">Le contexte de la base de donn�es</param>
-    public static void Seed(WisecorpContext context)
+    public static void Seed(BestTicketContext context)
     {
         SeedAccounts(context);
     }
@@ -17,17 +17,18 @@ public class DataSeeder
     /// Ajoute les comptes par d�faut � la base de donn�es
     /// </summary>
     /// <param name="context">Le contexte de la base de donn�es</param>
-    private static void SeedAccounts(WisecorpContext context)
+    private static void SeedAccounts(BestTicketContext context)
     {
-        if (!context.Accounts.Any())
+        if (!context.Users.Any())
         {
-            context.Accounts.Add(new Account
+            context.Users.Add(new User
             {
                 Email = "admin",
                 Password = CryptographyHelper.HashPassword("admin"),
-                FullName = "Admin",
-                IsEnabled = true,
-                EmploymentDate = DateTime.Now,
+                FirstName = "Admin",
+                LastName = "Admin",
+                AccountCreationDate = DateTime.Now,
+                AccountDisableDate = null,
                 Picture = "",
                 Phone = "123456789",
             }
