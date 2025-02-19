@@ -36,7 +36,7 @@ public static class Routes
 
     public static readonly Dictionary<string, string> HomeViews = new()
     {
-        { "Admin", "Views/Admin/ViewAdmin.xaml" },
+        { "Admin", "Views/ViewAdmin.xaml" },
         { "Guest", "Views/ViewLogin.xaml" }
     };
 
@@ -53,15 +53,6 @@ public static class Routes
             }
         },
         {
-            "Views/Admin/ViewAdmin.xaml",
-            new()
-            {
-                { "Title", () => (string)Application.Current.FindResource("admin") },
-                { "Icon", PackIconKind.ShieldAccountOutline },
-                { "Permission", 3 }
-            }
-        },
-        {
             "Views/ViewSettings.xaml",
             new()
             {
@@ -70,7 +61,25 @@ public static class Routes
                 { "Permission", 0 }
             }
         },
+        {
+            "Views/ViewAdmin.xaml",
+            new()
             {
+                { "Title", () => (string)Application.Current.FindResource("admin") },
+                { "Icon", PackIconKind.ShieldAccountOutline },
+                { "Permission", 1 }
+            }
+        },
+        {
+            "Views/ViewProfile.xaml",
+            new()
+            {
+                { "Title", () => (string)Application.Current.FindResource("profile") },
+                { "Icon", PackIconKind.AccountDetailsOutline },
+                { "Permission", 1 }
+            }
+        },
+        {
             "Views/Logout.xaml",
             new()
             {
