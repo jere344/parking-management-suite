@@ -107,5 +107,17 @@ namespace admintickets.ViewModels
             await context.SaveChangesAsync();
             await Refresh();
         });
+
+        public ICommand CopyTierCommand => new RelayCommand<SubscriptionTiers>((tier) =>
+        {
+            if (tier != null)
+            {
+                NewTierName = tier.Name;
+                NewTierDurationInDays = (int)tier.Duration.TotalDays;
+                NewTierMaxUsesPerDay = tier.MaxNumberOfUsesPerDay;
+                NewTierPrice = Math.Round(tier.Price, 2);
+                NewTierHospital = Hospitals.FirstOrDefault(h => h.Id == tier.HospitalId) ?? Hospitals.FirstOrDefault(h => h.Id == -1);
+            }
+        });
     }
 }

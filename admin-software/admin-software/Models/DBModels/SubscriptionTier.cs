@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Windows;
 
 namespace admintickets.Models.DBModels;
@@ -14,6 +15,7 @@ public class SubscriptionTiers : BaseModel
     // thing is, Timespan get converted to mysql Time which has a max value of 838:59:59
     // so Duration will be a wrapper and we will store it as a string in the database
     public string InternalDuration { get; set; }
+    [NotMapped]
     public TimeSpan Duration
     {
         get

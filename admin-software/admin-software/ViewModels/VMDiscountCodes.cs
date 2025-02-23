@@ -153,8 +153,19 @@ namespace admintickets.ViewModels
             context.SaveChanges();
             Refresh();
         });
+
+        public ICommand CopyCodeCommand => new RelayCommand<Code>((code) =>
+        {
+            if (code != null)
+            {
+                NewCodeName = code.Name;
+                NewCodeDescription = code.Description;
+                NewCodeReduction = Math.Round(code.Reduction, 2);
+                NewCodeIsActive = code.IsActive;
+                NewCodeHospital = Hospitals.FirstOrDefault(h => h.Id == code.HospitalId) ?? Hospitals.FirstOrDefault(h => h.Id == -1);
+            }
+        });
     }
 }
 
 
-        
