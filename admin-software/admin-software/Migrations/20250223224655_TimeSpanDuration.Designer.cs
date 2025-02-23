@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using admintickets.Context;
 
@@ -10,9 +11,10 @@ using admintickets.Context;
 namespace admintickets.Migrations
 {
     [DbContext(typeof(BestTicketContext))]
-    partial class BestTicketContextModelSnapshot : ModelSnapshot
+    [Migration("20250223224655_TimeSpanDuration")]
+    partial class TimeSpanDuration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -160,10 +162,6 @@ namespace admintickets.Migrations
 
                     b.Property<int?>("HospitalId")
                         .HasColumnType("int");
-
-                    b.Property<string>("InternalDuration")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.Property<int>("MaxNumberOfUsesPerDay")
                         .HasColumnType("int");

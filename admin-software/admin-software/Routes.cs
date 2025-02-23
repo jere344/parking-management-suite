@@ -89,10 +89,19 @@ public static class Routes
             }
         },
         {
+            "Views/ViewSubscriptionTiers.xaml",
+            new()
+            {
+                { "Title", () => (string)Application.Current.FindResource("subscriptionTiers") },
+                { "Icon", PackIconKind.CreditCardMultiple },
+                { "Permission", 1 }
+            }
+        },
+        {
             "Views/ViewDiscountCodes.xaml",
             new()
             {
-                { "Title", () => (string)Application.Current.FindResource("discount_codes") },
+                { "Title", () => (string)Application.Current.FindResource("discountCodes") },
                 { "Icon", PackIconKind.BarcodeScan },
                 { "Permission", 1 }
             }

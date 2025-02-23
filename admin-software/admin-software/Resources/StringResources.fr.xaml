@@ -185,7 +185,9 @@
     <system:String x:Key="isDisabled">Est désactivé : </system:String>
 
     <system:String x:Key="hospitals">Hôpitaux</system:String>
-    <system:String x:Key="discount_codes">Codes de réduction</system:String>
+    <system:String x:Key="discountCodes">Codes de réduction</system:String>
+    <system:String x:Key="subscriptionTiers">Niveaux d'abonnement</system:String>
+    <system:String x:Key="days">Jours</system:String>
 
 
 </ResourceDictionary>

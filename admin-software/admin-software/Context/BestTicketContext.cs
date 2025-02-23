@@ -14,6 +14,7 @@ public class BestTicketContext : DbContext
     public DbSet<SessionToken> SessionTokens { get; set; }
     public DbSet<Hospital> Hospitals { get; set; }
     public DbSet<Code> DiscountCodes { get; set; }
+    public DbSet<SubscriptionTiers> SubscriptionTiers { get; set; }
 
 
     private bool isDebug = false;

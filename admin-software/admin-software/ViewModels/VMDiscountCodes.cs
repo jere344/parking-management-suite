@@ -76,7 +76,10 @@ namespace admintickets.ViewModels
         public decimal NewCodeReduction
         {
             get => _newCodeReduction;
-            set => SetProperty(ref _newCodeReduction, value);
+            set { 
+                if (value >= 0 && value <= 100)
+                    SetProperty(ref _newCodeReduction, value);
+            }
         }
 
         private bool _newCodeIsActive;
@@ -102,6 +105,7 @@ namespace admintickets.ViewModels
         {
             context = new BestTicketContext();
             Hospitals = new ObservableCollection<Hospital>(context.Hospitals.ToList());
+            Hospitals.Insert(0, new Hospital { Name = "Global", Id = -1 });
 
             Refresh();
         }
@@ -115,7 +119,7 @@ namespace admintickets.ViewModels
 
         public ICommand AddCodeCommand => new AsyncRelayCommand(async () =>
         {
-            if (string.IsNullOrEmpty(NewCodeName) || string.IsNullOrEmpty(NewCodeDescription) || NewCodeReduction == 0)
+            if (string.IsNullOrEmpty(NewCodeName) || string.IsNullOrEmpty(NewCodeDescription) || NewCodeReduction <= 0 || NewCodeReduction > 100)
             {
                 MessageBox.Show("Please fill in all fields.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -124,10 +128,10 @@ namespace admintickets.ViewModels
             var newCode = new Code
             {
                 Name = NewCodeName,
-                Description = NewCodeDescription ?? String.Empty,
+                Description = NewCodeDescription ?? string.Empty,
                 Reduction = NewCodeReduction,
                 IsActive = NewCodeIsActive,
-                HospitalId = NewCodeHospital?.Id
+                HospitalId = NewCodeHospital?.Id == -1 ? null : NewCodeHospital?.Id
             };
 
             context.DiscountCodes.Add(newCode);
