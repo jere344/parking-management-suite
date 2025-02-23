@@ -7,5 +7,5 @@ public class Subscription : BaseModel
     public int MaxNumberOfUsesPerDay { get; set; }
 
     // Navigation properties
-    public ICollection<TicketPayment> TicketPayments { get; set; }
+    public virtual ICollection<TicketPayment> TicketPayments { get; set; }
 }

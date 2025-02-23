@@ -189,5 +189,8 @@
     <system:String x:Key="newAccount">New Account</system:String>
     <system:String x:Key="isDisabled">Is Disabled : </system:String>
 
+    <system:String x:Key="hospitals">Hospitals</system:String>
+    <system:String x:Key="discount_codes">Discount Codes</system:String>
+
 
 </ResourceDictionary>

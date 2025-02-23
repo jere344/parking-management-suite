@@ -10,13 +10,16 @@ public class Hospital : BaseModel
     // Logo is a base64 string
     public string Logo { get; set; }
 
-    public BitmapImage HospitalLogo
+    // Password for authenticating the ticket machine (stored as a hash)
+    public string Password { get; set; }
+
+    public BitmapImage? HospitalLogo
     {
         get
         {
             if (string.IsNullOrEmpty(Logo))
             {
-                return new BitmapImage(new Uri("pack://application:,,,/Resources/DefaultHospitalLogo.webp"));
+                return null;
             }
             var image = new BitmapImage();
             image.BeginInit();

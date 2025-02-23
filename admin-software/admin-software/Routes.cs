@@ -80,6 +80,24 @@ public static class Routes
             }
         },
         {
+            "Views/ViewHospitals.xaml",
+            new()
+            {
+                { "Title", () => (string)Application.Current.FindResource("hospitals") },
+                { "Icon", PackIconKind.Hospital },
+                { "Permission", 1 }
+            }
+        },
+        {
+            "Views/ViewDiscountCodes.xaml",
+            new()
+            {
+                { "Title", () => (string)Application.Current.FindResource("discount_codes") },
+                { "Icon", PackIconKind.BarcodeScan },
+                { "Permission", 1 }
+            }
+        },
+        {
             "Views/Logout.xaml",
             new()
             {

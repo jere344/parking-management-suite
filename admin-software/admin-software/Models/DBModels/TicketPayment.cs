@@ -11,6 +11,6 @@ public class TicketPayment : BaseModel
     public int? SubscriptionId { get; set; }
 
     // Navigation properties
-    public Code CodeUsed { get; set; }
-    public Subscription Subscription { get; set; }
+    public virtual Code CodeUsed { get; set; }
+    public virtual Subscription Subscription { get; set; }
 }

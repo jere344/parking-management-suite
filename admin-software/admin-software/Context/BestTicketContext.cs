@@ -12,6 +12,9 @@ public class BestTicketContext : DbContext
 {
     public DbSet<User> Users { get; set; }
     public DbSet<SessionToken> SessionTokens { get; set; }
+    public DbSet<Hospital> Hospitals { get; set; }
+    public DbSet<Code> DiscountCodes { get; set; }
+
 
     private bool isDebug = false;
 

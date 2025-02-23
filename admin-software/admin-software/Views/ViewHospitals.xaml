@@ -1,0 +1,103 @@
+<Page x:Class="admintickets.Views.ViewHospitals"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      Title="Hospitals"
+      Style="{StaticResource {x:Type Page}}">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <materialDesign:Card Grid.Row="0" Padding="10" Margin="0,0,0,10">
+            <TextBlock Text="Hospital Management" FontSize="20" FontWeight="Bold" />
+        </materialDesign:Card>
+
+        <!-- Hospital Cards Grid -->
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding Hospitals}" Margin="0,0,0,10">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel IsItemsHost="True" Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <materialDesign:Card Width="200" Height="300" Margin="5">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Image Source="{Binding HospitalLogo}" Width="100" Height="100" 
+                                   HorizontalAlignment="Center" Margin="0,10,0,10"/>
+                            <StackPanel Grid.Row="1" HorizontalAlignment="Center">
+                                <TextBlock Text="{Binding Name}" 
+                                           FontSize="16" FontWeight="Bold" 
+                                           TextAlignment="Center"/>
+                                <TextBlock Text="{Binding Address}" 
+                                           TextAlignment="Center" 
+                                           TextWrapping="Wrap" Margin="5,0,5,0"/>
+                            </StackPanel>
+                            <PasswordBox x:Name="EditHospitalPasswordBox" Grid.Row="2" Width="150" Margin="0,10,0,0" 
+                                         PasswordChanged="EditHospitalPasswordBox_PasswordChanged"
+                                         DataContext="{Binding}" />
+                            <Button Grid.Row="3" Content="Edit Password" 
+                                    Click="EditPasswordButton_Click" 
+                                    DataContext="{Binding}" 
+                                    HorizontalAlignment="Center" Margin="0,10,0,10"
+                                    Style="{StaticResource MaterialDesignFlatButton}" />
+                            <Button Grid.Row="4" Content="Delete" 
+                                    Command="{Binding DataContext.DeleteHospitalCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                    CommandParameter="{Binding}" 
+                                    HorizontalAlignment="Center" Margin="0,10,0,10"
+                                    Style="{StaticResource MaterialDesignFlatButton}" />
+                        </Grid>
+                    </materialDesign:Card>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <!-- Toggle Button for "Add New Hospital" Section -->
+        <Button x:Name="ToggleAddHospitalButton" Grid.Row="2" 
+                Content="Show Add New Hospital" 
+                Click="ToggleAddHospitalButton_Click" 
+                Style="{StaticResource MaterialDesignFlatButton}" 
+                HorizontalAlignment="Left" Margin="0,10,0,10"/>
+
+        <!-- Add New Hospital Section -->
+        <materialDesign:Card Grid.Row="3" Padding="20" x:Name="AddHospitalCard" Visibility="Collapsed">
+            <StackPanel>
+                <TextBlock Text="Add New Hospital" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
+                <StackPanel Orientation="Horizontal" Margin="0,5">
+                    <TextBlock Text="Name:" Width="100" VerticalAlignment="Center"/>
+                    <TextBox Text="{Binding NewHospitalName, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,5">
+                    <TextBlock Text="Address:" Width="100" VerticalAlignment="Center"/>
+                    <TextBox Text="{Binding NewHospitalAddress, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,5">
+                    <TextBlock Text="Password:" Width="100" VerticalAlignment="Center"/>
+                    <!-- Since PasswordBox doesn't support two-way binding, we update its value in code-behind -->
+                    <PasswordBox x:Name="NewHospitalPasswordBox" Width="200" PasswordChanged="NewHospitalPasswordBox_PasswordChanged"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,5">
+                    <TextBlock Text="Logo:" Width="100" VerticalAlignment="Center"/>
+                    <Image Source="{Binding NewHospitalLogoImage}" Width="100" Height="100" Margin="0,0,10,0"/>
+                    <Button Content="Upload Logo" Command="{Binding UploadLogoCommand}" 
+                            VerticalAlignment="Center" Style="{StaticResource MaterialDesignFlatButton}"/>
+                </StackPanel>
+                <Button Content="Add Hospital" Click="AddHospitalButton_Click" 
+                        Width="150" Margin="0,10,0,0" HorizontalAlignment="Left" 
+                        Style="{StaticResource MaterialDesignRaisedButton}"/>
+            </StackPanel>
+        </materialDesign:Card>
+    </Grid>
+</Page>

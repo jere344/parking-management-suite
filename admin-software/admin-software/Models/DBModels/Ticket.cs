@@ -9,6 +9,6 @@ public class Ticket : BaseModel
     public int TicketPaymentId { get; set; }
 
     // Navigation properties
-    public Hospital Hospital { get; set; }
-    public TicketPayment TicketPayment { get; set; }
+    public virtual Hospital Hospital { get; set; }
+    public virtual TicketPayment TicketPayment { get; set; }
 }

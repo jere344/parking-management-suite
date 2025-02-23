@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using admintickets.Context;
 
@@ -10,9 +11,10 @@ using admintickets.Context;
 namespace admintickets.Migrations
 {
     [DbContext(typeof(BestTicketContext))]
-    partial class BestTicketContextModelSnapshot : ModelSnapshot
+    [Migration("20250220181243_Hospitals")]
+    partial class Hospitals
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,9 +31,6 @@ namespace admintickets.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("HospitalId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("tinyint(1)");
 
@@ -44,9 +43,7 @@ namespace admintickets.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HospitalId");
-
-                    b.ToTable("DiscountCodes");
+                    b.ToTable("Code");
                 });
 
             modelBuilder.Entity("admintickets.Models.DBModels.Hospital", b =>
@@ -255,15 +252,6 @@ namespace admintickets.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("admintickets.Models.DBModels.Code", b =>
-                {
-                    b.HasOne("admintickets.Models.DBModels.Hospital", "Hospital")
-                        .WithMany()
-                        .HasForeignKey("HospitalId");
-
-                    b.Navigation("Hospital");
                 });
 
             modelBuilder.Entity("admintickets.Models.DBModels.SessionToken", b =>

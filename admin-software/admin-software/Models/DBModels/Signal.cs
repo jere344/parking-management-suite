@@ -8,7 +8,7 @@ public class Signal : BaseModel
     public TimeSpan Duration { get; set; }
     
     // Navigation properties
-    public Hospital Hospital { get; set; }
+    public virtual Hospital Hospital { get; set; }
 
     public const string OpenPortal = "OpenPortal";
 }
