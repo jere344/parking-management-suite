@@ -1,4 +1,4 @@
-using admintickets.Models.DBModels;
+using ticketlibrary.Models;
 using admintickets.Helpers;
 
 namespace admintickets.Context;

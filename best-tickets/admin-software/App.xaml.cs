@@ -13,7 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using admintickets.Context;
 using Microsoft.EntityFrameworkCore;
-using admintickets.Models.DBModels;
+using ticketlibrary.Models;
 using System.Net;
 
 namespace admintickets;

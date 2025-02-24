@@ -1,7 +1,7 @@
 using System.IO;
 using System.Windows.Media.Imaging;
 
-namespace admintickets.Models.DBModels;
+namespace ticketlibrary.Models;
 
 
 public class User : BaseModel

@@ -21,7 +21,7 @@ namespace admintickets.Migrations
                 .HasAnnotation("ProductVersion", "6.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("admintickets.Models.DBModels.SessionToken", b =>
+            modelBuilder.Entity("ticketlibrary.Models.SessionToken", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -47,7 +47,7 @@ namespace admintickets.Migrations
                     b.ToTable("SessionTokens");
                 });
 
-            modelBuilder.Entity("admintickets.Models.DBModels.User", b =>
+            modelBuilder.Entity("ticketlibrary.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -88,9 +88,9 @@ namespace admintickets.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("admintickets.Models.DBModels.SessionToken", b =>
+            modelBuilder.Entity("ticketlibrary.Models.SessionToken", b =>
                 {
-                    b.HasOne("admintickets.Models.DBModels.User", "User")
+                    b.HasOne("ticketlibrary.Models.User", "User")
                         .WithMany("SessionTokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -99,7 +99,7 @@ namespace admintickets.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("admintickets.Models.DBModels.User", b =>
+            modelBuilder.Entity("ticketlibrary.Models.User", b =>
                 {
                     b.Navigation("SessionTokens");
                 });

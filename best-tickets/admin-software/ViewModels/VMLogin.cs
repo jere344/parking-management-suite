@@ -5,7 +5,7 @@ using System.Security.Principal;
 using System.Windows.Input;
 using admintickets.Context;
 using admintickets.Models;
-using admintickets.Models.DBModels;
+using ticketlibrary.Models;
 using System.Security;
 using System.Runtime.InteropServices;
 

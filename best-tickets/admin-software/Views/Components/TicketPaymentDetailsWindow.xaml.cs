@@ -1,5 +1,5 @@
 using System.Windows;
-using admintickets.Models.DBModels;
+using ticketlibrary.Models;
 
 namespace admintickets.Views
 {

@@ -1,5 +1,5 @@
 using CommunityToolkit.Mvvm.ComponentModel;
-using admintickets.Models.DBModels;
+using ticketlibrary.Models;
 using System.Windows;
 using admintickets.Context;
 using System.Windows.Media.Imaging;

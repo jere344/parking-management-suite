@@ -1,4 +1,4 @@
-namespace admintickets.Models.DBModels;
+namespace ticketlibrary.Models;
 
 public class SessionToken : BaseModel
 { 

@@ -2,7 +2,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using admintickets.ViewModels;
-using admintickets.Models.DBModels;
+using ticketlibrary.Models;
 
 namespace admintickets.Views
 {

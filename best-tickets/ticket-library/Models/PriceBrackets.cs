@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace admintickets.Models.DBModels;
+namespace ticketlibrary.Models;
 
 public class PriceBrackets : BaseModel
 { 

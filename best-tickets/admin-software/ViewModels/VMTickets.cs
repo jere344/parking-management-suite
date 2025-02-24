@@ -1,6 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using admintickets.Models.DBModels;
+using ticketlibrary.Models;
 using admintickets.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;

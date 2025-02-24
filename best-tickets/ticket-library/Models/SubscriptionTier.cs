@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Windows;
 
-namespace admintickets.Models.DBModels;
+namespace ticketlibrary.Models;
 
 public class SubscriptionTiers : BaseModel
 {
