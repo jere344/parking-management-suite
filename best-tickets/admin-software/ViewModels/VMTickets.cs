@@ -13,6 +13,8 @@ using Microsoft.Win32;
 using System.Windows.Media.Imaging;
 using System.Windows;
 using System.Windows.Media;
+using QuestPDF.Fluent;
+
 
 namespace admintickets.ViewModels
 {
@@ -67,7 +69,13 @@ namespace admintickets.ViewModels
             {
                 string filePath = saveFileDialog.FileName;
                 await GenerateTicketPdf(ticket, filePath);
-                MessageBox.Show("Ticket saved as PDF.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                if (MessageBox.Show("Ticket saved as PDF. Do you want to open it?", "Success", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+                {
+                    // System.Diagnostics.Process.Start(filePath);
+                    // The specified executable is not a valid application for this OS platform.'
+                    // so we need to do that :
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(filePath) { UseShellExecute = true });
+                }
             }
         });
 
@@ -85,7 +93,13 @@ namespace admintickets.ViewModels
             {
                 string filePath = saveFileDialog.FileName;
                 await GenerateTicketPng(ticket, filePath);
-                MessageBox.Show("Ticket saved as PNG.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                if (MessageBox.Show("Ticket saved as PNG. Do you want to open it?", "Success", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+                {
+                    // System.Diagnostics.Process.Start(filePath);
+                    // The specified executable is not a valid application for this OS platform.'
+                    // so we need to do that :
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(filePath) { UseShellExecute = true });
+                }
             }
         });
 
@@ -128,13 +142,30 @@ namespace admintickets.ViewModels
         // Helper methods for PDF/PNG generation
         private async Task GenerateTicketPdf(Ticket ticket, string filePath)
         {
-            // Implement logic to generate a PDF file
+            try {
+                var ticketDocument = new ticket_library.TicketDocument(ticket);
+                ticketDocument.GeneratePdf(filePath);
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show($"Error generating PDF: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
             await Task.CompletedTask;
         }
 
         private async Task GenerateTicketPng(Ticket ticket, string filePath)
         {
-            // Implement logic to generate a PNG file
+            try {
+                var ticketDocument = new ticket_library.TicketDocument(ticket);
+                // document.GenerateImages(imageIndex => $"image{imageIndex}.png");
+                ticketDocument.GenerateImages(imageIndex => imageIndex == 0 ? filePath : filePath.Replace(".png", $"_{imageIndex}.png"));
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show($"Error generating PNG: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
             await Task.CompletedTask;
         }
     }
