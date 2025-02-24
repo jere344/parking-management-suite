@@ -64,7 +64,7 @@ namespace admintickets.ViewModels
         public VMSubscriptionTiers()
         {
             context = new BestTicketContext();
-            Hospitals = new ObservableCollection<Hospital>(context.Hospitals.ToList());
+            Hospitals = new ObservableCollection<Hospital>(context.Hospital.ToList());
             Hospitals.Insert(0, new Hospital { Name = "Global", Id = -1 });
 
             Refresh();
@@ -72,7 +72,7 @@ namespace admintickets.ViewModels
 
         private async Task Refresh()
         {
-            SubscriptionTiers = new ObservableCollection<SubscriptionTiers>(await context.SubscriptionTiers.ToListAsync());
+            SubscriptionTiers = new ObservableCollection<SubscriptionTiers>(await context.SubscriptionTier.ToListAsync());
             OnPropertyChanged(nameof(SubscriptionTiers));
         }
 
@@ -96,14 +96,14 @@ namespace admintickets.ViewModels
                 HospitalId = NewTierHospital?.Id == -1 ? null : NewTierHospital?.Id
             };
 
-            context.SubscriptionTiers.Add(newTier);
+            context.SubscriptionTier.Add(newTier);
             await context.SaveChangesAsync();
             await Refresh();
         });
 
         public ICommand DeleteTierCommand => new AsyncRelayCommand<SubscriptionTiers>(async (tier) =>
         {
-            context.SubscriptionTiers.Remove(tier);
+            context.SubscriptionTier.Remove(tier);
             await context.SaveChangesAsync();
             await Refresh();
         });

@@ -10,11 +10,13 @@ namespace admintickets.Context;
 
 public class BestTicketContext : DbContext
 {
-    public DbSet<User> Users { get; set; }
-    public DbSet<SessionToken> SessionTokens { get; set; }
-    public DbSet<Hospital> Hospitals { get; set; }
-    public DbSet<Code> DiscountCodes { get; set; }
-    public DbSet<SubscriptionTiers> SubscriptionTiers { get; set; }
+    public DbSet<User> User { get; set; }
+    public DbSet<SessionToken> SessionToken { get; set; }
+    public DbSet<Hospital> Hospital { get; set; }
+    public DbSet<Code> DiscountCode { get; set; }
+    public DbSet<SubscriptionTiers> SubscriptionTier { get; set; }
+    public DbSet<Ticket> Ticket { get; set; }
+    public DbSet<TicketPayment> TicketPayment { get; set; }
 
 
     private bool isDebug = false;
@@ -67,7 +69,7 @@ public class BestTicketContext : DbContext
     /// <returns>Le compte de l'utilisateur s'il est authentifi�, sinon null</returns>
     public User? Login(string email, string password)
     {
-        var user = Users.FirstOrDefault(a => a.Email == email);
+        var user = User.FirstOrDefault(a => a.Email == email);
         if (user == null)
         {
             return null;

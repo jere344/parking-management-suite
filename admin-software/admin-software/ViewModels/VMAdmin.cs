@@ -88,7 +88,7 @@ public partial class VMAdmin : ObservableObject
     /// <returns></returns>
     private async Task GetUsers()
     {
-        users = await context.Users.ToListAsync();
+        users = await context.User.ToListAsync();
         filteredUsers = new ObservableCollection<User>(users);
         OnPropertyChanged(nameof(FilteredUsers));
         SelectedUser = users.FirstOrDefault();
@@ -149,7 +149,7 @@ public partial class VMAdmin : ObservableObject
             AccountCreationDate = DateTime.Now,
             Picture = string.Empty,
         };
-        context.Users.Add(newUser);
+        context.User.Add(newUser);
         context.SaveChanges();
         users.Add(newUser);
         FilterUsers();
@@ -177,7 +177,7 @@ public partial class VMAdmin : ObservableObject
                     {
                         Content = "Copy Password",
                         Margin = new Thickness(0, 10, 0, 0),
-                        Command = new RelayCommand(() => Clipboard.SetText(password))
+                        Command = new RelayCommand(() => Clipboard.SetDataObject(password))
                     },
                     new Button
                     {

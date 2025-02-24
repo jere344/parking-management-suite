@@ -18,6 +18,7 @@
             <local:NullToUnderlineConverter x:Key="NullToUnderlineConverter" />
             <local:BoolToEnableDisableConverter x:Key="BoolToEnableDisableConverter"/>
             <local:NumberToMinusPercentageConverter x:Key="NumberToMinusPercentageConverter"/>
+            <local:NullToBooleanConverter x:Key="NullToBooleanConverter"/>
             
         </ResourceDictionary>
     </Application.Resources>

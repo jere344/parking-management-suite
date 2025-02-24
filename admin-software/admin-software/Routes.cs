@@ -107,6 +107,15 @@ public static class Routes
             }
         },
         {
+            "Views/ViewTickets.xaml",
+            new()
+            {
+                { "Title", () => (string)Application.Current.FindResource("tickets") },
+                { "Icon", PackIconKind.TicketPercent },
+                { "Permission", 1 }
+            }
+        },
+        {
             "Views/Logout.xaml",
             new()
             {

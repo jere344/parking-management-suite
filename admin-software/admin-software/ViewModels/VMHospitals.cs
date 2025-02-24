@@ -102,7 +102,7 @@ namespace admintickets.ViewModels
         private async Task Refresh() 
         {
             Hospitals.Clear();
-            Hospitals = new ObservableCollection<Hospital>(await context.Hospitals.ToListAsync());
+            Hospitals = new ObservableCollection<Hospital>(await context.Hospital.ToListAsync());
             OnPropertyChanged(nameof(Hospitals));
         }
 
@@ -126,7 +126,7 @@ namespace admintickets.ViewModels
                 Logo = NewHospitalLogo ?? string.Empty
             };
 
-            context.Hospitals.Add(newHospital);
+            context.Hospital.Add(newHospital);
             await context.SaveChangesAsync();
 
             // Clear new hospital fields.
@@ -145,7 +145,7 @@ namespace admintickets.ViewModels
             if (MessageBox.Show($"Are you sure you want to delete hospital \"{hospital.Name}\"?",
                 "Confirm Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                context.Hospitals.Remove(hospital);
+                context.Hospital.Remove(hospital);
                 await context.SaveChangesAsync();
                 await Refresh();
             }
@@ -213,7 +213,7 @@ namespace admintickets.ViewModels
             // Hash the new password using the helper.
             hospital.Password = CryptographyHelper.HashPassword(hospital.Password);
 
-            context.Hospitals.Update(hospital);
+            context.Hospital.Update(hospital);
             await context.SaveChangesAsync();
 
             MessageBox.Show($"Password for hospital \"{hospital.Name}\" has been updated.");

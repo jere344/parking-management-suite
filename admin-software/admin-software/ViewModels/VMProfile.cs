@@ -149,7 +149,7 @@ namespace admintickets.ViewModels
         /// </summary>
         public void Update()
         {
-            db.Users.Update(User);
+            db.User.Update(User);
             db.SaveChanges();
         }
 

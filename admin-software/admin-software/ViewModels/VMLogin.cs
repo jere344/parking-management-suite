@@ -136,7 +136,7 @@ public class VMLogin : ObservableObject
             ExpirationDate = DateTime.Now.AddDays(5)
         };
 
-        context.SessionTokens.Add(sessionToken);
+        context.SessionToken.Add(sessionToken);
         context.SaveChanges();
 
         ((App)Application.Current).SavedSettings["SessionToken"] = sessionToken.Token;

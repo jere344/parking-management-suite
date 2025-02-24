@@ -19,9 +19,9 @@ public class DataSeeder
     /// <param name="context">Le contexte de la base de donn�es</param>
     private static void SeedAccounts(BestTicketContext context)
     {
-        if (!context.Users.Any())
+        if (!context.User.Any())
         {
-            context.Users.Add(new User
+            context.User.Add(new User
             {
                 Email = "admin",
                 Password = CryptographyHelper.HashPassword("admin"),

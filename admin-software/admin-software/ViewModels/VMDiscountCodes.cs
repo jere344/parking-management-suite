@@ -104,7 +104,7 @@ namespace admintickets.ViewModels
         public VMDiscountCodes()
         {
             context = new BestTicketContext();
-            Hospitals = new ObservableCollection<Hospital>(context.Hospitals.ToList());
+            Hospitals = new ObservableCollection<Hospital>(context.Hospital.ToList());
             Hospitals.Insert(0, new Hospital { Name = "Global", Id = -1 });
 
             Refresh();
@@ -113,7 +113,7 @@ namespace admintickets.ViewModels
         private async Task Refresh()
         {
             Codes?.Clear();
-            Codes = new ObservableCollection<Code>(await context.DiscountCodes.ToListAsync());
+            Codes = new ObservableCollection<Code>(await context.DiscountCode.ToListAsync());
             OnPropertyChanged(nameof(Codes));
         }
 
@@ -134,14 +134,14 @@ namespace admintickets.ViewModels
                 HospitalId = NewCodeHospital?.Id == -1 ? null : NewCodeHospital?.Id
             };
 
-            context.DiscountCodes.Add(newCode);
+            context.DiscountCode.Add(newCode);
             await context.SaveChangesAsync();
             await Refresh();
         });
 
         public ICommand DeleteCodeCommand => new AsyncRelayCommand<Code>(async (code) =>
         {
-            context.DiscountCodes.Remove(code);
+            context.DiscountCode.Remove(code);
             await context.SaveChangesAsync();
             await Refresh();
         });
@@ -149,7 +149,7 @@ namespace admintickets.ViewModels
         public ICommand ToggleCodeActiveCommand => new RelayCommand<Code>(code =>
         {
             code.IsActive = !code.IsActive;
-            context.DiscountCodes.Update(code);
+            context.DiscountCode.Update(code);
             context.SaveChanges();
             Refresh();
         });

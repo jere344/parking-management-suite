@@ -193,6 +193,7 @@
     <system:String x:Key="discountCodes">Discount Codes</system:String>
     <system:String x:Key="subcriptionTiers">Subscription Tiers</system:String>
     <system:String x:Key="days">Days</system:String>
+    <system:String x:Key="tickets">Tickets</system:String>
 
 
 </ResourceDictionary>

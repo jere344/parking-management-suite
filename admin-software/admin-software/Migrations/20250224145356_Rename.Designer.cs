@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using admintickets.Context;
 
@@ -10,9 +11,10 @@ using admintickets.Context;
 namespace admintickets.Migrations
 {
     [DbContext(typeof(BestTicketContext))]
-    partial class BestTicketContextModelSnapshot : ModelSnapshot
+    [Migration("20250224145356_Rename")]
+    partial class Rename
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -197,7 +199,7 @@ namespace admintickets.Migrations
                     b.Property<DateTime?>("PaymentTime")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int?>("TicketPaymentId")
+                    b.Property<int>("TicketPaymentId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -337,7 +339,9 @@ namespace admintickets.Migrations
 
                     b.HasOne("admintickets.Models.DBModels.TicketPayment", "TicketPayment")
                         .WithMany()
-                        .HasForeignKey("TicketPaymentId");
+                        .HasForeignKey("TicketPaymentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Hospital");
 

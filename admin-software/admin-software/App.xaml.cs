@@ -157,7 +157,7 @@ public partial class App : Application
         // if we have a session token, we load the account
         if (SavedSettings.Contains("SessionToken") && SavedSettings["SessionToken"] != null)
         {
-            var sessionToken = context.SessionTokens.FirstOrDefault(t => t.Token == SavedSettings["SessionToken"].ToString());
+            var sessionToken = context.SessionToken.FirstOrDefault(t => t.Token == SavedSettings["SessionToken"].ToString());
             if (sessionToken != null && sessionToken.ExpirationDate > DateTime.Now)
             {
                 _connectedUser = sessionToken.User;
