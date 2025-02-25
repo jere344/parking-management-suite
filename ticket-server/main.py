@@ -167,6 +167,53 @@ def validate_ticket():
     session.close()
     return jsonify({'valid': True}), 200
 
+@app.route('/list_hospitals', methods=['GET'])
+def list_hospitals():
+    """
+    Lists all hospitals and their IDs.
+    No authentication required.
+    Returns a JSON array of objects with hospital id and name.
+    """
+    session = Session()
+    hospitals = session.query(Hospital).all()
+    
+    hospital_list = [
+        {
+            'id': hospital.id,
+            'name': hospital.name
+        }
+        for hospital in hospitals
+    ]
+    
+    session.close()
+    return jsonify(hospital_list), 200
+
+@app.route('/verify_credentials', methods=['POST'])
+def verify_credentials():
+    """
+    Verifies if the provided hospital credentials are correct.
+    Requires JSON input containing 'hospital_id' and 'password'.
+    Returns {'valid': True} if credentials are valid, {'valid': False} otherwise.
+    """
+    data = request.get_json()
+    if not data or 'hospital_id' not in data or 'password' not in data:
+        return jsonify({'error': 'Missing hospital_id or password'}), 400
+
+    hospital_id = data['hospital_id']
+    input_password = data['password']
+
+    session = Session()
+    hospital = session.query(Hospital).filter(Hospital.id == hospital_id).first()
+    
+    if not hospital:
+        session.close()
+        return jsonify({'valid': False, 'error': 'Hospital not found'}), 200
+
+    is_valid = verify_password(input_password, hospital.password)
+    session.close()
+    
+    return jsonify({'valid': is_valid}), 200
+
 if __name__ == '__main__':
     # In production, ensure to disable debug mode and serve via a proper WSGI server.
     app.run(debug=True)

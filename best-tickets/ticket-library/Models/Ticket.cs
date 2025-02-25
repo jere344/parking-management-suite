@@ -15,6 +15,7 @@ public class Ticket : BaseModel
     public virtual TicketPayment? TicketPayment { get; set; }
 
     public string TicketNumber { 
+        // will get moved to the python server
         get {
             // generate a non reversible hash of the ticket in the format of "XXXX-XXXX"
             // We use the Id as well as the CreationTime to avoid a user trying out different id to get ticket numbers
