@@ -1,7 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ticketlibrary.Models;
-using admintickets.Context;
+using paymentterminal.Context;
 using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
@@ -20,7 +20,7 @@ using System.Windows.Data;
 using ticketlibrary.Helpers;
 using Microsoft.EntityFrameworkCore;
 
-namespace admintickets.ViewModels
+namespace paymentterminal.ViewModels
 {
     public class VMDiscountCodes : ObservableObject
     {

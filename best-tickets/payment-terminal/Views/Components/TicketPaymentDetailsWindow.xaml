@@ -1,0 +1,56 @@
+<Window x:Class="paymentterminal.Views.TicketPaymentDetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Ticket Payment Details" Height="300" Width="400" 
+        WindowStartupLocation="CenterScreen" 
+        Background="{DynamicResource MaterialDesignPaper}"
+        Foreground="{DynamicResource MaterialDesignBody}"
+        >
+    <materialDesign:Card Margin="20" Padding="20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <TextBlock Text="Ticket Payment Details" FontSize="18" FontWeight="Bold" 
+                       Margin="0,0,0,10" Grid.Row="0" HorizontalAlignment="Center"/>
+            
+            <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,5">
+                <TextBlock Text="Total Amount:" Width="150" FontWeight="SemiBold"/>
+                <TextBlock Text="{Binding PaymentAmountTotal, StringFormat=C}"/>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0,5">
+                <TextBlock Text="Tax Amount:" Width="150" FontWeight="SemiBold"/>
+                <TextBlock Text="{Binding PaymentAmountOfTax, StringFormat=C}"/>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Grid.Row="3" Margin="0,5">
+                <TextBlock Text="Amount Before Tax:" Width="150" FontWeight="SemiBold"/>
+                <TextBlock Text="{Binding PaymentAmountBeforeTax, StringFormat=C}"/>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Grid.Row="4" Margin="0,5">
+                <TextBlock Text="Payment Method:" Width="150" FontWeight="SemiBold"/>
+                <TextBlock Text="{Binding PaymentMethod}"/>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Grid.Row="5" Margin="0,5">
+                <TextBlock Text="Code Reduction:" Width="150" FontWeight="SemiBold"/>
+                <TextBlock Text="{Binding CodeUsedReduction, StringFormat=P}"/>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Grid.Row="6" Margin="0,5">
+                <TextBlock Text="Subscription Id:" Width="150" FontWeight="SemiBold"/>
+                <TextBlock Text="{Binding SubscriptionId}"/>
+            </StackPanel>
+        </Grid>
+    </materialDesign:Card>
+</Window>

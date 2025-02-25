@@ -1,7 +1,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace admintickets.Helpers;
+namespace ticketlibrary.Helpers;
 
 public static class CryptographyHelper
 {

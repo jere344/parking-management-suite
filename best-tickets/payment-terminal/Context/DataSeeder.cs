@@ -1,7 +1,7 @@
 using ticketlibrary.Models;
 using ticketlibrary.Helpers;
 
-namespace admintickets.Context;
+namespace paymentterminal.Context;
 
 public class DataSeeder
 {

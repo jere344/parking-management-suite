@@ -1,7 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using ticketlibrary.Models;
 using System.Windows;
-using admintickets.Context;
+using paymentterminal.Context;
 using System.Windows.Media.Imaging;
 using System.IO;
 using Microsoft.Win32;
@@ -10,7 +10,7 @@ using CommunityToolkit.Mvvm.Input;
 using System.Windows.Input;
 using ticketlibrary.Helpers;
 
-namespace admintickets.ViewModels
+namespace paymentterminal.ViewModels
 {
     public class VMProfile : ObservableObject
     {

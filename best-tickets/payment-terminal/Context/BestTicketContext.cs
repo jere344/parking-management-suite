@@ -6,7 +6,7 @@ using ticketlibrary.Models;
 using ticketlibrary.Helpers;
 using System.Diagnostics;
 
-namespace admintickets.Context;
+namespace paymentterminal.Context;
 
 public class BestTicketContext : DbContext
 {

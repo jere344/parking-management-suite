@@ -1,4 +1,4 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
@@ -13,6 +13,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ticketlibrary", "ticket-library\ticketlibrary.csproj", "{C02B3B25-34CC-4204-B9CD-4C508F61A84E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gatessoftware", "gates-software\gates.csproj", "{A7C4BF81-38A4-40C9-ADCE-47234DB1CD1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "paymentterminal", "payment-terminal\paymentterminal.csproj", "{09D80F5A-C70C-4D19-9D0E-3B125849A666}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,10 @@ Global
 		{A7C4BF81-38A4-40C9-ADCE-47234DB1CD1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7C4BF81-38A4-40C9-ADCE-47234DB1CD1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7C4BF81-38A4-40C9-ADCE-47234DB1CD1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09D80F5A-C70C-4D19-9D0E-3B125849A666}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09D80F5A-C70C-4D19-9D0E-3B125849A666}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09D80F5A-C70C-4D19-9D0E-3B125849A666}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09D80F5A-C70C-4D19-9D0E-3B125849A666}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
