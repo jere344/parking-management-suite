@@ -38,8 +38,10 @@ class Ticket(Base):
     payment_time = Column('PaymentTime', DateTime, nullable=True)
     departure_time = Column('DepartureTime', DateTime, nullable=True)
     ticket_payment_id = Column('TicketPaymentId', Integer, nullable=True)
+    ticket_number = Column('TicketCode', String, nullable=True)
 
     hospital = relationship("Hospital")
+
 
 # --- Utility Functions ---
 def verify_password(input_password, hashed_password):
@@ -57,6 +59,14 @@ def verify_password(input_password, hashed_password):
     computed_hash = hashlib.pbkdf2_hmac('sha1', input_password.encode('utf-8'),
                                         salt, 100000, dklen=20)
     return hmac.compare_digest(stored_hash, computed_hash)
+
+def get_ticket_number(ticket :Ticket):
+    """
+    Returns a unique code for the ticket.
+    Code format : XXX-XXX-XXX
+    """
+    fullhash :String = hashlib.sha256(f"{ticket.creation_time}{ticket.hospital_id}".encode()).hexdigest()
+    return f"{fullhash[:3]}-{fullhash[3:6]}-{fullhash[6:9]}"
 
 # --- Routes ---
 @app.route('/create_ticket', methods=['POST'])
@@ -94,6 +104,7 @@ def create_ticket():
         departure_time=None,
         ticket_payment_id=None
     )
+    new_ticket.ticket_number = get_ticket_number(new_ticket)
     session.add(new_ticket)
     session.commit()
     session.refresh(new_ticket)
@@ -101,6 +112,7 @@ def create_ticket():
     # Build the response with ticket and hospital information
     ticket_data = {
         'id': new_ticket.id,
+        'ticket_number': new_ticket.ticket_number,
         'hospital': {
             'id': hospital.id,
             'name': hospital.name,
@@ -127,12 +139,12 @@ def validate_ticket():
       - Otherwise returns a response indicating invalidity.
     """
     data = request.get_json()
-    if not data or 'hospital_id' not in data or 'password' not in data or 'ticket_id' not in data:
-        return jsonify({'error': 'Missing hospital_id, password, or ticket_id'}), 400
+    if not data or 'hospital_id' not in data or 'password' not in data or 'ticket_number' not in data:
+        return jsonify({'error': 'Missing hospital_id, password, or ticket_number'}), 400
 
     hospital_id = data['hospital_id']
     input_password = data['password']
-    ticket_id = data['ticket_id']
+    ticket_number = data['ticket_id']
 
     session = Session()
     hospital = session.query(Hospital).filter(Hospital.id == hospital_id).first()
@@ -144,17 +156,16 @@ def validate_ticket():
         session.close()
         return jsonify({'error': 'Unauthorized'}), 401
 
-    ticket = session.query(Ticket).filter(Ticket.id == ticket_id,
-                                            Ticket.hospital_id == hospital_id).first()
+    ticket = session.query(Ticket).filter(Ticket.ticket_number == ticket_number).first()
     if not ticket:
         session.close()
         return jsonify({'error': 'Ticket not found'}), 404
 
-    # Check that the ticket has been paid and that payment was made less than 30 minutes ago.
+    # Check that the ticket has been paid 
     if not ticket.payment_time:
         session.close()
         return jsonify({'valid': False, 'error': 'Ticket not paid'}), 400
-    
+    #and that payment was made less than 30 minutes ago.
     now = datetime.datetime.now(server_timezone)
     if not (ticket.creation_time < ticket.payment_time and
             (now - ticket.payment_time.replace(tzinfo=server_timezone)) <= datetime.timedelta(minutes=30)):
