@@ -5,15 +5,15 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Newtonsoft.Json;
 using ticketlibrary.Models; // Contains Hospital model
 
 namespace GatesSoftware.ViewModels
 {
-    public class FirstSetupViewModel : INotifyPropertyChanged
+    public class FirstSetupViewModel : ObservableObject
     {
-        public event PropertyChangedEventHandler PropertyChanged;
         private readonly HttpClient _httpClient = new HttpClient();
 
         public ObservableCollection<Hospital> Hospitals { get; set; } = new ObservableCollection<Hospital>();
@@ -145,8 +145,5 @@ namespace GatesSoftware.ViewModels
                 MessageBox.Show($"Error: {ex.Message}");
             }
         }
-
-        private void OnPropertyChanged(string propName) =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
     }
 }

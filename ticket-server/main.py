@@ -38,7 +38,7 @@ class Ticket(Base):
     payment_time = Column('PaymentTime', DateTime, nullable=True)
     departure_time = Column('DepartureTime', DateTime, nullable=True)
     ticket_payment_id = Column('TicketPaymentId', Integer, nullable=True)
-    ticket_number = Column('TicketCode', String, nullable=True)
+    ticket_number = Column('TicketNumber', String, nullable=True)
 
     hospital = relationship("Hospital")
 
@@ -65,7 +65,7 @@ def get_ticket_number(ticket :Ticket):
     Returns a unique code for the ticket.
     Code format : XXX-XXX-XXX
     """
-    fullhash :String = hashlib.sha256(f"{ticket.creation_time}{ticket.hospital_id}".encode()).hexdigest()
+    fullhash :String = hashlib.sha256(f"{ticket.creation_time}{ticket.hospital_id}".encode()).hexdigest().upper()
     return f"{fullhash[:3]}-{fullhash[3:6]}-{fullhash[6:9]}"
 
 # --- Routes ---
@@ -131,7 +131,7 @@ def create_ticket():
 def validate_ticket():
     """
     Validates an existing ticket.
-      - Requires JSON input containing 'hospital_id', 'password', and 'ticket_id'.
+      - Requires JSON input containing 'hospital_id', 'password', and 'ticket_number'.
       - Verifies that:
           • The ticket exists (and belongs to the hospital),
           • The ticket's payment_time is set and is within the last 30 minutes.
@@ -144,7 +144,7 @@ def validate_ticket():
 
     hospital_id = data['hospital_id']
     input_password = data['password']
-    ticket_number = data['ticket_id']
+    ticket_number = data['ticket_number']
 
     session = Session()
     hospital = session.query(Hospital).filter(Hospital.id == hospital_id).first()

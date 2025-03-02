@@ -9,10 +9,11 @@
                  FontSize="24" 
                  FontWeight="Bold" 
                  HorizontalAlignment="Center" />
-      <TextBox Text="{Binding TicketId, UpdateSourceTrigger=PropertyChanged}" 
-               materialDesign:HintAssist.Hint="Ticket ID" 
+      <TextBox Text="{Binding TicketNumber, UpdateSourceTrigger=PropertyChanged}" 
+               materialDesign:HintAssist.Hint="XXX-XXX-XXX" 
                Width="200" 
-               HorizontalAlignment="Center" />
+               HorizontalAlignment="Center" 
+               x:Name="TicketNumberTextBox" />
       <Button Content="Validate" 
               Command="{Binding ValidateTicketCommand}" 
               Style="{StaticResource MaterialDesignRaisedButton}" />

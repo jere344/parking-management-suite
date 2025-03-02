@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Newtonsoft.Json;
 using ticketlibrary.Models; // Contains Ticket model
 
 namespace GatesSoftware.ViewModels
 {
-    public class EntryGateViewModel : INotifyPropertyChanged
+    public class EntryGateViewModel : ObservableObject
     {
-        public event PropertyChangedEventHandler PropertyChanged;
         private readonly HttpClient _httpClient = new HttpClient();
 
         public ICommand GenerateTicketCommand { get; }
@@ -60,8 +60,5 @@ namespace GatesSoftware.ViewModels
                 MessageBox.Show($"Error: {ex.Message}");
             }
         }
-
-        private void OnPropertyChanged(string propName) =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
     }
 }

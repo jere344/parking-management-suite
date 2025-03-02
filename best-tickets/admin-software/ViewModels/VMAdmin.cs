@@ -138,10 +138,10 @@ public partial class VMAdmin : ObservableObject
 
     private void AddAccount_Execute()
     {
-        string RandomPassword = Helpers.CryptographyHelper.GenerateRandomString(8);
+        string RandomPassword = ticketlibrary.Helpers.CryptographyHelper.GenerateRandomString(8);
         var newUser = new User
         {
-            Password = Helpers.CryptographyHelper.HashPassword(RandomPassword),
+            Password = ticketlibrary.Helpers.CryptographyHelper.HashPassword(RandomPassword),
             FirstName = "New",
             LastName = "User",
             Email = "new.user@example.com",
