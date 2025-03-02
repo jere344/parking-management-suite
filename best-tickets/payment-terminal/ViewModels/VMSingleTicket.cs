@@ -1,0 +1,149 @@
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using ticketlibrary.Models;
+using paymentterminal.Context;
+
+namespace paymentterminal.ViewModels
+{
+    public class VMSingleTicket : ObservableObject
+    {
+        private readonly BestTicketContext _context;
+
+        private string _ticketNumber;
+        public string TicketNumber
+        {
+            get => _ticketNumber;
+            set
+            {
+                // ticket format is xxx-xxx-xxx
+                // while the user is typing, add dashes to the ticket number
+
+                value = value.ToUpper();
+                if (value.Length > 11)
+                {
+                    value = value[..11];
+                    return;
+                }
+                
+
+                ErrorMessage = null;
+                
+                // if it's a backspace
+                if (value?.Length < _ticketNumber?.Length)
+                {
+                    // if we are backspacing over a dash, remove the dash and the number
+                    if (value.Length == 3 || value.Length == 7)
+                    {
+                        _ticketNumber = value[..^1];
+                        // todo : fix wpf stupid inconsistency
+                        // when last input is a number, cursor doesn't move to the end
+                        // but when last input is a letter, cursor moves to the end
+                    }
+                    else
+                    {
+                        _ticketNumber = value;
+                    }
+                }
+                else // if it's a new character
+                {
+                    // if we are at a position where a dash should be, add the dash and the number
+                    if (value.Length == 3 || value.Length == 7)
+                    {
+                        _ticketNumber = value + "-";
+                    }
+                    else
+                    {
+                        _ticketNumber = value;
+                    }
+                }
+                
+                OnPropertyChanged(nameof(TicketNumber));
+
+                if (TicketNumber.Length == 11)
+                {
+                    ValidateAndProceed();
+                }
+            }
+        }
+
+        private string _errorMessage;
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set => SetProperty(ref _errorMessage, value);
+        }
+
+        private bool _canProceed;
+        public bool CanProceed
+        {
+            get => _canProceed;
+            set => SetProperty(ref _canProceed, value);
+        }
+
+        public ICommand ScanCommand { get; }
+        public ICommand NextCommand { get; }
+        public ICommand RetourCommand { get; }
+
+        public VMSingleTicket()
+        {
+            // TODO: Initialize the database context as needed (consider using dependency injection)
+            _context = new BestTicketContext();
+
+            ScanCommand = new RelayCommand(ScanTicket);
+            NextCommand = new AsyncRelayCommand(ValidateAndProceed);
+            RetourCommand = new RelayCommand(Retour);
+
+            TicketNumber = string.Empty;
+            ErrorMessage = string.Empty;
+            CanProceed = false;
+        }
+
+        private void ScanTicket()
+        {
+            // TODO: Replace the placeholder with an actual scanning implementation.
+            TicketNumber = "354-863-B04";
+        }
+
+        private async Task ValidateAndProceed()
+        {
+            ErrorMessage = string.Empty;
+            CanProceed = false;
+
+            if (string.IsNullOrWhiteSpace(TicketNumber))
+            {
+                ErrorMessage = "Veuillez entrer un numéro de ticket.";
+                return;
+            }
+
+            // Query the database for the ticket.
+            var ticket = await _context.Ticket.FirstOrDefaultAsync(t => t.TicketNumber == TicketNumber);
+            if (ticket == null)
+            {
+                ErrorMessage = "Ticket non trouvé.";
+                return;
+            }
+
+            // Check if the ticket has already been paid.
+            if (ticket.PaymentTime.HasValue || ticket.TicketPaymentId.HasValue)
+            {
+                ErrorMessage = "Ce ticket a déjà été payé.";
+                return;
+            }
+
+            // The ticket is valid.
+            CanProceed = true;
+
+            // Navigate to the next page (payment information/confirmation page).
+            ((MainWindow)App.Current.MainWindow).NavigateTo("Views/ViewSingleTicketPayment.xaml", ticket);
+        }
+
+        private void Retour()
+        {
+            // TODO: Adjust the navigation logic as needed.
+            ((MainWindow)App.Current.MainWindow).NavigateTo("Views/ViewHome.xaml");
+        }
+    }
+}

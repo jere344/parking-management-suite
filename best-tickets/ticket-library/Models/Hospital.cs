@@ -34,4 +34,8 @@ public class Hospital : BaseModel
     // Navigation Properties
     public virtual ICollection<Ticket> Tickets { get; set; }
     public virtual ICollection<Signal> Signals { get; set; }
+
+    public virtual ICollection<PriceBracket> PriceBrackets { get; set; }
+    public virtual ICollection<Code> Codes { get; set; }
+    public virtual ICollection<SubscriptionTiers> SubscriptionTiers { get; set; }
 }

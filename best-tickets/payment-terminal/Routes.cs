@@ -35,7 +35,7 @@ public static class Routes
 
     public static readonly Dictionary<string, string> HomeViews = new()
     {
-        { "Guest", "Views/ViewTickets.xaml" }
+        { "Guest", "Views/ViewHome.xaml" }
     };
 
     public static readonly Dictionary<string, DynamicViewInfoDictionary> ViewInfos = new()
@@ -50,13 +50,41 @@ public static class Routes
             }
         },
         {
-            "Views/ViewTickets.xaml",
+            "Views/ViewHome.xaml",
             new()
             {
-                { "Title", () => (string)Application.Current.FindResource("tickets") },
-                { "Icon", PackIconKind.TicketPercent },
+                { "Title", () => (string)Application.Current.FindResource("home") },
+                { "Icon", PackIconKind.HomeOutline },
                 { "Permission", 0 }
             }
         },
+        {
+            "Views/ViewSingleTicket.xaml",
+            new()
+            {
+                { "Title", () => "Ticket Unique" },
+                { "Icon", PackIconKind.TicketOutline },
+                { "Permission", 0 }
+            }
+        },
+        {
+            "Views/ViewSingleTicketPayment.xaml",
+            new()
+            {
+                { "Title", () => "Paiement Ticket" },
+                { "Icon", PackIconKind.CreditCardOutline },
+                { "Permission", 0 }
+            }
+        },
+        {
+            "Views/ViewTicketPrint.xaml",
+            new()
+            {
+                { "Title", () => "Impression du Ticket" },
+                { "Icon", PackIconKind.Printer },
+                { "Permission", 0 }
+            }
+        },
+
     };
 }

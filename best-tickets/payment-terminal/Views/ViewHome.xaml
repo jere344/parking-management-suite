@@ -1,0 +1,41 @@
+<Page x:Class="paymentterminal.Views.ViewHome"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:paymentterminal.Views"
+      mc:Ignorable="d"
+      Style="{StaticResource {x:Type Page}}">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <materialDesign:Card Grid.Row="0" Padding="10" Margin="0,0,0,10">
+            <TextBlock Text="Terminal de paiement"
+                       Style="{DynamicResource MaterialDesignHeadline6TextBlock}" />
+        </materialDesign:Card>
+
+        <!-- Buttons Section -->
+        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button Content="Créditer un ticket unique"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    Command="{Binding NavigateToSingleTicketCommand}"
+                    ToolTip="Navigate to single ticket credit page" />
+
+            <Button Content="Créditer un ticket avec un abonnement"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    Command="{Binding NavigateToTicketWithSubscriptionCommand}"
+                    ToolTip="Navigate to ticket with subscription credit page" />
+
+            <Button Content="Acheter un abonnement"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    Command="{Binding NavigateToBuySubscriptionCommand}"
+                    ToolTip="Navigate to buy subscription page" />
+        </StackPanel>
+    </Grid>
+</Page>

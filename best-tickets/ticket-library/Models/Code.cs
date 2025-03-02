@@ -2,7 +2,7 @@ namespace ticketlibrary.Models;
 
 public class Code : BaseModel
 {
-    public decimal Reduction { get; set; }
+    public decimal Reduction { get; set; } // 30 => 30% reduction
     public string Name { get; set; }
     public string Description { get; set; }
     public bool IsActive { get; set; }

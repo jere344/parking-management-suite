@@ -19,6 +19,9 @@
             <local:BoolToEnableDisableConverter x:Key="BoolToEnableDisableConverter"/>
             <local:NumberToMinusPercentageConverter x:Key="NumberToMinusPercentageConverter"/>
             <local:NullToBooleanConverter x:Key="NullToBooleanConverter"/>
+            <local:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
+            <local:DecimalToVisibilityConverter x:Key="DecimalToVisibilityConverter"/>
+            <local:TimeSpanToHumanReadableConverter x:Key="TimeSpanToHumanReadableConverter"/>
             
         </ResourceDictionary>
     </Application.Resources>
