@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using admintickets.Context;
 
@@ -10,9 +11,10 @@ using admintickets.Context;
 namespace admintickets.Migrations
 {
     [DbContext(typeof(BestTicketContext))]
-    partial class BestTicketContextModelSnapshot : ModelSnapshot
+    [Migration("20250302205356_taxes")]
+    partial class taxes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,29 +76,6 @@ namespace admintickets.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Hospital");
-                });
-
-            modelBuilder.Entity("ticketlibrary.Models.PriceBracket", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("HospitalId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("InternalMinDuration")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(65,30)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HospitalId");
-
-                    b.ToTable("PriceBracket");
                 });
 
             modelBuilder.Entity("ticketlibrary.Models.SessionToken", b =>
@@ -212,6 +191,7 @@ namespace admintickets.Migrations
                         .HasColumnType("decimal(65,30)");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Name")
@@ -220,7 +200,7 @@ namespace admintickets.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Taxe");
+                    b.ToTable("Taxes");
                 });
 
             modelBuilder.Entity("ticketlibrary.Models.Ticket", b =>
@@ -338,16 +318,7 @@ namespace admintickets.Migrations
             modelBuilder.Entity("ticketlibrary.Models.Code", b =>
                 {
                     b.HasOne("ticketlibrary.Models.Hospital", "Hospital")
-                        .WithMany("Codes")
-                        .HasForeignKey("HospitalId");
-
-                    b.Navigation("Hospital");
-                });
-
-            modelBuilder.Entity("ticketlibrary.Models.PriceBracket", b =>
-                {
-                    b.HasOne("ticketlibrary.Models.Hospital", "Hospital")
-                        .WithMany("PriceBrackets")
+                        .WithMany()
                         .HasForeignKey("HospitalId");
 
                     b.Navigation("Hospital");
@@ -378,7 +349,7 @@ namespace admintickets.Migrations
             modelBuilder.Entity("ticketlibrary.Models.SubscriptionTiers", b =>
                 {
                     b.HasOne("ticketlibrary.Models.Hospital", "Hospital")
-                        .WithMany("SubscriptionTiers")
+                        .WithMany()
                         .HasForeignKey("HospitalId");
 
                     b.Navigation("Hospital");
@@ -423,13 +394,7 @@ namespace admintickets.Migrations
 
             modelBuilder.Entity("ticketlibrary.Models.Hospital", b =>
                 {
-                    b.Navigation("Codes");
-
-                    b.Navigation("PriceBrackets");
-
                     b.Navigation("Signals");
-
-                    b.Navigation("SubscriptionTiers");
 
                     b.Navigation("Tickets");
                 });

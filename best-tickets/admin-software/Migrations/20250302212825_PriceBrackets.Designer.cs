@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using admintickets.Context;
 
@@ -10,9 +11,10 @@ using admintickets.Context;
 namespace admintickets.Migrations
 {
     [DbContext(typeof(BestTicketContext))]
-    partial class BestTicketContextModelSnapshot : ModelSnapshot
+    [Migration("20250302212825_PriceBrackets")]
+    partial class PriceBrackets
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,7 +87,7 @@ namespace admintickets.Migrations
                     b.Property<int?>("HospitalId")
                         .HasColumnType("int");
 
-                    b.Property<string>("InternalMinDuration")
+                    b.Property<string>("InternalMaxDuration")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -220,7 +222,7 @@ namespace admintickets.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Taxe");
+                    b.ToTable("Taxes");
                 });
 
             modelBuilder.Entity("ticketlibrary.Models.Ticket", b =>
