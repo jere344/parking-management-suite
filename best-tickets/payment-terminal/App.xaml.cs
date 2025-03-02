@@ -24,14 +24,12 @@ namespace paymentterminal;
 public partial class App : Application
 {
     new public static App Current => (App)Application.Current;
-    private User? _connectedUser;
+
     public User? ConnectedUser { 
-        get => _connectedUser;
-        set {
-            _connectedUser = value;
-            ((MainWindow)Current.MainWindow).ChangeAccount();
-        }
+        get => null;
+        set { }
     }
+  
     private BestTicketContext context = new();
 
     public System.Collections.IDictionary SavedSettings => (System.Collections.IDictionary?)Current.Properties["SavedSettings"] ?? throw new Exception("SavedSettings not found");
@@ -48,8 +46,6 @@ public partial class App : Application
 
         // preload the database from there, so it won't be loaded after logging in causing a slow startup
         DataSeeder.Seed(context); // also seed the database if it's empty
-
-        SetRememberedAccount();
     }
 
 
@@ -150,18 +146,5 @@ public partial class App : Application
         };
 
         this.Resources.MergedDictionaries.Add(bundledTheme);
-    }
-
-    private void SetRememberedAccount()
-    {
-        // if we have a session token, we load the account
-        if (SavedSettings.Contains("SessionToken") && SavedSettings["SessionToken"] != null)
-        {
-            var sessionToken = context.SessionToken.FirstOrDefault(t => t.Token == SavedSettings["SessionToken"].ToString());
-            if (sessionToken != null && sessionToken.ExpirationDate > DateTime.Now)
-            {
-                _connectedUser = sessionToken.User;
-            }
-        }
     }
 }

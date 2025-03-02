@@ -45,16 +45,6 @@ namespace paymentterminal.ViewModels
             OnPropertyChanged(nameof(Tickets));
         }
 
-        public ICommand ViewPaymentCommand => new RelayCommand<Ticket>((ticket) =>
-        {
-            if (ticket?.TicketPayment != null)
-            {
-                // Open a floating window to display read-only ticket payment details.
-                TicketPaymentDetailsWindow detailsWindow = new TicketPaymentDetailsWindow(ticket.TicketPayment);
-                detailsWindow.ShowDialog();
-            }
-        });
-
         public ICommand PrintTicketAsPdfCommand => new AsyncRelayCommand<Ticket>(async (ticket) =>
         {
             if (ticket == null) return;

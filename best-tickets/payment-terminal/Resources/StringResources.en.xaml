@@ -4,7 +4,7 @@
     <system:String x:Key="timeSheet">Time Sheet</system:String>
     <system:String x:Key="entreprise">BestTickets Inc.</system:String>
     <system:String x:Key="entrepriseShort">BestTickets</system:String>
-    <system:String x:Key="entrepriseSentence">Revolutionize time sheets</system:String>
+    <system:String x:Key="entrepriseSentence">Revolutionize parking tickets</system:String>
 
     <system:String x:Key="firstName">First Name</system:String>
     <system:String x:Key="lastName">Last Name</system:String>

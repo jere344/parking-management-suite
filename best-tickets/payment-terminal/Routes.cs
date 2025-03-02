@@ -30,28 +30,16 @@ public static class Routes
 
     public static readonly Dictionary<string, int> PermissionsLevels = new()
     {
-        { "Admin", 3 },
         { "Guest", 0 }
     };
 
     public static readonly Dictionary<string, string> HomeViews = new()
     {
-        { "Admin", "Views/ViewAdmin.xaml" },
-        { "Guest", "Views/ViewLogin.xaml" }
+        { "Guest", "Views/ViewTickets.xaml" }
     };
 
     public static readonly Dictionary<string, DynamicViewInfoDictionary> ViewInfos = new()
     {
-        {
-            "Views/ViewLogin.xaml",
-            new()
-            {
-                { "Title", () => (string)Application.Current.FindResource("login") },
-                { "Icon", PackIconKind.Login},
-                { "Permission", 0 },
-                { "Hidden", true }
-            }
-        },
         {
             "Views/ViewSettings.xaml",
             new()
@@ -62,66 +50,12 @@ public static class Routes
             }
         },
         {
-            "Views/ViewAdmin.xaml",
-            new()
-            {
-                { "Title", () => (string)Application.Current.FindResource("admin") },
-                { "Icon", PackIconKind.ShieldAccountOutline },
-                { "Permission", 1 }
-            }
-        },
-        {
-            "Views/ViewProfile.xaml",
-            new()
-            {
-                { "Title", () => (string)Application.Current.FindResource("profile") },
-                { "Icon", PackIconKind.AccountDetailsOutline },
-                { "Permission", 1 }
-            }
-        },
-        {
-            "Views/ViewHospitals.xaml",
-            new()
-            {
-                { "Title", () => (string)Application.Current.FindResource("hospitals") },
-                { "Icon", PackIconKind.Hospital },
-                { "Permission", 1 }
-            }
-        },
-        {
-            "Views/ViewSubscriptionTiers.xaml",
-            new()
-            {
-                { "Title", () => (string)Application.Current.FindResource("subscriptionTiers") },
-                { "Icon", PackIconKind.CreditCardMultiple },
-                { "Permission", 1 }
-            }
-        },
-        {
-            "Views/ViewDiscountCodes.xaml",
-            new()
-            {
-                { "Title", () => (string)Application.Current.FindResource("discountCodes") },
-                { "Icon", PackIconKind.BarcodeScan },
-                { "Permission", 1 }
-            }
-        },
-        {
             "Views/ViewTickets.xaml",
             new()
             {
                 { "Title", () => (string)Application.Current.FindResource("tickets") },
                 { "Icon", PackIconKind.TicketPercent },
-                { "Permission", 1 }
-            }
-        },
-        {
-            "Views/Logout.xaml",
-            new()
-            {
-                { "Title", () => (string)Application.Current.FindResource("logout") },
-                { "Icon", PackIconKind.Logout },
-                { "Permission", 1 } // permission 1 because guest doesn't need to logout
+                { "Permission", 0 }
             }
         },
     };

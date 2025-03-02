@@ -21,7 +21,6 @@ public class ModelSettings
             ((App)Application.Current).SavedSettings["Language"] = value;
             Thread.CurrentThread.CurrentCulture = new CultureInfo(value);
             ((App)Application.Current).SetLanguageDictionary();
-            ((MainWindow)((App)Application.Current).MainWindow).FillLeftDrawer();
         }
     }
     public string Theme {
@@ -33,7 +32,6 @@ public class ModelSettings
             ((App)Application.Current).SetTheme();
             // We also need to set the primary color when the theme changes for the bundle
             ((App)Application.Current).SetPrimaryColor();
-            ((MainWindow)((App)Application.Current).MainWindow).FillLeftDrawer();
         }
     }
     public string PrimaryColor {
@@ -43,7 +41,6 @@ public class ModelSettings
             _primaryColor = value;
             ((App)Application.Current).SavedSettings["PrimaryColor"] = value;
             ((App)Application.Current).SetPrimaryColor();
-            ((MainWindow)((App)Application.Current).MainWindow).FillLeftDrawer();
         }
     }
 

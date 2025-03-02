@@ -26,26 +26,8 @@ namespace paymentterminal
             MainNavigationFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
             NavigationController = new NavigationController(MainNavigationFrame.NavigationService);
             NavigationController.NavigateHome();
-            FillLeftDrawer();
-
-            // Every time the NavigationController changes, update the buttons (because automatic binding from XAML is a PAIN without DataContext)
-            NavigationController.PropertyChanged += NavigationController_PropertyChanged;
-            UpdateNavigationButtons();
         }
 
-        private void NavigationController_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(NavigationController.CanGoBack) || e.PropertyName == nameof(NavigationController.CanGoForward))
-            {
-                UpdateNavigationButtons();
-            }
-        }
-
-        private void UpdateNavigationButtons()
-        {
-            btnBack.IsEnabled = NavigationController.CanGoBack;
-            btnNext.IsEnabled = NavigationController.CanGoForward;
-        }
 
         public void NavigateTo(string uri, object? parameter = null)
         {
@@ -65,69 +47,7 @@ namespace paymentterminal
 
         public void ChangeAccount()
         {
-            FillLeftDrawer();
             NavigationController.ClearHistory();
-        }
-
-        public void FillLeftDrawer()
-        {
-            // Clear the stack panel to avoid duplication on multiple calls
-            // LeftDrawerStackPanel.Children.Clear();
-            LeftDrawerStackPanel.Items.Clear();
-
-            // Get the permission level of the connected user or default to "Guest"
-            string permission = App.Current.ConnectedUser != null ? "Admin" : "Guest";
-
-            // Loop through all views and add buttons for those the user has access to
-            foreach (var view in Routes.ViewInfos)
-            {
-                if (view.Value.TryGetValue("Hidden", out var hiddenValue) && (bool)hiddenValue == true)
-                    continue;
-
-                if (NavigationController.HasPermission(view.Key))
-                {
-                    var icon = new PackIcon
-                    {
-                        Kind = view.Value.TryGetValue("Icon", out var iconValue) ? (PackIconKind)iconValue : PackIconKind.None,
-                        Foreground = App.Current.Resources["MaterialDesignBody"] as Brush,
-                        Width = 20,
-                        Height = 20,
-                        Margin = new Thickness(0, 0, 5, 0)
-                    };
-
-                    var stackPanel = new StackPanel
-                    {
-                        Orientation = Orientation.Horizontal,
-                        Children =
-                        {
-                            icon,
-                            new TextBlock
-                            {
-                                Text = view.Value["Title"].ToString(),
-                                Foreground = App.Current.Resources["MaterialDesignBody"] as Brush,
-                                Width = 150,
-                            },
-                        }
-                    };
-
-                    var button = new Button
-                    {
-                        Content = stackPanel,
-                        Margin = new Thickness(0),
-                        Padding = new Thickness(10),
-                        Height = 40,
-                        Style = Application.Current.FindResource("MaterialDesignFlatButton") as Style 
-                    };
-
-                    // Optional: Add a click event to handle navigation or actions
-                    button.Click += (s, e) => NavigateTo(view.Key);
-
-                    // Add the button to the stack panel
-                    // LeftDrawerStackPanel.Children.Add(button);
-                    // LeftDrawerStackPanel is now a ListView, so we need to add items to its Items property
-                    LeftDrawerStackPanel.Items.Add(button);
-                }
-            }
         }
 
         // Clicking on the logo will open the GitHub page
