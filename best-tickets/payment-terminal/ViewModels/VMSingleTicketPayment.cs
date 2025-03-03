@@ -132,7 +132,7 @@ namespace paymentterminal.ViewModels
                 }
 
                 // Get the first bracket where Time MinDuration is less than the stationment time
-                var bracket = relevantBrackets.OrderBy(pb => pb.MinDuration).FirstOrDefault(pb => pb.MinDuration <= StationmentTime);
+                var bracket = relevantBrackets.OrderByDescending(pb => pb.MinDuration).FirstOrDefault(pb => pb.MinDuration <= StationmentTime);
                 PaymentOriginalAmount = bracket?.Price ?? 0;
             }
             catch (Exception ex)
@@ -178,6 +178,7 @@ namespace paymentterminal.ViewModels
                 CodeUsedReduction = CodeUsed?.Reduction,
             };
 
+            _context.Ticket.Update(CurrentTicket);
             _context.SaveChanges();
 
             ((MainWindow)App.Current.MainWindow).NavigateTo("Views/ViewTicketPrint.xaml", CurrentTicket);
@@ -185,7 +186,7 @@ namespace paymentterminal.ViewModels
 
         private void Retour()
         {
-            ((MainWindow)App.Current.MainWindow).NavigateTo("Views/ViewSingleTicket.xaml");
+            ((MainWindow)App.Current.MainWindow).NavigateTo("Views/ViewInputTicket.xaml", "unique");
         }
     }
 }

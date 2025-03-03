@@ -6,27 +6,27 @@ namespace paymentterminal.ViewModels
 {
     public class VMHome : ObservableObject
     {
-        public ICommand NavigateToSingleTicketCommand { get; }
+        public ICommand NavigateToInputTicketCommand { get; }
         public ICommand NavigateToTicketWithSubscriptionCommand { get; }
         public ICommand NavigateToBuySubscriptionCommand { get; }
 
         public VMHome()
         {
-            NavigateToSingleTicketCommand = new RelayCommand(NavigateToSingleTicket);
+            NavigateToInputTicketCommand = new RelayCommand(NavigateToInputTicket);
             NavigateToTicketWithSubscriptionCommand = new RelayCommand(NavigateToTicketWithSubscription);
             NavigateToBuySubscriptionCommand = new RelayCommand(NavigateToBuySubscription);
         }
 
-        private void NavigateToSingleTicket()
+        private void NavigateToInputTicket()
         {
             // Navigation to the "Créditer un ticket unique" page.
-            ((MainWindow)App.Current.MainWindow).NavigateTo("Views/ViewSingleTicket.xaml");
+            ((MainWindow)App.Current.MainWindow).NavigateTo("Views/ViewInputTicket.xaml", "unique");
         }
 
         private void NavigateToTicketWithSubscription()
         {
             // Navigation to the "Créditer un ticket avec un abonnement" page.
-            ((MainWindow)App.Current.MainWindow).NavigateTo("Views/ViewTicketWithSubscription.xaml");
+            ((MainWindow)App.Current.MainWindow).NavigateTo("Views/ViewInputTicket.xaml", "subscription");
         }
 
         private void NavigateToBuySubscription()

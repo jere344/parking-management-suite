@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ticketlibrary.Models;
 using paymentterminal.Context;
+using System.Windows;
 
 namespace paymentterminal.ViewModels
 {
-    public class VMSingleTicket : ObservableObject
+    public class VMInputTicket : ObservableObject
     {
         private readonly BestTicketContext _context;
 
@@ -87,7 +88,9 @@ namespace paymentterminal.ViewModels
         public ICommand NextCommand { get; }
         public ICommand RetourCommand { get; }
 
-        public VMSingleTicket()
+        public string? NextStep { get; set; }
+
+        public VMInputTicket()
         {
             // TODO: Initialize the database context as needed (consider using dependency injection)
             _context = new BestTicketContext();
@@ -99,12 +102,22 @@ namespace paymentterminal.ViewModels
             TicketNumber = string.Empty;
             ErrorMessage = string.Empty;
             CanProceed = false;
+
+
+
+            NextStep = SimpleNavigationService.Instance.Parameter as string;
+            SimpleNavigationService.Instance.Parameter = null;
+            if (NextStep != "unique" && NextStep != "subscription")
+            {
+                MessageBox.Show("Invalid navigation parameter.");
+                ((MainWindow)App.Current.MainWindow).NavigateTo("Views/ViewHome.xaml");
+            }
         }
 
         private void ScanTicket()
         {
             // TODO: Replace the placeholder with an actual scanning implementation.
-            TicketNumber = "354-863-B04";
+            TicketNumber = "39A-14D-870";
         }
 
         private async Task ValidateAndProceed()
@@ -136,8 +149,15 @@ namespace paymentterminal.ViewModels
             // The ticket is valid.
             CanProceed = true;
 
-            // Navigate to the next page (payment information/confirmation page).
-            ((MainWindow)App.Current.MainWindow).NavigateTo("Views/ViewSingleTicketPayment.xaml", ticket);
+            // Navigate to the next page 
+            if (NextStep == "unique")
+            {
+                ((MainWindow)App.Current.MainWindow).NavigateTo("Views/ViewSingleTicketPayment.xaml", ticket);
+            }
+            else if (NextStep == "subscription")
+            {
+                ((MainWindow)App.Current.MainWindow).NavigateTo("Views/ViewSubscriberTicketPayment.xaml", ticket);
+            }
         }
 
         private void Retour()

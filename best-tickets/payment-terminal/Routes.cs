@@ -59,10 +59,10 @@ public static class Routes
             }
         },
         {
-            "Views/ViewSingleTicket.xaml",
+            "Views/ViewInputTicket.xaml",
             new()
             {
-                { "Title", () => "Ticket Unique" },
+                { "Title", () => "Saisie du Ticket" },
                 { "Icon", PackIconKind.TicketOutline },
                 { "Permission", 0 }
             }
@@ -82,6 +82,15 @@ public static class Routes
             {
                 { "Title", () => "Impression du Ticket" },
                 { "Icon", PackIconKind.Printer },
+                { "Permission", 0 }
+            }
+        },
+        {
+            "Views/ViewSubscriberTicketPayment.xaml",
+            new()
+            {
+                { "Title", () => "Paiement par Abonnement" },
+                { "Icon", PackIconKind.CardAccountDetails }, // Use an appropriate MaterialDesign icon.
                 { "Permission", 0 }
             }
         },

@@ -24,7 +24,7 @@
         <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Button Content="Créditer un ticket unique"
                     Style="{StaticResource MaterialDesignRaisedButton}"
-                    Command="{Binding NavigateToSingleTicketCommand}"
+                    Command="{Binding NavigateToInputTicketCommand}"
                     ToolTip="Navigate to single ticket credit page" />
 
             <Button Content="Créditer un ticket avec un abonnement"

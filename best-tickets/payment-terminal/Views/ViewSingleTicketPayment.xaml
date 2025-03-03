@@ -33,7 +33,7 @@
         <materialDesign:Card Margin="0,0,5,10" Padding="10" Grid.Row="1">
             <StackPanel>
                 <TextBlock Text="Informations du Ticket" 
-                            Style="{DynamicResource MaterialDesignSubheaderTextBlock}" 
+                            Style="{DynamicResource MaterialDesignHeadline6TextBlock}" 
                             Margin="0,0,0,5"/>
                 <TextBlock Text="{Binding CurrentTicket.TicketNumber, StringFormat='Numéro de Ticket: {0}'}" 
                             Style="{DynamicResource MaterialDesignBody1TextBlock}" Margin="0,0,0,5"/>
@@ -48,7 +48,7 @@
         <materialDesign:Card Margin="5,0,0,10" Padding="10" Grid.Row="1" Grid.Column="1">
             <StackPanel>
                 <TextBlock Text="Informations de l'Hôpital" 
-                            Style="{DynamicResource MaterialDesignSubheaderTextBlock}" 
+                            Style="{DynamicResource MaterialDesignHeadline6TextBlock}" 
                             Margin="0,0,0,5"/>
                 <StackPanel Orientation="Horizontal">
                     <Image Source="{Binding CurrentTicket.Hospital.HospitalLogo}" Height="50" Width="50" Margin="0,0,10,0"/>
@@ -63,43 +63,100 @@
         </materialDesign:Card>
         
         <!-- Payment Details Card -->
+        <!-- Payment Details Card -->
         <materialDesign:Card Margin="0,0,5,10" Padding="10" Grid.Row="2">
             <StackPanel>
                 <TextBlock Text="Détails du Paiement" 
-                            Style="{DynamicResource MaterialDesignSubheaderTextBlock}" 
-                            Margin="0,0,0,5"/>
-                <TextBlock Text="{Binding PaymentOriginalAmount, StringFormat='Prix HT: {0:C}'}" 
-                            Style="{DynamicResource MaterialDesignBody1TextBlock}" Margin="0,0,0,5"/>
-                <TextBlock Text="{Binding CodeAmountSaved, StringFormat='Code : -{0:C}'}" 
-                            Style="{DynamicResource MaterialDesignBody2TextBlock}" Margin="0,0,0,5" 
-                            Visibility="{Binding CodeAmountSaved, Converter={StaticResource DecimalToVisibilityConverter}}"/>
-                <TextBlock Text="{Binding PaymentAmountAfterCode, StringFormat='Prix HT après code: {0:C}'}"
-                            Style="{DynamicResource MaterialDesignBody2TextBlock}" Margin="0,0,0,5"
-                            Visibility="{Binding CodeAmountSaved, Converter={StaticResource DecimalToVisibilityConverter}}"/>
+                           Style="{DynamicResource MaterialDesignHeadline6TextBlock}" 
+                           Margin="0,0,0,5"/>
                 
-                <!-- separator : -->
-                <Separator Margin="0,5,0,5"/>
+                <!-- Prix HT -->
+                <Grid Margin="0,0,0,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Prix HT:" 
+                               Style="{DynamicResource MaterialDesignBody1TextBlock}" />
+                    <TextBlock Grid.Column="1" Text="{Binding PaymentOriginalAmount, StringFormat={}{0:C}}" 
+                               Style="{DynamicResource MaterialDesignBody1TextBlock}" />
+                </Grid>
+                
+                <!-- Code Reduction Amount (if any) -->
+                <Grid Margin="0,0,0,5" Visibility="{Binding CodeAmountSaved, Converter={StaticResource DecimalToVisibilityConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Code:" 
+                               Style="{DynamicResource MaterialDesignBody2TextBlock}" />
+                    <TextBlock Grid.Column="1" Text="{Binding CodeAmountSaved, StringFormat={}{0:C}}" 
+                               Style="{DynamicResource MaterialDesignBody2TextBlock}" />
+                </Grid>
+                
+                <!-- Prix HT après code (if applicable) -->
+                <Grid Margin="0,0,0,5" Visibility="{Binding CodeAmountSaved, Converter={StaticResource DecimalToVisibilityConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Prix HT après code:" 
+                               Style="{DynamicResource MaterialDesignBody2TextBlock}" />
+                    <TextBlock Grid.Column="1" Text="{Binding PaymentAmountAfterCode, StringFormat={}{0:C}}" 
+                               Style="{DynamicResource MaterialDesignBody2TextBlock}" />
+                </Grid>
+                
+                <!-- Taxes List -->
                 <ItemsControl ItemsSource="{Binding TaxesList}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Name}" 
-                                            Style="{DynamicResource MaterialDesignBody2TextBlock}" Margin="0,0,10,0"/>
-                                <TextBlock Text="{Binding Amount, StringFormat='({0:P})'}" 
-                                            Style="{DynamicResource MaterialDesignBody2TextBlock}"/>
-                            </StackPanel>
+                            <Grid Margin="0,0,0,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <!-- Tax Name -->
+                                <TextBlock Grid.Column="0" Text="{Binding Name}" 
+                                           Style="{DynamicResource MaterialDesignBody2TextBlock}" />
+                                <!-- Calculated Tax Amount -->
+                                <TextBlock Grid.Column="1" Style="{DynamicResource MaterialDesignBody2TextBlock}">
+                                    <TextBlock.Text>
+                                        <MultiBinding Converter="{StaticResource TaxCalculationConverter}">
+                                            <!-- Bind to the PaymentAmountAfterCode from the view model -->
+                                            <Binding Path="DataContext.PaymentAmountAfterCode" RelativeSource="{RelativeSource AncestorType=Page}" />
+                                            <!-- Bind to the current tax's Amount -->
+                                            <Binding Path="Amount" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <TextBlock Text="{Binding TotalTaxesAmount, StringFormat='Total Taxes: {0:C}'}"
-                            Style="{DynamicResource MaterialDesignBody2TextBlock}" Margin="0,10,0,5"/>
-                <Separator Margin="0,5,0,5"/>
-
-                <TextBlock Text="{Binding PaymentAmountAfterTaxes, StringFormat='Prix TTC: {0:C}'}"
-                            Style="{DynamicResource MaterialDesignBody1TextBlock}" Margin="0,10,0,5"
-                            FontWeight="Bold"
-                            />
-
+                
+                <!-- Total Taxes -->
+                <Grid Margin="0,10,0,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Total Taxes:" 
+                               Style="{DynamicResource MaterialDesignBody2TextBlock}" />
+                    <TextBlock Grid.Column="1" Text="{Binding TotalTaxesAmount, StringFormat={}{0:C}}" 
+                               Style="{DynamicResource MaterialDesignBody2TextBlock}" />
+                </Grid>
+                
+                <!-- Prix TTC -->
+                <Grid Margin="0,10,0,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Prix TTC:" 
+                               Style="{DynamicResource MaterialDesignBody1TextBlock}" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="1" Text="{Binding PaymentAmountAfterTaxes, StringFormat={}{0:C}}" 
+                               Style="{DynamicResource MaterialDesignBody1TextBlock}" FontWeight="Bold"/>
+                </Grid>
             </StackPanel>
         </materialDesign:Card>
         
@@ -107,7 +164,7 @@
         <materialDesign:Card Margin="5,0,0,10" Padding="10" Grid.Row="2" Grid.Column="1">
             <StackPanel>
                 <TextBlock Text="Code de Réduction (optionnel)" 
-                            Style="{DynamicResource MaterialDesignSubheaderTextBlock}" 
+                            Style="{DynamicResource MaterialDesignHeadline6TextBlock}" 
                             Margin="0,0,0,5"/>
                 <StackPanel Orientation="Horizontal">
                     <TextBox Width="200" 

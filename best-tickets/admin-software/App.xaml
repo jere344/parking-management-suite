@@ -15,7 +15,6 @@
                 <Setter Property="Background" Value="{DynamicResource MaterialDesignPaper}" />
                 <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}" />
             </Style>
-            <local:NullToUnderlineConverter x:Key="NullToUnderlineConverter" />
             <local:BoolToEnableDisableConverter x:Key="BoolToEnableDisableConverter"/>
             <local:NumberToMinusPercentageConverter x:Key="NumberToMinusPercentageConverter"/>
             <local:NullToBooleanConverter x:Key="NullToBooleanConverter"/>
