@@ -10,24 +10,24 @@
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/> <!-- Header -->
-            <RowDefinition Height="Auto"/> <!-- Ticket Info -->
-            <RowDefinition Height="Auto"/> <!-- Hospital Info -->
+            <RowDefinition Height="Auto"/> <!-- Ticket and Hospital Information -->
             <RowDefinition Height="Auto"/> <!-- Subscription Card Input -->
             <RowDefinition Height="*"/>   <!-- Spacer -->
             <RowDefinition Height="Auto"/> <!-- Navigation Buttons -->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <!-- Header -->
-        <materialDesign:Card Grid.Row="0" Padding="10" Margin="0,0,0,10">
+        <materialDesign:Card Grid.Row="0" Padding="10" Margin="0,0,0,10" Grid.ColumnSpan="2">
             <TextBlock Text="Paiement par Carte d'Abonnement" 
                        Style="{DynamicResource MaterialDesignHeadline6TextBlock}" />
         </materialDesign:Card>
 
         <!-- Ticket Information Card -->
-        <materialDesign:Card Grid.Row="1" Padding="10" Margin="0,0,0,10">
+        <materialDesign:Card Grid.Row="1" Padding="10" Margin="0,0,5,10" Grid.Column="0">
             <StackPanel>
                 <TextBlock Text="Informations du Ticket" 
                            Style="{DynamicResource MaterialDesignHeadline6TextBlock}" Margin="0,0,0,5"/>
@@ -35,13 +35,15 @@
                            Style="{DynamicResource MaterialDesignBody1TextBlock}" Margin="0,0,0,5"/>
                 <TextBlock Text="{Binding CurrentTicket.CreationTime, StringFormat='Créé le: {0:G}'}" 
                            Style="{DynamicResource MaterialDesignBody1TextBlock}" Margin="0,0,0,5"/>
+                <TextBlock Text="{Binding StationmentTime, Converter={StaticResource TimeSpanToHumanReadableConverter}, StringFormat='Durée de Stationnement: {0}'}" 
+                            Style="{DynamicResource MaterialDesignBody1TextBlock}" Margin="0,0,0,5"/>
             </StackPanel>
         </materialDesign:Card>
 
         <!-- Hospital Information Card -->
-        <materialDesign:Card Grid.Row="2" Padding="10" Margin="0,0,0,10">
+        <materialDesign:Card Grid.Row="1" Padding="10" Margin="5,0,0,10" Grid.Column="1">
             <StackPanel Orientation="Horizontal">
-                <Image Source="{Binding CurrentTicket.Hospital.HospitalLogo}" Height="50" Width="50" Margin="0,0,10,0"/>
+                <Image Source="{Binding CurrentTicket.Hospital.HospitalLogo}" Height="70" Width="70" Margin="0,0,10,0"/>
                 <StackPanel>
                     <TextBlock Text="{Binding CurrentTicket.Hospital.Name}" 
                                Style="{DynamicResource MaterialDesignBody1TextBlock}" />
@@ -52,13 +54,13 @@
         </materialDesign:Card>
 
         <!-- Subscription Card Input -->
-        <materialDesign:Card Grid.Row="3" Padding="10" Margin="0,0,0,10">
+        <materialDesign:Card Grid.Row="2" Padding="10" Margin="0,0,0,10" Grid.ColumnSpan="1">
             <StackPanel>
-                <TextBlock Text="Numéro de Carte d'Abonnement" 
+                <TextBlock Text="Entrez le numéro de la carte" 
                            Style="{DynamicResource MaterialDesignHeadline6TextBlock}" Margin="0,0,0,5"/>
                 <StackPanel Orientation="Horizontal">
                     <TextBox Width="200"
-                             materialDesign:HintAssist.Hint="Entrez le numéro de la carte"
+                             materialDesign:HintAssist.Hint="XXXX-XXXX"
                              Text="{Binding SubscriptionCardInput, UpdateSourceTrigger=PropertyChanged}"
                              Margin="0,0,10,0"/>
                     <Button Content="Scan" 
@@ -71,16 +73,30 @@
             </StackPanel>
         </materialDesign:Card>
 
-        <!-- Navigation Buttons -->
-        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Procéder au paiement" 
-                    Style="{StaticResource MaterialDesignRaisedButton}"
-                    Command="{Binding ProcessPaymentCommand}"
-                    Margin="0,10,10,0"/>
-            <Button Content="Retour" 
-                    Style="{StaticResource MaterialDesignRaisedButton}"
-                    Command="{Binding RetourCommand}"
-                    Margin="0,10,0,0"/>
-        </StackPanel>
+        <!-- Subscription info -->
+        <materialDesign:Card Grid.Row="2" Padding="10" Margin="5,0,0,10" Grid.Column="1">
+            <StackPanel>
+                <TextBlock Text="{Binding CurrentSubscription.CardNumber, StringFormat='Numéro d\'Abonnement: {0}'}" 
+                           Style="{DynamicResource MaterialDesignHeadline6TextBlock}" Margin="0,0,0,5"/>
+                <TextBlock Text="{Binding CurrentSubscription.DateEnd, StringFormat='Date d\'Expiration: {0:G}'}"
+                           Style="{DynamicResource MaterialDesignBody1TextBlock}" Margin="0,0,0,5"/>
+                <TextBlock Text="{Binding SubscriptionUsageMessage}"
+                           Style="{DynamicResource MaterialDesignBody1TextBlock}" Margin="0,0,0,5"/>
+            </StackPanel>
+        </materialDesign:Card>
+
+
+        <Button Grid.Row="3" Content="Retour" 
+                Grid.Column="0"
+                HorizontalAlignment="Left" Margin="10,10,10,10"
+                Background="Red" Foreground="White"
+                Command="{Binding RetourCommand}" />
+
+        <Button Grid.Row="3" HorizontalAlignment="Right"
+                Grid.Column="1"
+                Content="Procéder au paiement" 
+                Style="{StaticResource MaterialDesignRaisedButton}"
+                Command="{Binding ProcessPaymentCommand}"
+                Margin="0,10,10,0"/>
     </Grid>
 </Page>

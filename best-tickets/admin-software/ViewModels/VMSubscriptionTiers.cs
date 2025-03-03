@@ -16,8 +16,8 @@ namespace admintickets.ViewModels
     {
         private BestTicketContext context;
 
-        private ObservableCollection<SubscriptionTiers> _subscriptionTiers;
-        public ObservableCollection<SubscriptionTiers> SubscriptionTiers
+        private ObservableCollection<SubscriptionTier> _subscriptionTiers;
+        public ObservableCollection<SubscriptionTier> SubscriptionTiers
         {
             get => _subscriptionTiers;
             set => SetProperty(ref _subscriptionTiers, value);
@@ -72,7 +72,7 @@ namespace admintickets.ViewModels
 
         private async Task Refresh()
         {
-            SubscriptionTiers = new ObservableCollection<SubscriptionTiers>(await context.SubscriptionTier.ToListAsync());
+            SubscriptionTiers = new ObservableCollection<SubscriptionTier>(await context.SubscriptionTier.ToListAsync());
             OnPropertyChanged(nameof(SubscriptionTiers));
         }
 
@@ -87,7 +87,7 @@ namespace admintickets.ViewModels
                 return;
             }
 
-            var newTier = new SubscriptionTiers
+            var newTier = new SubscriptionTier
             {
                 Name = NewTierName,
                 Duration = TimeSpan.FromDays(NewTierDurationInDays),
@@ -101,14 +101,14 @@ namespace admintickets.ViewModels
             await Refresh();
         });
 
-        public ICommand DeleteTierCommand => new AsyncRelayCommand<SubscriptionTiers>(async (tier) =>
+        public ICommand DeleteTierCommand => new AsyncRelayCommand<SubscriptionTier>(async (tier) =>
         {
             context.SubscriptionTier.Remove(tier);
             await context.SaveChangesAsync();
             await Refresh();
         });
 
-        public ICommand CopyTierCommand => new RelayCommand<SubscriptionTiers>((tier) =>
+        public ICommand CopyTierCommand => new RelayCommand<SubscriptionTier>((tier) =>
         {
             if (tier != null)
             {

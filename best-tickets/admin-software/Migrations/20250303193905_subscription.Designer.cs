@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using admintickets.Context;
 
@@ -10,9 +11,10 @@ using admintickets.Context;
 namespace admintickets.Migrations
 {
     [DbContext(typeof(BestTicketContext))]
-    partial class BestTicketContextModelSnapshot : ModelSnapshot
+    [Migration("20250303193905_subscription")]
+    partial class subscription
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -177,7 +179,7 @@ namespace admintickets.Migrations
                     b.ToTable("Subscription");
                 });
 
-            modelBuilder.Entity("ticketlibrary.Models.SubscriptionTier", b =>
+            modelBuilder.Entity("ticketlibrary.Models.SubscriptionTiers", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -391,7 +393,7 @@ namespace admintickets.Migrations
                     b.Navigation("Hospital");
                 });
 
-            modelBuilder.Entity("ticketlibrary.Models.SubscriptionTier", b =>
+            modelBuilder.Entity("ticketlibrary.Models.SubscriptionTiers", b =>
                 {
                     b.HasOne("ticketlibrary.Models.Hospital", "Hospital")
                         .WithMany("SubscriptionTiers")

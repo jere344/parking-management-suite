@@ -32,7 +32,7 @@ namespace paymentterminal.ViewModels
         private void NavigateToBuySubscription()
         {
             // Navigation to the "Acheter un abonnement" page.
-            ((MainWindow)App.Current.MainWindow).NavigateTo("Views/ViewBuySubscription.xaml");
+            ((MainWindow)App.Current.MainWindow).NavigateTo("Views/ViewSelectHospitalSubscription.xaml");
         }
     }
 }

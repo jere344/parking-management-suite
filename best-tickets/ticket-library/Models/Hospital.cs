@@ -37,5 +37,5 @@ public class Hospital : BaseModel
 
     public virtual ICollection<PriceBracket> PriceBrackets { get; set; }
     public virtual ICollection<Code> Codes { get; set; }
-    public virtual ICollection<SubscriptionTiers> SubscriptionTiers { get; set; }
+    public virtual ICollection<SubscriptionTier> SubscriptionTiers { get; set; }
 }

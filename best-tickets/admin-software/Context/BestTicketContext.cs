@@ -14,7 +14,7 @@ public class BestTicketContext : DbContext
     public DbSet<SessionToken> SessionToken { get; set; }
     public DbSet<Hospital> Hospital { get; set; }
     public DbSet<Code> DiscountCode { get; set; }
-    public DbSet<SubscriptionTiers> SubscriptionTier { get; set; }
+    public DbSet<SubscriptionTier> SubscriptionTier { get; set; }
     public DbSet<Ticket> Ticket { get; set; }
     public DbSet<TicketPayment> TicketPayment { get; set; }
     public DbSet<Taxes> Taxe { get; set; }

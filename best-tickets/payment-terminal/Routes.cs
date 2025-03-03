@@ -94,6 +94,24 @@ public static class Routes
                 { "Permission", 0 }
             }
         },
+        {
+            "Views/ViewSelectHospitalSubscription.xaml",
+            new()
+            {
+                { "Title", () => "Choix de l'hôpital" },
+                { "Icon", PackIconKind.HospitalBuilding },  // Ensure that PackIconKind.HospitalBuilding exists or choose an appropriate icon.
+                { "Permission", 0 }
+            }
+        },
+        {
+            "Views/ViewSubscriptionTierSelection.xaml",
+            new()
+            {
+                { "Title", () => "Sélection Abonnement" },
+                { "Icon", PackIconKind.TicketConfirmation }, // adjust the icon as needed
+                { "Permission", 0 }
+            }
+        },
 
     };
 }

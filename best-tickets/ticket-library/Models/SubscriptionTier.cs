@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace ticketlibrary.Models;
 
-public class SubscriptionTiers : BaseModel
+public class SubscriptionTier : BaseModel
 {
     public string Name { get; set; }
     public int MaxNumberOfUsesPerDay { get; set; }
