@@ -53,7 +53,23 @@ namespace paymentterminal.ViewModels
 
         private void SelectTier(SubscriptionTier selectedTier)
         {
-            // TODO: Implement the confirmation logic for the selected tier.
+            if (MessageBox.Show($"Confirmez-vous l'abonnement {selectedTier.Name} pour {SelectedHospital.Name} ?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.No)
+            {
+                return;
+            }
+
+            var subscription = new Subscription
+            {
+                DateStart = System.DateTime.Now,
+                DateEnd = System.DateTime.Now + selectedTier.Duration,
+                MaxNumberOfUsesPerDay = selectedTier.MaxNumberOfUsesPerDay,
+                HospitalId = SelectedHospital.Id
+            };
+
+            _context.Subscription.Add(subscription);
+            _context.SaveChanges();
+
+            ((MainWindow)App.Current.MainWindow).NavigateTo("Views/ViewSubscriptionCardPrinting.xaml", subscription);
         }
 
         private void Retour()

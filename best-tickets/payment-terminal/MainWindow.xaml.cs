@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Windows.Media;
 using System.Diagnostics;
 using MaterialDesignThemes.Wpf;
+using paymentterminal.Services;
 
 
 
@@ -18,13 +19,17 @@ namespace paymentterminal
     public partial class MainWindow : Window
     {
         public NavigationController NavigationController { get; set; }
+        public InactivityService InactivityService { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = NavigationController;
+            DataContext = this;
             MainNavigationFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
             NavigationController = new NavigationController(MainNavigationFrame.NavigationService);
+            InactivityService = new InactivityService();
+            InactivityService.InactivityTimeout += (sender, e) => NavigateTo("Views/ViewHome.xaml");
+            InactivityService.IsTicking = () => NavigationController.GetCurrentViewUri()?.ToString() != "Views/ViewHome.xaml";
             NavigationController.NavigateHome();
         }
 
@@ -58,44 +63,6 @@ namespace paymentterminal
                 FileName = "https://github.com/jere344/parking-ticket",
                 UseShellExecute = true
             });
-        }
-
-        private void Next_Btn(object sender, RoutedEventArgs e)
-        {
-            if (this.NavigationController.CanGoForward)
-                NavigationController.NavigateForward();
-        }
-
-        private void Back_Btn(object sender, RoutedEventArgs e)
-        {
-            if (this.NavigationController.CanGoBack)
-                NavigationController.NavigateBack();
-        }
-
-        private void Home_Btn(object sender, RoutedEventArgs e)
-        {
-            NavigationController.NavigateHome();
-        }
-
-        private void Open_Settings(object sender, RoutedEventArgs e)
-        {
-            NavigateTo("Views/ViewSettings.xaml");
-        }
-
-        private void Test(object sender, RoutedEventArgs e)
-        {
-            // check if the user is connected
-            if (App.Current.ConnectedUser == null)
-            {
-                MessageBox.Show((string)Application.Current.FindResource("must_be_connected"), (string)Application.Current.FindResource("error"), MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-            NavigateTo("Views/ViewProfile.xaml");
-        }
-
-        private void Logout(object sender,RoutedEventArgs e)
-        {
-            NavigateTo("Views/Logout.xaml");
         }
 
         public void SetWindowInfos(string title, double minHeight = 0, double minWidth = 0, double maxHeight = double.PositiveInfinity, double maxWidth = double.PositiveInfinity)

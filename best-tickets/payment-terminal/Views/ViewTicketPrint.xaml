@@ -33,6 +33,8 @@
                 Background="Green" Foreground="White"
                 Style="{StaticResource MaterialDesignRaisedButton}"
                 Command="{Binding FinishCommand}"
+                IsEnabled="{Binding HasPrinted}"
+                ToolTip="{Binding HasPrinted, Converter={StaticResource BoolToStringConverter}, ConverterParameter='Vous pouvez terminer.|Veuillez imprimer le ticket d\'abord.'}"
                 Margin="0,10,0,0"/>
     </Grid>
 </Page>

@@ -22,6 +22,7 @@
             <local:DecimalToVisibilityConverter x:Key="DecimalToVisibilityConverter"/>
             <local:TimeSpanToHumanReadableConverter x:Key="TimeSpanToHumanReadableConverter"/>
             <local:TaxCalculationConverter x:Key="TaxCalculationConverter"/>
+            <local:BoolToStringConverter x:Key="BoolToStringConverter"/>
             
         </ResourceDictionary>
     </Application.Resources>

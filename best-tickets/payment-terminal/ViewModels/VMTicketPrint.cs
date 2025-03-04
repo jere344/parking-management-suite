@@ -16,6 +16,13 @@ namespace paymentterminal.ViewModels
     {
         public Ticket CurrentTicket { get; set; }
 
+        private bool _hasPrinted = false;
+        public bool HasPrinted
+        {
+            get => _hasPrinted;
+            set => SetProperty(ref _hasPrinted, value);
+        }
+
         public IAsyncRelayCommand PrintTicketCommand { get; }
         public ICommand FinishCommand { get; }
 
@@ -31,8 +38,9 @@ namespace paymentterminal.ViewModels
             }
             CurrentTicket = Passedticket;
 
-            PrintTicketCommand = new AsyncRelayCommand(PrintTicketAsPdf);
-            FinishCommand = new RelayCommand(Finish);
+
+            PrintTicketCommand = new AsyncRelayCommand(PrintTicketAsPdf);            
+            FinishCommand = new RelayCommand(Finish, () => HasPrinted);
         }
 
         private async Task PrintTicketAsPdf()
@@ -53,6 +61,7 @@ namespace paymentterminal.ViewModels
                 {
                     Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
                 }
+                HasPrinted = true;
             }
         }
 

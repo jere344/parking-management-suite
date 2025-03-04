@@ -134,7 +134,7 @@ public class NavigationController : INotifyPropertyChanged
     }
 
     // Utility method to get the current view's URI
-    private Uri? GetCurrentViewUri()
+    public Uri? GetCurrentViewUri()
     {
         var content = NavigationService.Content as Page;
         return content?.NavigationService?.CurrentSource;
