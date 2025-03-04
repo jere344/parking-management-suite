@@ -112,6 +112,14 @@ public static class Routes
                 { "Permission", 0 }
             }
         },
-
+        {
+            "Views/ViewSubscriptionCardPrinting.xaml",
+            new()
+            {
+                { "Title", () => "Impression de la Carte de Souscription" },
+                { "Icon", PackIconKind.Printer },
+                { "Permission", 0 }
+            }
+        },
     };
 }

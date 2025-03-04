@@ -20,7 +20,10 @@ namespace paymentterminal.ViewModels
         public bool HasPrinted
         {
             get => _hasPrinted;
-            set => SetProperty(ref _hasPrinted, value);
+            set {
+                SetProperty(ref _hasPrinted, value);
+                (FinishCommand as RelayCommand)?.NotifyCanExecuteChanged();
+            }
         }
 
         public IAsyncRelayCommand PrintTicketCommand { get; }
@@ -69,7 +72,7 @@ namespace paymentterminal.ViewModels
         private async Task GenerateTicketPdf(Ticket ticket, string filePath)
         {
             try {
-                var ticketDocument = new ticket_library.TicketDocument(ticket);
+                var ticketDocument = new ticket_library.Documents.TicketDocument(ticket);
                 ticketDocument.GeneratePdf(filePath);
             }
             catch (System.Exception ex)

@@ -133,7 +133,7 @@ namespace paymentterminal.ViewModels
         private async Task GenerateTicketPdf(Ticket ticket, string filePath)
         {
             try {
-                var ticketDocument = new ticket_library.TicketDocument(ticket);
+                var ticketDocument = new ticket_library.Documents.TicketDocument(ticket);
                 ticketDocument.GeneratePdf(filePath);
             }
             catch (System.Exception ex)
@@ -147,7 +147,7 @@ namespace paymentterminal.ViewModels
         private async Task GenerateTicketPng(Ticket ticket, string filePath)
         {
             try {
-                var ticketDocument = new ticket_library.TicketDocument(ticket);
+                var ticketDocument = new ticket_library.Documents.TicketDocument(ticket);
                 // document.GenerateImages(imageIndex => $"image{imageIndex}.png");
                 ticketDocument.GenerateImages(imageIndex => imageIndex == 0 ? filePath : filePath.Replace(".png", $"_{imageIndex}.png"));
             }

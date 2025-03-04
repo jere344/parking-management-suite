@@ -58,12 +58,17 @@ namespace paymentterminal.ViewModels
                 return;
             }
 
+            byte[] hashBytes = System.Security.Cryptography.SHA256.Create().ComputeHash(System.Text.Encoding.UTF8.GetBytes(DateTime.Now.ToString() + SelectedHospital.Id + selectedTier.Id));
+            string fullhash = BitConverter.ToString(hashBytes).Replace("-", "");
+            string cardNumber = $"{fullhash.Substring(0, 4)}-{fullhash.Substring(4, 4)}".ToUpper();
+
             var subscription = new Subscription
             {
                 DateStart = System.DateTime.Now,
                 DateEnd = System.DateTime.Now + selectedTier.Duration,
                 MaxNumberOfUsesPerDay = selectedTier.MaxNumberOfUsesPerDay,
-                HospitalId = SelectedHospital.Id
+                HospitalId = SelectedHospital.Id,
+                CardNumber = cardNumber  
             };
 
             _context.Subscription.Add(subscription);
