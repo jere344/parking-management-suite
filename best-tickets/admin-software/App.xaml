@@ -18,6 +18,7 @@
             <local:BoolToEnableDisableConverter x:Key="BoolToEnableDisableConverter"/>
             <local:NumberToMinusPercentageConverter x:Key="NumberToMinusPercentageConverter"/>
             <local:NullToBooleanConverter x:Key="NullToBooleanConverter"/>
+            <local:SubscriptionStatusConverter x:Key="SubscriptionStatusConverter"/>
             
         </ResourceDictionary>
     </Application.Resources>

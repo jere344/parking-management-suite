@@ -61,6 +61,8 @@
     <system:String x:Key="filterByIp">Filter by IP</system:String>
     <system:String x:Key="filterByAccountID">Filter by Account ID</system:String>
     <system:String x:Key="filterByDate">Filter by Date</system:String>
+    <system:String x:Key="filterByName">Filter by name</system:String>
+    <system:String x:Key="editAccount">Edit Account</system:String>
 
     <system:String x:Key="previous">Previous</system:String>
     <system:String x:Key="next">Next</system:String>
@@ -194,6 +196,7 @@
     <system:String x:Key="subcriptionTiers">Subscription Tiers</system:String>
     <system:String x:Key="days">Days</system:String>
     <system:String x:Key="tickets">Tickets</system:String>
+    <system:String x:Key="subscriptions">Subscriptions</system:String>
 
 
 </ResourceDictionary>

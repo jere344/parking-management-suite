@@ -1,0 +1,125 @@
+<Page x:Class="admintickets.Views.ViewSubscription"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:admintickets.Converters"
+      xmlns:viewmodel="clr-namespace:admintickets.ViewModels"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d"
+      d:DataContext="{d:DesignInstance Type=viewmodel:VMSubscription}"
+      Style="{StaticResource {x:Type Page}}">
+
+    <Page.Resources>
+        <!-- Converter to determine the subscription status based on dates -->
+        <local:SubscriptionStatusConverter x:Key="SubscriptionStatusConverter"/>
+    </Page.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>   <!-- Header -->
+            <RowDefinition Height="*"/>      <!-- Subscriptions Grid -->
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <materialDesign:Card Grid.Row="0" Padding="10" Margin="0,0,0,10">
+            <TextBlock Text="Subscription Management" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+        </materialDesign:Card>
+
+        <!-- Subscriptions Grid -->
+        <materialDesign:Card Grid.Row="1" Padding="10">
+            <DataGrid ItemsSource="{Binding Subscriptions}" AutoGenerateColumns="False"
+                      CanUserAddRows="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <!-- Card Number -->
+                    <DataGridTextColumn Header="Card Number" Binding="{Binding CardNumber}" Width="*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    
+                    <!-- Hospital Name -->
+                    <DataGridTextColumn Header="Hospital" Binding="{Binding Hospital.Name}" Width="*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    
+                    <!-- Start Date -->
+                    <DataGridTextColumn Header="Start Date" 
+                                        Binding="{Binding DateStart, StringFormat={}{0:yyyy-MM-dd}}" Width="*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    
+                    <!-- End Date -->
+                    <DataGridTextColumn Header="End Date" 
+                                        Binding="{Binding DateEnd, StringFormat={}{0:yyyy-MM-dd}}" Width="*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    
+                    <!-- Maximum Uses per Day -->
+                    <DataGridTextColumn Header="Max Uses/Day" Binding="{Binding MaxNumberOfUsesPerDay}" Width="*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+
+                    <!-- Ticket Payments Count -->
+                    <DataGridTextColumn Header="Payments Count" Binding="{Binding TicketPayments.Count}" Width="*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+
+                    <!-- Subscription Status (Active/Expired) -->
+                    <DataGridTextColumn Header="Status" 
+                                        Binding="{Binding ., Converter={StaticResource SubscriptionStatusConverter}}"
+                                        Width="*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    
+                    <!-- Actions -->
+                    <DataGridTemplateColumn Header="Actions" Width="200">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Command="{Binding DataContext.PrintSubscriptionCardAsPdfCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                            CommandParameter="{Binding}"
+                                            Style="{StaticResource MaterialDesignFlatButton}">
+                                        <materialDesign:PackIcon Kind="FilePdfBox" />
+                                    </Button>
+                                    <Button Command="{Binding DataContext.PrintSubscriptionCardAsPngCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                            CommandParameter="{Binding}"
+                                            Style="{StaticResource MaterialDesignFlatButton}">
+                                        <materialDesign:PackIcon Kind="ImageOutline" />
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    
+                </DataGrid.Columns>
+            </DataGrid>
+        </materialDesign:Card>
+    </Grid>
+</Page>

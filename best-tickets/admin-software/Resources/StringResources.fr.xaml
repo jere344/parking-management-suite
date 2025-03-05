@@ -1,4 +1,3 @@
-
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=mscorlib">
@@ -62,6 +61,7 @@
     <system:String x:Key="filterByIp">Filtrer par IP</system:String>
     <system:String x:Key="filterByAccountID">Filtrer par ID de compte</system:String>
     <system:String x:Key="filterByDate">Filtrer par date</system:String>
+    <system:String x:Key="filterByName">Filtrer par nom</system:String>
 
     <system:String x:Key="previous">Précédent</system:String>
     <system:String x:Key="next">Suivant</system:String>
@@ -190,6 +190,7 @@
     <system:String x:Key="subscriptionTiers">Niveaux d'abonnement</system:String>
     <system:String x:Key="days">Jours</system:String>
     <system:String x:Key="tickets">Tickets</system:String>
-
+    <system:String x:Key="subscriptions">Abonnement</system:String>
+    <system:String x:Key="editAccount">Modifier un compte</system:String>
 
 </ResourceDictionary>

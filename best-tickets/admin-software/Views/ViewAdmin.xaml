@@ -40,7 +40,7 @@
                  Margin="0,15,0,0"
                  Width="330"
                  VerticalAlignment="Top"
-                 materialDesign:HintAssist.Hint="Filter by name"
+                 materialDesign:HintAssist.Hint="{DynamicResource filterByName}"
                  AcceptsReturn="False"
                  Style="{StaticResource MaterialDesignFilledTextBox}"
                  TextWrapping="Wrap"
@@ -125,7 +125,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Row="0"
-                           Text="Edit Account"/>
+                           Text="{DynamicResource editAccount}"/>
 
                 <TextBox
                     Grid.Row="1"

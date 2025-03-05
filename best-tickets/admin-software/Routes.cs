@@ -116,6 +116,15 @@ public static class Routes
             }
         },
         {
+            "Views/ViewSubscription.xaml",
+            new()
+            {
+                { "Title", () => (string)Application.Current.FindResource("subscriptions") },
+                { "Icon", PackIconKind.CardAccountDetailsOutline },
+                { "Permission", 1 }
+            }
+        },
+        {
             "Views/Logout.xaml",
             new()
             {
