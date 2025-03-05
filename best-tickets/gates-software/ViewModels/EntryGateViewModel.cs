@@ -8,7 +8,14 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Newtonsoft.Json;
-using ticketlibrary.Models; // Contains Ticket model
+using ticketlibrary.Models;
+
+using Microsoft.Win32;
+using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using QuestPDF.Fluent;
+
 
 namespace GatesSoftware.ViewModels
 {
@@ -47,6 +54,7 @@ namespace GatesSoftware.ViewModels
 
                     // TODO : Print Ticket
                     MessageBox.Show($"Ticket generated: {ticket.Id}\nPrinting ticket...");
+                    _ = PrintTicketAsPdf(ticket);
                 }
                 else
                 {
@@ -59,6 +67,41 @@ namespace GatesSoftware.ViewModels
             {
                 MessageBox.Show($"Error: {ex.Message}");
             }
+        }
+
+        private static async Task PrintTicketAsPdf(Ticket CurrentTicket)
+        {
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "PDF Files (*.pdf)|*.pdf",
+                FileName = $"Ticket_{CurrentTicket.TicketNumber}.pdf"
+            };
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string filePath = saveFileDialog.FileName;
+                await GenerateTicketPdf(CurrentTicket, filePath);
+                if (MessageBox.Show("Ticket saved as PDF. Do you want to open it?", "Success", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+                {
+                    Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
+                }
+            }
+        }
+
+        // Helper methods for PDF/PNG generation
+        private static async Task GenerateTicketPdf(Ticket ticket, string filePath)
+        {
+            try {
+                var ticketDocument = new ticket_library.Documents.TicketDocument(ticket);
+                ticketDocument.GeneratePdf(filePath);
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show($"Error generating PDF: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            await Task.CompletedTask;
         }
     }
 }

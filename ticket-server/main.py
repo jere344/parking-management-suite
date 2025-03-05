@@ -109,23 +109,27 @@ def create_ticket():
     session.commit()
     session.refresh(new_ticket)
 
-    # Build the response with ticket and hospital information
+    # Return ticket details and hospital information
     ticket_data = {
-        'id': new_ticket.id,
-        'ticket_number': new_ticket.ticket_number,
-        'hospital': {
-            'id': hospital.id,
-            'name': hospital.name,
-            'address': hospital.address,
-            'logo': hospital.logo,
-        },
-        'creation_time': new_ticket.creation_time.isoformat(),
-        'payment_time': None,
-        'departure_time': None,
-        'ticket_payment_id': None
+        'Id': new_ticket.id,
+        'HospitalId': new_ticket.hospital_id,
+        'CreationTime': new_ticket.creation_time.isoformat(),
+        'PaymentTime': new_ticket.payment_time.isoformat() if new_ticket.payment_time else None,
+        'DepartureTime': new_ticket.departure_time.isoformat() if new_ticket.departure_time else None,
+        'TicketPaymentId': new_ticket.ticket_payment_id,
+        'TicketNumber': new_ticket.ticket_number,
+        'Hospital': {
+            'Id': hospital.id,
+            'Name': hospital.name,
+            'Address': hospital.address,
+            'Logo': hospital.logo
+        }
     }
+
+    
     session.close()
-    return jsonify(ticket_data), 201
+    return jsonify(ticket_data), 200
+    
 
 @app.route('/validate_ticket', methods=['POST'])
 def validate_ticket():
@@ -227,7 +231,7 @@ def verify_credentials():
 
 if __name__ == '__main__':
     # In production, ensure to disable debug mode and serve via a proper WSGI server.
-    app.run(debug=True)
+    # app.run(debug=True)
     # for prod :
-    # import waitress
-    # waitress.serve(app, port=5000)
+    import waitress
+    waitress.serve(app, port=5000)
