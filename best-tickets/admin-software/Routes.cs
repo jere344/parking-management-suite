@@ -125,6 +125,15 @@ public static class Routes
             }
         },
         {
+            "Views/PriceBrackets.xaml",
+            new()
+            {
+                { "Title", () => (string)Application.Current.FindResource("priceBrackets") },
+                { "Icon", PackIconKind.Tag },
+                { "Permission", 1 }
+            }
+        },
+        {
             "Views/Logout.xaml",
             new()
             {

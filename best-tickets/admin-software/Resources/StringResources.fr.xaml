@@ -192,5 +192,6 @@
     <system:String x:Key="tickets">Tickets</system:String>
     <system:String x:Key="subscriptions">Abonnement</system:String>
     <system:String x:Key="editAccount">Modifier un compte</system:String>
+    <system:String x:Key="priceBrackets">Tranches de prix</system:String>
 
 </ResourceDictionary>
