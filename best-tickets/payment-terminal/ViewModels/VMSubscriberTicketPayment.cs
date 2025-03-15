@@ -78,7 +78,7 @@ namespace paymentterminal.ViewModels
                 }
                 else
                 {
-                    if (value.Length == 3 || value.Length == 7)
+                    if (value.Length == 4)
                     {
                         _subscriptionCardInput = value + "-";
                     }
@@ -157,11 +157,13 @@ namespace paymentterminal.ViewModels
             if (string.IsNullOrWhiteSpace(SubscriptionCardInput))
             {
                 SubscriptionErrorMessage = "Veuillez entrer ou scanner votre carte d'abonnement.";
+                return;
             }
 
             if (SubscriptionCardInput.Length != 9)
             {
                 SubscriptionErrorMessage = "Le numéro de carte d'abonnement doit comporter 9 caractères au format xxxx-xxxx.";
+                return;
             }
 
             var subscription = await _context.Subscription
@@ -170,6 +172,7 @@ namespace paymentterminal.ViewModels
             if (subscription == null)
             {
                 SubscriptionErrorMessage = "Carte d'abonnement invalide.";
+                return;
             }
 
             // Check that the subscription is active.
@@ -177,6 +180,7 @@ namespace paymentterminal.ViewModels
             if (subscription.DateStart > now || subscription.DateEnd < now)
             {
                 SubscriptionErrorMessage = "Votre abonnement n'est pas valide pour aujourd'hui.";
+                return;
             }
 
             // Check if the card has exceeded its usage for today.
@@ -191,6 +195,7 @@ namespace paymentterminal.ViewModels
             if (usageCount >= subscription.MaxNumberOfUsesPerDay)
             {
                 SubscriptionErrorMessage = "Cette carte a déjà été utilisée le nombre maximal de fois pour aujourd'hui.";
+                return;
             }
             CurrentSubscription = subscription;
             SubscriptionUsageCount = usageCount;

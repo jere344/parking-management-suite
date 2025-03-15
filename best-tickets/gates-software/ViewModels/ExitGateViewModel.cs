@@ -38,9 +38,10 @@ namespace GatesSoftware.ViewModels
                     if (value.Length == 3 || value.Length == 7)
                     {
                         _ticketNumber = value[..^1];
-                        // todo : fix wpf stupid inconsistency
-                        // when last input is a number, cursor doesn't move to the end
-                        // but when last input is a letter, cursor moves to the end
+                        // ---- : fix wpf stupid inconsistency
+                        // ----when last input is a number, cursor doesn't move to the end
+                        // ----but when last input is a letter, cursor moves to the end
+                        // > Fixed, see TextBoxBehaviorsSubscription.cs and TextBoxBehaviors.cs
                     }
                     else
                     {
@@ -118,9 +119,6 @@ namespace GatesSoftware.ViewModels
 
         private async Task ScanTicket()
         {
-            // TODO : Integrate scanner hardware to capture ticket data.
-            // For now, simulate scanning by auto-filling a Ticket ID and calling validation.
-            MessageBox.Show("Scanning ticket... (simulate scanner integration)");
             TicketNumber = "1B3-BCD-E2A"; // Simulated scanned ticket id
             await ValidateTicket();
         }

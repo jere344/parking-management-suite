@@ -52,7 +52,6 @@ namespace GatesSoftware.ViewModels
                     var json = await response.Content.ReadAsStringAsync();
                     Ticket ticket = JsonConvert.DeserializeObject<Ticket>(json);
 
-                    // TODO : Print Ticket
                     MessageBox.Show($"Ticket generated: {ticket.Id}\nPrinting ticket...");
                     _ = PrintTicketAsPdf(ticket);
                 }

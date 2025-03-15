@@ -39,9 +39,6 @@ namespace paymentterminal.ViewModels
                     if (value.Length == 3 || value.Length == 7)
                     {
                         _ticketNumber = value[..^1];
-                        // todo : fix wpf stupid inconsistency
-                        // when last input is a number, cursor doesn't move to the end
-                        // but when last input is a letter, cursor moves to the end
                     }
                     else
                     {
@@ -92,7 +89,6 @@ namespace paymentterminal.ViewModels
 
         public VMInputTicket()
         {
-            // TODO: Initialize the database context as needed (consider using dependency injection)
             _context = new BestTicketContext();
 
             ScanCommand = new RelayCommand(ScanTicket);
@@ -116,7 +112,6 @@ namespace paymentterminal.ViewModels
 
         private void ScanTicket()
         {
-            // TODO: Replace the placeholder with an actual scanning implementation.
             TicketNumber = "39A-14D-870";
         }
 
@@ -162,7 +157,6 @@ namespace paymentterminal.ViewModels
 
         private void Retour()
         {
-            // TODO: Adjust the navigation logic as needed.
             ((MainWindow)App.Current.MainWindow).NavigateTo("Views/ViewHome.xaml");
         }
     }

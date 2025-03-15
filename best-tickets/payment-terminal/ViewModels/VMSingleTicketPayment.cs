@@ -94,7 +94,6 @@ namespace paymentterminal.ViewModels
 
         public VMSingleTicketPayment()
         {
-            // TODO: Adjust context creation as needed (e.g. dependency injection)
             _context = new BestTicketContext();
 
             ApplyReductionCommand = new AsyncRelayCommand(ApplyReductionCode);

@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:paymentterminal.Views"
+      xmlns:behaviors="clr-namespace:paymentterminal.Behaviors"
       mc:Ignorable="d"
       Style="{StaticResource {x:Type Page}}">
 
@@ -27,11 +28,9 @@
                        Style="{DynamicResource MaterialDesignBody1TextBlock}" />
             <TextBox Width="300" Margin="0,5,0,5"
                      materialDesign:HintAssist.Hint="Ticket Number" 
-                     Text="{Binding TicketNumber, UpdateSourceTrigger=PropertyChanged}" />
+                     Text="{Binding TicketNumber, UpdateSourceTrigger=PropertyChanged}"
+                     behaviors:TextBoxBehaviors.MaintainCursorPosition="True" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Content="Scanner"
-                        Style="{StaticResource MaterialDesignRaisedButton}"
-                        Command="{Binding ScanCommand}" />
                 <Button Content="Suivant"
                         Style="{StaticResource MaterialDesignRaisedButton}"
                         Command="{Binding NextCommand}"
