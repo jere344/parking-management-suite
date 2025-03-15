@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d"
-      Title="Profile"
+      Title="{DynamicResource profile}"
       Style="{StaticResource {x:Type Page}}">
     <Grid>
         <Grid.RowDefinitions>
@@ -16,7 +16,7 @@
 
         <!-- Header -->
         <materialDesign:Card Grid.Row="0" Margin="10" Padding="10">
-            <TextBlock Text="Your Account" FontSize="20" FontWeight="Bold" />
+            <TextBlock Text="{DynamicResource yourAccount}" FontSize="20" FontWeight="Bold" />
         </materialDesign:Card>
 
         <!-- Profile Content -->
@@ -42,7 +42,7 @@
                     <StackPanel Margin="10">
                         <TextBlock FontWeight="Bold" FontSize="18" Text="{Binding FullName}" />
                         <TextBlock Text="{Binding Email}" Margin="0,5,0,0" />
-                        <Button Content="Upload Picture" Command="{Binding UploadPictureCommand}" 
+                        <Button Content="{DynamicResource uploadPicture}" Command="{Binding UploadPictureCommand}" 
                                 Margin="0,10,0,0" Width="200" HorizontalAlignment="Left" 
                                 Style="{StaticResource MaterialDesignFlatButton}" />
                     </StackPanel>
@@ -53,28 +53,28 @@
 
                 <!-- Detailed User Information -->
                 <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,10">
-                    <TextBlock FontWeight="Bold" FontSize="16" Text="Account Information" />
+                    <TextBlock FontWeight="Bold" FontSize="16" Text="{DynamicResource accountInformation}" />
                     <StackPanel Orientation="Horizontal" Margin="0,5">
-                        <TextBlock Text="First Name:" Width="120" />
+                        <TextBlock Text="{DynamicResource firstNameLabel}" Width="120" />
                         <TextBlock Text="{Binding User.FirstName}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,5">
-                        <TextBlock Text="Last Name:" Width="120" />
+                        <TextBlock Text="{DynamicResource lastNameLabel}" Width="120" />
                         <TextBlock Text="{Binding User.LastName}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,5">
-                        <TextBlock Text="Created On:" Width="120" />
+                        <TextBlock Text="{DynamicResource createdOnLabel}" Width="120" />
                         <TextBlock Text="{Binding User.AccountCreationDate}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,5">
-                        <TextBlock Text="Status:" Width="120" />
+                        <TextBlock Text="{DynamicResource statusLabel}" Width="120" />
                         <TextBlock>
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
-                                    <Setter Property="Text" Value="Active" />
+                                    <Setter Property="Text" Value="{DynamicResource active}" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding User.IsDisabled}" Value="True">
-                                            <Setter Property="Text" Value="Disabled" />
+                                            <Setter Property="Text" Value="{DynamicResource disabled}" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -85,13 +85,13 @@
 
                 <!-- Contact Information -->
                 <StackPanel Grid.Row="2" Grid.Column="2" Margin="0,10">
-                    <TextBlock FontWeight="Bold" FontSize="16" Text="Contact Information" />
+                    <TextBlock FontWeight="Bold" FontSize="16" Text="{DynamicResource contactInformation}" />
                     <StackPanel Orientation="Horizontal" Margin="0,5">
-                        <TextBlock Text="Email:" Width="120" />
+                        <TextBlock Text="{DynamicResource emailLabel}" Width="120" />
                         <TextBlock Text="{Binding Email}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,5">
-                        <TextBlock Text="Phone:" Width="120" />
+                        <TextBlock Text="{DynamicResource phoneLabel}" Width="120" />
                         <TextBox Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}" Width="200" />
                     </StackPanel>
                 </StackPanel>
@@ -101,20 +101,20 @@
         <!-- Change Password Section -->
         <materialDesign:Card Grid.Row="2" Margin="20" Padding="20">
             <StackPanel>
-                <TextBlock FontWeight="Bold" FontSize="16" Text="Change Password" Margin="0,0,0,10" />
+                <TextBlock FontWeight="Bold" FontSize="16" Text="{DynamicResource changePassword}" Margin="0,0,0,10" />
                 <StackPanel Orientation="Horizontal" Margin="0,5">
-                    <TextBlock Text="Current Password:" Width="150" VerticalAlignment="Center"/>
+                    <TextBlock Text="{DynamicResource currentPasswordLabel}" Width="150" VerticalAlignment="Center"/>
                     <PasswordBox x:Name="CurrentPasswordBox" Width="200" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,5">
-                    <TextBlock Text="New Password:" Width="150" VerticalAlignment="Center"/>
+                    <TextBlock Text="{DynamicResource newPasswordLabel}" Width="150" VerticalAlignment="Center"/>
                     <PasswordBox x:Name="NewPasswordBox" Width="200" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,5">
-                    <TextBlock Text="Confirm Password:" Width="150" VerticalAlignment="Center"/>
+                    <TextBlock Text="{DynamicResource confirmPasswordLabel}" Width="150" VerticalAlignment="Center"/>
                     <PasswordBox x:Name="ConfirmPasswordBox" Width="200" />
                 </StackPanel>
-                <Button Content="Update Password" Width="200" Margin="0,10,0,0" HorizontalAlignment="Left" Click="UpdatePassword_Click"/>
+                <Button Content="{DynamicResource updatePassword}" Width="200" Margin="0,10,0,0" HorizontalAlignment="Left" Click="UpdatePassword_Click"/>
             </StackPanel>
         </materialDesign:Card>
     </Grid>

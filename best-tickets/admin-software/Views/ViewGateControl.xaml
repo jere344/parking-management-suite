@@ -25,7 +25,7 @@
                 
                 <StackPanel Grid.Column="0" Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="Gate" VerticalAlignment="Center" Width="32" Height="32" Margin="0,0,10,0"/>
-                    <TextBlock Text="Parking Gate Control" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <TextBlock Text="{DynamicResource gateControlTitle}" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
                 </StackPanel>
             </Grid>
         </materialDesign:Card>
@@ -47,22 +47,22 @@
                 <!-- Active Signals Display -->
                 <materialDesign:Card Grid.Row="0" Padding="16" Margin="0,0,0,16">
                     <StackPanel>
-                        <TextBlock Text="Active Gate Signals" Style="{StaticResource MaterialDesignHeadline6TextBlock}" Margin="0,0,0,16"/>
+                        <TextBlock Text="{DynamicResource activeGateSignals}" Style="{StaticResource MaterialDesignHeadline6TextBlock}" Margin="0,0,0,16"/>
                         
                         <!-- Entry Gate Signal Status -->
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
                             <!-- <materialDesign:PackIcon Kind="DoorEnter" Width="24" Height="24" VerticalAlignment="Center" Margin="0,0,8,0"/> -->
-                            <TextBlock Text="Entry Gate:" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                            <TextBlock Text="{DynamicResource entryGateLabel}" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,8,0"/>
                             <TextBlock VerticalAlignment="Center">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ActiveEntrySignal}" Value="{x:Null}">
-                                                <Setter Property="Text" Value="No active signal"/>
+                                                <Setter Property="Text" Value="{DynamicResource noActiveSignal}"/>
                                                 <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBodyLight}"/>
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding ActiveEntrySignal.IsActive}" Value="True">
-                                                <Setter Property="Text" Value="OPEN"/>
+                                                <Setter Property="Text" Value="{DynamicResource openText}"/>
                                                 <Setter Property="Foreground" Value="Green"/>
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -89,17 +89,17 @@
                         <!-- Exit Gate Signal Status -->
                         <StackPanel Orientation="Horizontal">
                             <!-- <materialDesign:PackIcon Kind="DoorExit" Width="24" Height="24" VerticalAlignment="Center" Margin="0,0,8,0"/> -->
-                            <TextBlock Text="Exit Gate:" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                            <TextBlock Text="{DynamicResource exitGateLabel}" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,8,0"/>
                             <TextBlock VerticalAlignment="Center">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ActiveExitSignal}" Value="{x:Null}">
-                                                <Setter Property="Text" Value="No active signal"/>
+                                                <Setter Property="Text" Value="{DynamicResource noActiveSignal}"/>
                                                 <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBodyLight}"/>
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding ActiveExitSignal.IsActive}" Value="True">
-                                                <Setter Property="Text" Value="OPEN"/>
+                                                <Setter Property="Text" Value="{DynamicResource openText}"/>
                                                 <Setter Property="Foreground" Value="Green"/>
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -128,10 +128,10 @@
                 <!-- Gate Control Form -->
                 <materialDesign:Card Grid.Row="1" Padding="20">
                     <StackPanel>
-                        <TextBlock Text="Open Parking Gate" Style="{StaticResource MaterialDesignHeadline6TextBlock}" Margin="0,0,0,16"/>
+                        <TextBlock Text="{DynamicResource openParkingGate}" Style="{StaticResource MaterialDesignHeadline6TextBlock}" Margin="0,0,0,16"/>
 
                         <!-- Hospital Selection -->
-                        <ComboBox materialDesign:HintAssist.Hint="Select Hospital"
+                        <ComboBox materialDesign:HintAssist.Hint="{DynamicResource selectHospital}"
                                   ItemsSource="{Binding Hospitals}"
                                   SelectedItem="{Binding SelectedHospital}"
                                   DisplayMemberPath="Name"
@@ -140,19 +140,19 @@
                         </ComboBox>
 
                         <!-- Gate Type Selection -->
-                        <TextBlock Text="Gate Type" Margin="0,0,0,8"/>
+                        <TextBlock Text="{DynamicResource gateType}" Margin="0,0,0,8"/>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
-                            <RadioButton Content="Entry Gate" 
+                            <RadioButton Content="{DynamicResource entryGate}" 
                                          IsChecked="{Binding SelectedGateType, Converter={StaticResource EqualityConverter}, ConverterParameter={x:Static models:Signal.OpenEntryGate}}"
                                          Style="{StaticResource MaterialDesignChoiceChipPrimaryRadioButton}"
                                          Margin="0,0,8,0"/>
-                            <RadioButton Content="Exit Gate" 
+                            <RadioButton Content="{DynamicResource exitGate}" 
                                          IsChecked="{Binding SelectedGateType, Converter={StaticResource EqualityConverter}, ConverterParameter={x:Static models:Signal.OpenExitGate}}"
                                          Style="{StaticResource MaterialDesignChoiceChipPrimaryRadioButton}"/>
                         </StackPanel>
 
                         <!-- Duration Selection -->
-                        <TextBlock Text="Duration" Margin="0,0,0,8"/>
+                        <TextBlock Text="{DynamicResource duration}" Margin="0,0,0,8"/>
                         <Grid Margin="0,0,0,16">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -161,17 +161,17 @@
                             </Grid.ColumnDefinitions>
                             
                             <StackPanel Grid.Column="0" Margin="0,0,8,0">
-                                <TextBlock Text="Hours" Margin="0,0,0,4" Style="{StaticResource MaterialDesignCaptionTextBlock}"/>
+                                <TextBlock Text="{DynamicResource hours}" Margin="0,0,0,4" Style="{StaticResource MaterialDesignCaptionTextBlock}"/>
                                 <materialDesign:NumericUpDown Minimum="0" Maximum="23" Value="{Binding HoursValue}" />
                             </StackPanel>
                             
                             <StackPanel Grid.Column="1" Margin="8,0,8,0">
-                                <TextBlock Text="Minutes" Margin="0,0,0,4" Style="{StaticResource MaterialDesignCaptionTextBlock}"/>
+                                <TextBlock Text="{DynamicResource minutes}" Margin="0,0,0,4" Style="{StaticResource MaterialDesignCaptionTextBlock}"/>
                                 <materialDesign:NumericUpDown Minimum="0" Maximum="59" Value="{Binding MinutesValue}" />
                             </StackPanel>
                             
                             <StackPanel Grid.Column="2" Margin="8,0,0,0">
-                                <TextBlock Text="Seconds" Margin="0,0,0,4" Style="{StaticResource MaterialDesignCaptionTextBlock}"/>
+                                <TextBlock Text="{DynamicResource seconds}" Margin="0,0,0,4" Style="{StaticResource MaterialDesignCaptionTextBlock}"/>
                                 <materialDesign:NumericUpDown Minimum="0" Maximum="59" Value="{Binding SecondsValue}" />
                             </StackPanel>
                         </Grid>
@@ -186,7 +186,7 @@
                                 </Style>
                             </Button.Resources>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="OPEN GATE" VerticalAlignment="Center"/>
+                                <TextBlock Text="{DynamicResource openGateButton}" VerticalAlignment="Center"/>
                                 <materialDesign:PackIcon Kind="Gate" Height="20" Width="20"/>
                             </StackPanel>
                         </Button>
@@ -200,7 +200,7 @@
                         <materialDesign:Card Padding="8" Margin="0,16,0,0" Visibility="{Binding IsProcessing, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="DatabaseSync" VerticalAlignment="Center" Width="24" Height="24"/>
-                                <TextBlock Text="Processing request..." Margin="8,0,0,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="{DynamicResource processingRequest}" Margin="8,0,0,0" VerticalAlignment="Center"/>
                                 <ProgressBar IsIndeterminate="True" Width="80" Margin="8,0,0,0" VerticalAlignment="Center"/>
                             </StackPanel>
                         </materialDesign:Card>
@@ -211,7 +211,7 @@
             <!-- Information Panel -->
             <materialDesign:Card Grid.Column="1" Padding="20" Margin="10,0,0,0">
                 <StackPanel>
-                    <TextBlock Text="Gate Control Information" Style="{StaticResource MaterialDesignHeadline6TextBlock}" Margin="0,0,0,16"/>
+                    <TextBlock Text="{DynamicResource gateControlInformation}" Style="{StaticResource MaterialDesignHeadline6TextBlock}" Margin="0,0,0,16"/>
                     
                     <!-- Info Items -->
                     <StackPanel>
@@ -219,12 +219,9 @@
                             <StackPanel Margin="16">
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
                                     <materialDesign:PackIcon Kind="InformationOutline" VerticalAlignment="Center" Width="24" Height="24" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
-                                    <TextBlock Text="About Gate Control" FontWeight="Bold" Style="{StaticResource MaterialDesignSubtitle1TextBlock}" Margin="8,0,0,0"/>
+                                    <TextBlock Text="{DynamicResource aboutGateControl}" FontWeight="Bold" Style="{StaticResource MaterialDesignSubtitle1TextBlock}" Margin="8,0,0,0"/>
                                 </StackPanel>
-                                <TextBlock TextWrapping="Wrap" Style="{StaticResource MaterialDesignBody2TextBlock}">
-                                    This panel allows you to remotely open parking gates at your selected hospital. 
-                                    The signal will be sent to the gate control system and will keep the gate open for the duration specified.
-                                </TextBlock>
+                                <TextBlock TextWrapping="Wrap" Style="{StaticResource MaterialDesignBody2TextBlock}" Text="{DynamicResource gateControlInfoDescription}"/>
                             </StackPanel>
                         </materialDesign:Card>
                         
@@ -232,11 +229,9 @@
                             <StackPanel Margin="16">
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
                                     <materialDesign:PackIcon Kind="ClockOutline" VerticalAlignment="Center" Width="24" Height="24" Foreground="{DynamicResource SecondaryAccentBrush}"/>
-                                    <TextBlock Text="Duration" FontWeight="Bold" Style="{StaticResource MaterialDesignSubtitle1TextBlock}" Margin="8,0,0,0"/>
+                                    <TextBlock Text="{DynamicResource durationInfoTitle}" FontWeight="Bold" Style="{StaticResource MaterialDesignSubtitle1TextBlock}" Margin="8,0,0,0"/>
                                 </StackPanel>
-                                <TextBlock TextWrapping="Wrap" Style="{StaticResource MaterialDesignBody2TextBlock}">
-                                    Select how long the gate should remain open. For security reasons, it's recommended to keep this duration as short as necessary.
-                                </TextBlock>
+                                <TextBlock TextWrapping="Wrap" Style="{StaticResource MaterialDesignBody2TextBlock}" Text="{DynamicResource durationInfoDescription}"/>
                             </StackPanel>
                         </materialDesign:Card>
                         
@@ -244,11 +239,9 @@
                             <StackPanel Margin="16">
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
                                     <materialDesign:PackIcon Kind="ShieldAlert" VerticalAlignment="Center" Width="24" Height="24" Foreground="{DynamicResource ValidationErrorBrush}"/>
-                                    <TextBlock Text="Security Notice" FontWeight="Bold" Style="{StaticResource MaterialDesignSubtitle1TextBlock}" Margin="8,0,0,0"/>
+                                    <TextBlock Text="{DynamicResource securityNotice}" FontWeight="Bold" Style="{StaticResource MaterialDesignSubtitle1TextBlock}" Margin="8,0,0,0"/>
                                 </StackPanel>
-                                <TextBlock TextWrapping="Wrap" Style="{StaticResource MaterialDesignBody2TextBlock}">
-                                    All gate operations are logged for security purposes. Use this feature only when necessary and authorized to do so.
-                                </TextBlock>
+                                <TextBlock TextWrapping="Wrap" Style="{StaticResource MaterialDesignBody2TextBlock}" Text="{DynamicResource securityNoticeDescription}"/>
                             </StackPanel>
                         </materialDesign:Card>
                         
@@ -256,11 +249,9 @@
                             <StackPanel Margin="16">
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
                                     <materialDesign:PackIcon Kind="FlagVariant" VerticalAlignment="Center" Width="24" Height="24" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
-                                    <TextBlock Text="Active Signals" FontWeight="Bold" Style="{StaticResource MaterialDesignSubtitle1TextBlock}" Margin="8,0,0,0"/>
+                                    <TextBlock Text="{DynamicResource activeSignals}" FontWeight="Bold" Style="{StaticResource MaterialDesignSubtitle1TextBlock}" Margin="8,0,0,0"/>
                                 </StackPanel>
-                                <TextBlock TextWrapping="Wrap" Style="{StaticResource MaterialDesignBody2TextBlock}">
-                                    Only one active signal per gate type is allowed for each hospital. Sending a new signal for a gate type that already has an active signal will replace the existing one.
-                                </TextBlock>
+                                <TextBlock TextWrapping="Wrap" Style="{StaticResource MaterialDesignBody2TextBlock}" Text="{DynamicResource activeSignalsDescription}"/>
                             </StackPanel>
                         </materialDesign:Card>
                     </StackPanel>

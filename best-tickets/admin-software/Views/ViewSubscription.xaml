@@ -23,7 +23,7 @@
 
         <!-- Header -->
         <materialDesign:Card Grid.Row="0" Padding="10" Margin="0,0,0,10">
-            <TextBlock Text="Subscription Management" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+            <TextBlock Text="{DynamicResource subscriptionManagement}" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
         </materialDesign:Card>
 
         <!-- Subscriptions Grid -->
@@ -32,7 +32,7 @@
                       CanUserAddRows="False" IsReadOnly="True">
                 <DataGrid.Columns>
                     <!-- Card Number -->
-                    <DataGridTextColumn Header="Card Number" Binding="{Binding CardNumber}" Width="*">
+                    <DataGridTextColumn Header="{DynamicResource cardNumber}" Binding="{Binding CardNumber}" Width="*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="VerticalAlignment" Value="Center"/>
@@ -41,7 +41,7 @@
                     </DataGridTextColumn>
                     
                     <!-- Hospital Name -->
-                    <DataGridTextColumn Header="Hospital" Binding="{Binding Hospital.Name}" Width="*">
+                    <DataGridTextColumn Header="{DynamicResource hospital}" Binding="{Binding Hospital.Name}" Width="*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="VerticalAlignment" Value="Center"/>
@@ -50,7 +50,7 @@
                     </DataGridTextColumn>
                     
                     <!-- Start Date -->
-                    <DataGridTextColumn Header="Start Date" 
+                    <DataGridTextColumn Header="{DynamicResource startDate}" 
                                         Binding="{Binding DateStart, StringFormat={}{0:yyyy-MM-dd}}" Width="*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
@@ -60,7 +60,7 @@
                     </DataGridTextColumn>
                     
                     <!-- End Date -->
-                    <DataGridTextColumn Header="End Date" 
+                    <DataGridTextColumn Header="{DynamicResource endDate}" 
                                         Binding="{Binding DateEnd, StringFormat={}{0:yyyy-MM-dd}}" Width="*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
@@ -70,7 +70,7 @@
                     </DataGridTextColumn>
                     
                     <!-- Maximum Uses per Day -->
-                    <DataGridTextColumn Header="Max Uses/Day" Binding="{Binding MaxNumberOfUsesPerDay}" Width="*">
+                    <DataGridTextColumn Header="{DynamicResource maxUsesDay}" Binding="{Binding MaxNumberOfUsesPerDay}" Width="*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="VerticalAlignment" Value="Center"/>
@@ -79,7 +79,7 @@
                     </DataGridTextColumn>
 
                     <!-- Ticket Payments Count -->
-                    <DataGridTextColumn Header="Payments Count" Binding="{Binding TicketPayments.Count}" Width="*">
+                    <DataGridTextColumn Header="{DynamicResource paymentsCount}" Binding="{Binding TicketPayments.Count}" Width="*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="VerticalAlignment" Value="Center"/>
@@ -88,7 +88,7 @@
                     </DataGridTextColumn>
 
                     <!-- Subscription Status (Active/Expired) -->
-                    <DataGridTextColumn Header="Status" 
+                    <DataGridTextColumn Header="{DynamicResource subscriptionStatus}" 
                                         Binding="{Binding ., Converter={StaticResource SubscriptionStatusConverter}}"
                                         Width="*">
                         <DataGridTextColumn.ElementStyle>
@@ -99,7 +99,7 @@
                     </DataGridTextColumn>
                     
                     <!-- Actions -->
-                    <DataGridTemplateColumn Header="Actions" Width="200">
+                    <DataGridTemplateColumn Header="{DynamicResource actions}" Width="200">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">

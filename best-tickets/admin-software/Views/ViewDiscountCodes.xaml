@@ -26,52 +26,50 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="Discount Code Management" FontSize="20" FontWeight="Bold" Grid.Column="0" VerticalAlignment="Center" />
+                <TextBlock Text="{DynamicResource discountCodeManagement}" FontSize="20" FontWeight="Bold" Grid.Column="0" VerticalAlignment="Center" />
                 <!-- Filter Section -->
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
-                    <TextBlock Text="Show Disabled Codes:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <TextBlock Text="{DynamicResource showDisabledCodes}" VerticalAlignment="Center" Margin="0,0,5,0"/>
                     <CheckBox IsChecked="{Binding ShowDisabled, Mode=TwoWay}" VerticalAlignment="Center"/>
                 </StackPanel>
             </Grid>
         </materialDesign:Card>
-
-        
 
         <!-- Discount Codes Grid -->
         <materialDesign:Card Grid.Row="2" Padding="10" Margin="0,0,0,10">
             <DataGrid  ItemsSource="{Binding FilteredCodes}" AutoGenerateColumns="False" 
                     CanUserAddRows="False" IsReadOnly="True">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*">
+                    <DataGridTextColumn Header="{DynamicResource name}" Binding="{Binding Name}" Width="*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="VerticalAlignment" Value="Center"/>
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="2*">
+                    <DataGridTextColumn Header="{DynamicResource description}" Binding="{Binding Description}" Width="2*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="VerticalAlignment" Value="Center"/>
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Hospital" Binding="{Binding Hospital.Name}" Width="*">
+                    <DataGridTextColumn Header="{DynamicResource hospital}" Binding="{Binding Hospital.Name}" Width="*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="VerticalAlignment" Value="Center"/>
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Reduction" Binding="{Binding Reduction, Converter={StaticResource NumberToMinusPercentageConverter}}" Width="*">
+                    <DataGridTextColumn Header="{DynamicResource reduction}" Binding="{Binding Reduction, Converter={StaticResource NumberToMinusPercentageConverter}}" Width="*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="VerticalAlignment" Value="Center"/>
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridCheckBoxColumn Header="Active" Binding="{Binding IsActive}" Width="*"/>
-                    <DataGridTemplateColumn Header="Actions" Width="230">
+                    <DataGridCheckBoxColumn Header="{DynamicResource active}" Binding="{Binding IsActive}" Width="*"/>
+                    <DataGridTemplateColumn Header="{DynamicResource actions}" Width="230">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
@@ -97,7 +95,7 @@
             </DataGrid>
         </materialDesign:Card>
 
-               <!-- Add New Discount Code Section -->
+        <!-- Add New Discount Code Section -->
         <materialDesign:Card Grid.Row="3" Padding="20" x:Name="AddCodeCard">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -113,24 +111,24 @@
                     <RowDefinition Height="35"/>
                 </Grid.RowDefinitions>
         
-                <TextBlock Text="Add New Discount Code" FontSize="18" FontWeight="Bold" Margin="0,0,0,10" Grid.ColumnSpan="4"/>
+                <TextBlock Text="{DynamicResource addNewDiscountCode}" FontSize="18" FontWeight="Bold" Margin="0,0,0,10" Grid.ColumnSpan="4"/>
         
-                <TextBlock Text="Name:" Width="100" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
+                <TextBlock Text="{DynamicResource nameLabel}" Width="100" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
                 <TextBox Text="{Binding NewCodeName, UpdateSourceTrigger=PropertyChanged}" Width="200" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"/>
         
-                <TextBlock Text="Description:" Width="100" VerticalAlignment="Center" Grid.Row="1" Grid.Column="2"/>
+                <TextBlock Text="{DynamicResource descriptionLabel}" Width="100" VerticalAlignment="Center" Grid.Row="1" Grid.Column="2"/>
                 <TextBox Text="{Binding NewCodeDescription, UpdateSourceTrigger=PropertyChanged}" Width="200" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left"/>
         
-                <TextBlock Text="Reduction:" Width="100" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0"/>
+                <TextBlock Text="{DynamicResource reductionLabel}" Width="100" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0"/>
                 <TextBox Text="{Binding NewCodeReduction, UpdateSourceTrigger=PropertyChanged}" Width="200" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left"/>
         
-                <TextBlock Text="Active:" Width="100" VerticalAlignment="Center" Grid.Row="2" Grid.Column="2"/>
+                <TextBlock Text="{DynamicResource activeLabel}" Width="100" VerticalAlignment="Center" Grid.Row="2" Grid.Column="2"/>
                 <CheckBox IsChecked="{Binding NewCodeIsActive}" VerticalAlignment="Center" Grid.Row="2" Grid.Column="3"/>
         
-                <TextBlock Text="Hospital:" Width="100" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0"/>
+                <TextBlock Text="{DynamicResource hospitalLabel}" Width="100" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0"/>
                 <ComboBox ItemsSource="{Binding Hospitals}" DisplayMemberPath="Name" SelectedItem="{Binding NewCodeHospital}" Width="200" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left"/>
         
-                <Button Content="Add Discount Code" Command="{Binding AddCodeCommand}" 
+                <Button Content="{DynamicResource addDiscountCode}" Command="{Binding AddCodeCommand}" 
                         Width="200" Margin="0,0,0,0" HorizontalAlignment="Left" 
                         Style="{StaticResource MaterialDesignRaisedButton}" Grid.Row="3" Grid.Column="3"/>
             </Grid>

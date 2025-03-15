@@ -17,7 +17,7 @@
 
         <!-- Header -->
         <materialDesign:Card Grid.Row="0" Padding="10" Margin="0,0,0,10">
-            <TextBlock Text="Price Bracket Management" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" />
+            <TextBlock Text="{DynamicResource priceBracketManagement}" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" />
         </materialDesign:Card>
 
         <!-- Price Brackets Grid -->
@@ -25,28 +25,28 @@
             <DataGrid ItemsSource="{Binding PriceBrackets}" AutoGenerateColumns="False"
                       CanUserAddRows="False" IsReadOnly="True">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Min Duration" Binding="{Binding MinDuration}" Width="*">
+                    <DataGridTextColumn Header="{DynamicResource minDuration}" Binding="{Binding MinDuration}" Width="*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="VerticalAlignment" Value="Center"/>
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Price" Binding="{Binding Price, StringFormat=C}" Width="*">
+                    <DataGridTextColumn Header="{DynamicResource price}" Binding="{Binding Price, StringFormat=C}" Width="*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="VerticalAlignment" Value="Center"/>
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Hospital" Binding="{Binding Hospital.Name, TargetNullValue=Global}" Width="*">
+                    <DataGridTextColumn Header="{DynamicResource hospital}" Binding="{Binding Hospital.Name, TargetNullValue=Global}" Width="*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="VerticalAlignment" Value="Center"/>
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTemplateColumn Header="Actions" Width="150">
+                    <DataGridTemplateColumn Header="{DynamicResource actions}" Width="150">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -82,21 +82,21 @@
                     <RowDefinition Height="35"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="Add New Price Bracket" FontSize="18" FontWeight="Bold" Margin="0,0,0,10" Grid.ColumnSpan="4"/>
+                <TextBlock Text="{DynamicResource addNewPriceBracket}" FontSize="18" FontWeight="Bold" Margin="0,0,0,10" Grid.ColumnSpan="4"/>
 
                 <!-- Row 0: Min Duration and Price -->
-                <TextBlock Text="Min Duration:" Width="120" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0"/>
+                <TextBlock Text="{DynamicResource minDurationLabel}" Width="120" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0"/>
                 <TextBox Text="{Binding NewBracketMinDuration, UpdateSourceTrigger=PropertyChanged}" Width="200" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" 
                          ToolTip="Enter duration as hh:mm:ss"/>
                 
-                <TextBlock Text="Price:" Width="120" VerticalAlignment="Center" Grid.Row="0" Grid.Column="2"/>
+                <TextBlock Text="{DynamicResource priceLabel}" Width="120" VerticalAlignment="Center" Grid.Row="0" Grid.Column="2"/>
                 <TextBox Text="{Binding NewBracketPrice, UpdateSourceTrigger=PropertyChanged}" Width="200" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Left"/>
 
                 <!-- Row 1: Hospital and Add Button -->
-                <TextBlock Text="Hospital:" Width="120" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
+                <TextBlock Text="{DynamicResource hospitalLabel}" Width="120" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
                 <ComboBox ItemsSource="{Binding Hospitals}" DisplayMemberPath="Name" SelectedItem="{Binding NewBracketHospital}" Width="200" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"/>
 
-                <Button Content="Add Price Bracket" Command="{Binding AddBracketCommand}" 
+                <Button Content="{DynamicResource addPriceBracket}" Command="{Binding AddBracketCommand}" 
                         Width="200" HorizontalAlignment="Left" 
                         Style="{StaticResource MaterialDesignRaisedButton}" Grid.Row="1" Grid.Column="3"/>
             </Grid>

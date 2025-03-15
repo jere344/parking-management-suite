@@ -18,7 +18,7 @@
 
         <!-- Header -->
         <materialDesign:Card Grid.Row="0" Padding="10" Margin="0,0,0,10">
-            <TextBlock Text="Subscription Tier Management" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" />
+            <TextBlock Text="{DynamicResource subscriptionTierManagement}" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" />
         </materialDesign:Card>
 
         <!-- Subscription Tiers Grid -->
@@ -26,14 +26,14 @@
             <DataGrid ItemsSource="{Binding SubscriptionTiers}" AutoGenerateColumns="False"
                       CanUserAddRows="False" IsReadOnly="True">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*">
+                    <DataGridTextColumn Header="{DynamicResource name}" Binding="{Binding Name}" Width="*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="VerticalAlignment" Value="Center"/>
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Duration in Days" 
+                    <DataGridTextColumn Header="{DynamicResource durationInDays}" 
                                         Binding="{Binding DurationString}" Width="*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
@@ -41,14 +41,14 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Max Uses/Day" Binding="{Binding MaxNumberOfUsesPerDay}" Width="*">
+                    <DataGridTextColumn Header="{DynamicResource maxUsesPerDay}" Binding="{Binding MaxNumberOfUsesPerDay}" Width="*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="VerticalAlignment" Value="Center"/>
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Price" Binding="{Binding Price, StringFormat=C}" Width="*">
+                    <DataGridTextColumn Header="{DynamicResource price}" Binding="{Binding Price, StringFormat=C}" Width="*">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="VerticalAlignment" Value="Center"/>
@@ -63,7 +63,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTemplateColumn Header="Actions" Width="150">
+                    <DataGridTemplateColumn Header="{DynamicResource actions}" Width="150">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -101,28 +101,28 @@
                     <RowDefinition Height="35"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="Add New Subscription Tier" FontSize="18" FontWeight="Bold" Margin="0,0,0,10" Grid.ColumnSpan="4"/>
+                <TextBlock Text="{DynamicResource addNewSubscriptionTier}" FontSize="18" FontWeight="Bold" Margin="0,0,0,10" Grid.ColumnSpan="4"/>
 
                 <!-- Row 1: Name and Duration -->
-                <TextBlock Text="Name:" Width="120" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
+                <TextBlock Text="{DynamicResource nameLabel}" Width="120" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
                 <TextBox Text="{Binding NewTierName, UpdateSourceTrigger=PropertyChanged}" Width="200" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"/>
 
-                <TextBlock Text="Duration in days:" Width="120" VerticalAlignment="Center" Grid.Row="1" Grid.Column="2"/> 
+                <TextBlock Text="{DynamicResource durationInDaysLabel}" Width="120" VerticalAlignment="Center" Grid.Row="1" Grid.Column="2"/> 
                 <TextBox Text="{Binding NewTierDurationInDays, UpdateSourceTrigger=PropertyChanged}" Width="200" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left"/>
 
                 <!-- Row 2: Max Uses Per Day and Price -->
-                <TextBlock Text="Max Uses/Day:" Width="120" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0"/>
+                <TextBlock Text="{DynamicResource maxUsesPerDayLabel}" Width="120" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0"/>
                 <TextBox Text="{Binding NewTierMaxUsesPerDay, UpdateSourceTrigger=PropertyChanged}" Width="200" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left"/>
 
-                <TextBlock Text="Price:" Width="120" VerticalAlignment="Center" Grid.Row="2" Grid.Column="2"/>
+                <TextBlock Text="{DynamicResource priceLabel}" Width="120" VerticalAlignment="Center" Grid.Row="2" Grid.Column="2"/>
                 <TextBox Text="{Binding NewTierPrice, UpdateSourceTrigger=PropertyChanged}" Width="200" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left"/>
 
                 <!-- Row 3: Hospital -->
-                <TextBlock Text="Hospital:" Width="120" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0"/>
+                <TextBlock Text="{DynamicResource hospitalLabel}" Width="120" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0"/>
                 <ComboBox ItemsSource="{Binding Hospitals}" DisplayMemberPath="Name" SelectedItem="{Binding NewTierHospital}" Width="200" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left"/>
 
                 <!-- Add Button -->
-                <Button Content="Add Subscription Tier" Command="{Binding AddTierCommand}" 
+                <Button Content="{DynamicResource addSubscriptionTier}" Command="{Binding AddTierCommand}" 
                         Width="200" HorizontalAlignment="Left" 
                         Style="{StaticResource MaterialDesignRaisedButton}" Grid.Row="3" Grid.Column="3"/>
             </Grid>

@@ -134,21 +134,21 @@ public static class Routes
             }
         },
         {
-            "Views/Logout.xaml",
-            new()
-            {
-                { "Title", () => (string)Application.Current.FindResource("logout") },
-                { "Icon", PackIconKind.Logout },
-                { "Permission", 1 } // permission 1 because guest doesn't need to logout
-            }
-        },
-        {
             "Views/ViewGateControl.xaml",
             new()
             {
                 { "Title", () => (string)Application.Current.FindResource("gateControl") },
                 { "Icon", PackIconKind.Gate },
                 { "Permission", 1 }
+            }
+        },
+        {
+            "Views/Logout.xaml",
+            new()
+            {
+                { "Title", () => (string)Application.Current.FindResource("logout") },
+                { "Icon", PackIconKind.Logout },
+                { "Permission", 1 } // permission 1 because guest doesn't need to logout
             }
         },
     };
