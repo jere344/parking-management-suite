@@ -15,6 +15,7 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using QuestPDF.Fluent;
+using System.Windows.Media;
 
 
 namespace GatesSoftware.ViewModels
@@ -51,6 +52,16 @@ namespace GatesSoftware.ViewModels
                 {
                     var json = await response.Content.ReadAsStringAsync();
                     Ticket ticket = JsonConvert.DeserializeObject<Ticket>(json);
+
+                    // Set gate to temporarily open for 10 seconds
+                    var mainWindow = (MainWindow)Application.Current.MainWindow;
+                    mainWindow.GateStatusService.SetTemporaryOpenState(TimeSpan.FromSeconds(10));
+                    
+                    // Update UI immediately
+                    Application.Current.Dispatcher.Invoke(() => {
+                        mainWindow.GateStatusIndicator.Background = Brushes.Green;
+                        mainWindow.GateStatusText.Text = "Open";
+                    });
 
                     MessageBox.Show($"Ticket generated: {ticket.Id}\nPrinting ticket...");
                     _ = PrintTicketAsPdf(ticket);

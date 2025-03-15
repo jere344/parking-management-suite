@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Newtonsoft.Json;
@@ -102,7 +103,16 @@ namespace GatesSoftware.ViewModels
                 dynamic result = JsonConvert.DeserializeObject(json);
                 if (result.valid == true)
                 {
-                    // TODO : Open Gate
+                    // Set gate to temporarily open for 10 seconds
+                    var mainWindow = (MainWindow)Application.Current.MainWindow;
+                    mainWindow.GateStatusService.SetTemporaryOpenState(TimeSpan.FromSeconds(10));
+                    
+                    // Update UI immediately
+                    Application.Current.Dispatcher.Invoke(() => {
+                        mainWindow.GateStatusIndicator.Background = Brushes.Green;
+                        mainWindow.GateStatusText.Text = "Open";
+                    });
+
                     MessageBox.Show("Ticket validated. Opening gate...");
                 }
                 else

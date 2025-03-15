@@ -2,14 +2,14 @@ import base64
 import datetime
 import hashlib
 import hmac
+import pytz  # Add pytz for proper timezone handling
 
 from flask import Flask, request, jsonify
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import sessionmaker, relationship, declarative_base
 
-# the timezone of the server, which is Canada/Eastern in this case.
-# We should be using UTC everywhere, but I don't have the time to allow multiple time zone in the admin app
-server_timezone = datetime.timezone(datetime.timedelta(hours=-5))
+# Use proper timezone identifier instead of hardcoded offset
+quebec_timezone = pytz.timezone('America/Montreal')
 
 app = Flask(__name__)
 
@@ -34,7 +34,7 @@ class Ticket(Base):
     __tablename__ = 'Ticket'
     id = Column('Id', Integer, primary_key=True, autoincrement=True)
     hospital_id = Column('HospitalId', Integer, ForeignKey('Hospital.Id'))
-    creation_time = Column('CreationTime', DateTime, default=datetime.datetime.now(server_timezone))
+    creation_time = Column('CreationTime', DateTime, default=lambda: datetime.datetime.now(quebec_timezone))
     payment_time = Column('PaymentTime', DateTime, nullable=True)
     departure_time = Column('DepartureTime', DateTime, nullable=True)
     ticket_payment_id = Column('TicketPaymentId', Integer, nullable=True)
@@ -42,6 +42,19 @@ class Ticket(Base):
 
     hospital = relationship("Hospital")
 
+# Signal table model
+class Signal(Base):
+    __tablename__ = 'Signal'
+    id = Column('Id', Integer, primary_key=True, autoincrement=True)
+    hospital_id = Column('HospitalId', Integer, ForeignKey('Hospital.Id'))
+    signal_type = Column('SignalType', String)
+    end_time = Column('EndTime', DateTime)
+
+    hospital = relationship("Hospital")
+
+    # Constants
+    OPEN_ENTRY_GATE = "OpenEntryGate"
+    OPEN_EXIT_GATE = "OpenExitGate"
 
 # --- Utility Functions ---
 def verify_password(input_password, hashed_password):
@@ -99,7 +112,7 @@ def create_ticket():
     # Create and insert a new ticket
     new_ticket = Ticket(
         hospital_id=hospital_id,
-        creation_time=datetime.datetime.now(server_timezone),
+        creation_time=datetime.datetime.now(quebec_timezone),
         payment_time=None,
         departure_time=None,
         ticket_payment_id=None
@@ -170,9 +183,9 @@ def validate_ticket():
         session.close()
         return jsonify({'valid': False, 'error': 'Ticket not paid'}), 400
     #and that payment was made less than 30 minutes ago.
-    now = datetime.datetime.now(server_timezone)
+    now = datetime.datetime.now(quebec_timezone)
     if not (ticket.creation_time < ticket.payment_time and
-            (now - ticket.payment_time.replace(tzinfo=server_timezone)) <= datetime.timedelta(minutes=30)):
+            (now - ticket.payment_time.replace(tzinfo=quebec_timezone)) <= datetime.timedelta(minutes=30)):
         session.close()
         return jsonify({'valid': False, 'error': 'Ticket payment expired'}), 400
 
@@ -228,6 +241,60 @@ def verify_credentials():
     session.close()
     
     return jsonify({'valid': is_valid}), 200
+
+@app.route('/check_gate_signals', methods=['POST'])
+def check_gate_signals():
+    """
+    Checks for active signals to open gates for a specific hospital.
+    - Requires JSON input containing 'hospital_id', 'password', and optionally 'signal_type'.
+    - If signal_type is provided, only checks for that type of signal.
+    - Otherwise, checks for any active signals.
+    - Returns a list of active signals with their types and remaining time.
+    """
+    data = request.get_json()
+    if not data or 'hospital_id' not in data or 'password' not in data:
+        return jsonify({'error': 'Missing hospital_id or password'}), 400
+
+    hospital_id = data['hospital_id']
+    input_password = data['password']
+    signal_type = data.get('signal_type', None)  # Optional parameter
+
+    session = Session()
+    hospital = session.query(Hospital).filter(Hospital.id == hospital_id).first()
+    if not hospital:
+        session.close()
+        return jsonify({'error': 'Invalid hospital'}), 401
+
+    if not verify_password(input_password, hospital.password):
+        session.close()
+        return jsonify({'error': 'Unauthorized'}), 401
+
+    # Query active signals
+    now = datetime.datetime.now(quebec_timezone)
+    query = session.query(Signal).filter(
+        Signal.hospital_id == hospital_id,
+        Signal.end_time > now
+    )
+
+    # If signal_type is provided, filter by it
+    if signal_type:
+        query = query.filter(Signal.signal_type == signal_type)
+
+    active_signals = query.all()
+    
+    # Format results
+    signals_data = [
+        {
+            'id': signal.id,
+            'type': signal.signal_type
+        }
+        for signal in active_signals
+    ]
+    print()
+    print(signals_data)
+    print()
+    session.close()
+    return jsonify({'signals': signals_data}), 200
 
 if __name__ == '__main__':
     # In production, ensure to disable debug mode and serve via a proper WSGI server.
