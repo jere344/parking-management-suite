@@ -1,6 +1,5 @@
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Navigation;
 using admintickets.ViewModels;
 using ticketlibrary.Models;
 
@@ -14,24 +13,6 @@ namespace admintickets.Views
             DataContext = new VMHospitals();
         }
 
-        // Update the view model when the password changes.
-        private void NewHospitalPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            if (DataContext is VMHospitals vm)
-            {
-                vm.NewHospitalPassword = ((PasswordBox)sender).Password;
-            }
-        }
-
-        // Update the view model when the password changes for a specific hospital.
-        private void EditHospitalPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            if (DataContext is VMHospitals vm && ((PasswordBox)sender).DataContext is Hospital hospital)
-            {
-                hospital.Password = ((PasswordBox)sender).Password;
-            }
-        }
-
         // Handle the click event for the Edit Password button.
         private void EditPasswordButton_Click(object sender, RoutedEventArgs e)
         {
@@ -41,22 +22,15 @@ namespace admintickets.Views
                 if (result == MessageBoxResult.Yes)
                 {
                     vm.EditHospitalPasswordCommand.Execute(hospital);
-                    var passwordBox = (PasswordBox)((FrameworkElement)((Button)sender).Parent).FindName("EditHospitalPasswordBox");
-                    if (passwordBox != null)
-                    {
-                        passwordBox.Password = string.Empty;
-                    }
                 }
             }
         }
 
-        // we pass through the .xaml.cs instead of directly call the command because we need to clear the password field after the command is executed
         private void AddHospitalButton_Click(object sender, RoutedEventArgs e)
         {
             if (DataContext is VMHospitals vm)
             {
                 vm.AddHospitalCommand.Execute(null);
-                vm.NewHospitalPassword = "";
             }
         }
 

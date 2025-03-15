@@ -1,9 +1,11 @@
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System.Windows.Media.Imaging;
 
 namespace ticketlibrary.Models;
 
-public class Hospital : BaseModel
+public class Hospital : BaseModel, INotifyPropertyChanged
 {
     public string Name { get; set; }
     public string Address { get; set; }
@@ -30,6 +32,33 @@ public class Hospital : BaseModel
             return image;
         }
     }
+    
+    [NotMapped]
+    private string _tempPassword;
+
+    [NotMapped]
+    public string TempPassword
+    {
+        get => _tempPassword ?? string.Empty;
+        set 
+        {
+            if (_tempPassword != value)
+            {
+                _tempPassword = value;
+                OnPropertyChanged(nameof(TempPassword));
+            }
+        }
+    }
+
+    // Add INotifyPropertyChanged implementation if not already in BaseModel
+    #region INotifyPropertyChanged Implementation
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+    #endregion
 
     // Navigation Properties
     public virtual ICollection<Ticket> Tickets { get; set; }

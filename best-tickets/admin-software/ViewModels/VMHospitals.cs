@@ -204,14 +204,15 @@ namespace admintickets.ViewModels
 
         private async Task EditHospitalPassword(Hospital hospital)
         {
-            if (hospital == null || string.IsNullOrWhiteSpace(hospital.Password))
+            if (hospital == null || string.IsNullOrWhiteSpace(hospital.TempPassword))
             {
                 MessageBox.Show("Please enter a valid password.");
                 return;
             }
 
             // Hash the new password using the helper.
-            hospital.Password = CryptographyHelper.HashPassword(hospital.Password);
+            hospital.Password = CryptographyHelper.HashPassword(hospital.TempPassword);
+            hospital.TempPassword = string.Empty; // Clear the temporary password
 
             context.Hospital.Update(hospital);
             await context.SaveChangesAsync();
