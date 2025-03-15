@@ -7,8 +7,7 @@ using System.Globalization;
 using System.Windows.Media;
 using System.Diagnostics;
 using MaterialDesignThemes.Wpf;
-
-
+using admintickets.Context;
 
 namespace admintickets
 {
@@ -53,6 +52,9 @@ namespace admintickets
 
         public void NavigateTo(string uri, object? parameter = null)
         {
+            // Dispose active contexts before navigation
+            BestTicketContext.DisposeActiveContexts();
+            
             if (uri == "Views/Logout.xaml")
             {
                 App.Current.ConnectedUser = null;

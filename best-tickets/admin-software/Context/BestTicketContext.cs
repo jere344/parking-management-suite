@@ -5,11 +5,17 @@ using System.Windows;
 using ticketlibrary.Models;
 using ticketlibrary.Helpers;
 using System.Diagnostics;
+using System.Collections.Concurrent;
 
 namespace admintickets.Context;
 
 public class BestTicketContext : DbContext
 {
+    // Static collection to track all active contexts
+    private static ConcurrentDictionary<int, BestTicketContext> _activeContexts = new ConcurrentDictionary<int, BestTicketContext>();
+    private static int _lastContextId = 0;
+    private int _contextId;
+
     public DbSet<User> User { get; set; }
     public DbSet<SessionToken> SessionToken { get; set; }
     public DbSet<Hospital> Hospital { get; set; }
@@ -29,8 +35,18 @@ public class BestTicketContext : DbContext
     {
         isDebug = true;
     }
-    public BestTicketContext() { }
-    public BestTicketContext(DbContextOptions<BestTicketContext> options): base(options) { }
+
+    public BestTicketContext()
+    {
+        _contextId = Interlocked.Increment(ref _lastContextId);
+        _activeContexts.TryAdd(_contextId, this);
+    }
+    
+    public BestTicketContext(DbContextOptions<BestTicketContext> options): base(options)
+    {
+        _contextId = Interlocked.Increment(ref _lastContextId);
+        _activeContexts.TryAdd(_contextId, this);
+    }
 
     /// <summary>
     /// Configure le contexte de la base de donn�es
@@ -62,6 +78,34 @@ public class BestTicketContext : DbContext
             //use lazy loadings
             optionsBuilder.UseLazyLoadingProxies();
         } 
+    }
+
+    /// <summary>
+    /// Disposes all active database contexts to prevent concurrent access issues
+    /// </summary>
+    public static void DisposeActiveContexts()
+    {
+        foreach (var contextEntry in _activeContexts.ToList())
+        {
+            if (contextEntry.Value != null)
+            {
+                try
+                {
+                    contextEntry.Value.Dispose();
+                }
+                catch { /* Ignore any errors during disposal */ }
+                
+                _activeContexts.TryRemove(contextEntry.Key, out _);
+            }
+        }
+    }
+
+    protected void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            _activeContexts.TryRemove(_contextId, out _);
+        }
     }
 
     /// <summary>

@@ -1,5 +1,6 @@
 namespace admintickets;
 
+using admintickets.Context;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -56,6 +57,9 @@ public class NavigationController : INotifyPropertyChanged
     // Navigate to a view with permission checks and stack management
     public void _NavigateTo(string uri, object? parameter = null)
     {
+        // Dispose all active contexts before navigation
+        BestTicketContext.DisposeActiveContexts();
+
         // check if the current user has the permission to access the view
         if (!HasPermission(uri))
         {
@@ -87,6 +91,9 @@ public class NavigationController : INotifyPropertyChanged
     {
         if (CanGoBack)
         {
+            // Dispose all active contexts before navigation
+            BestTicketContext.DisposeActiveContexts();
+
             // Move the current page to the forward stack
             var currentUri = GetCurrentViewUri();
             if (currentUri != null)
@@ -108,6 +115,9 @@ public class NavigationController : INotifyPropertyChanged
     {
         if (CanGoForward)
         {
+            // Dispose all active contexts before navigation
+            BestTicketContext.DisposeActiveContexts();
+
             // Move the current page to the back stack
             var currentUri = GetCurrentViewUri();
             if (currentUri != null)
@@ -126,6 +136,9 @@ public class NavigationController : INotifyPropertyChanged
 
     public void NavigateHome()
     {
+        // Dispose all active contexts before navigation
+        BestTicketContext.DisposeActiveContexts();
+
         string permission = App.Current.ConnectedUser != null ? "Admin" : "Guest";
         _NavigateTo(Routes.HomeViews[permission]);
 

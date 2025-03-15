@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 
 namespace admintickets.Converters
@@ -8,7 +9,13 @@ namespace admintickets.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value != null;
+            bool isInverted = parameter as string == "invert";
+            bool result = value != null;
+            
+            if (targetType == typeof(Visibility))
+                return (isInverted ? !result : result) ? Visibility.Visible : Visibility.Collapsed;
+                
+            return isInverted ? !result : result;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

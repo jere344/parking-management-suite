@@ -145,4 +145,13 @@
     <system:String x:Key="revenueByHospital">Revenue by Hospital</system:String>
     <system:String x:Key="revenue">Revenue</system:String>
     <system:String x:Key="paymentMethods">Payment Methods</system:String>
+    <system:String x:Key="filters">Filters</system:String>
+    <system:String x:Key="search">Search</system:String>
+    <system:String x:Key="paymentStatus">Payment Status</system:String>
+    <system:String x:Key="apply">Apply</system:String>
+    <system:String x:Key="clear">Clear</system:String>
+    <system:String x:Key="itemsPerPage">Items per page</system:String>
+    <system:String x:Key="showing">Showing</system:String>
+    <system:String x:Key="of">of</system:String>
+    <system:String x:Key="items">items</system:String>
 </ResourceDictionary>

@@ -132,7 +132,6 @@
     <system:String x:Key="departureTime">Départ</system:String>
     <system:String x:Key="viewPayment">Voir paiement</system:String>
     <system:String x:Key="dashboard">Tableau de bord</system:String>
-    <!-- New keys -->
     <system:String x:Key="refresh">Rafraîchir</system:String>
     <system:String x:Key="totalTickets">Tickets totaux</system:String>
     <system:String x:Key="paidTickets">Tickets payés</system:String>
@@ -146,4 +145,13 @@
     <system:String x:Key="revenueByHospital">Revenu par hôpital</system:String>
     <system:String x:Key="revenue">Revenu</system:String>
     <system:String x:Key="paymentMethods">Méthodes de paiement</system:String>
+    <system:String x:Key="filters">Filtres</system:String>
+    <system:String x:Key="search">Recherche</system:String>
+    <system:String x:Key="paymentStatus">Statut de paiement</system:String>
+    <system:String x:Key="apply">Appliquer</system:String>
+    <system:String x:Key="clear">Effacer</system:String>
+    <system:String x:Key="itemsPerPage">Articles par page</system:String>
+    <system:String x:Key="showing">Affichage</system:String>
+    <system:String x:Key="of">sur</system:String>
+    <system:String x:Key="items">articles</system:String>
 </ResourceDictionary>

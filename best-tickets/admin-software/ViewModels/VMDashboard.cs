@@ -87,11 +87,19 @@ namespace admintickets.ViewModels
             set => SetProperty(ref _paymentMethodsCollection, value);
         }
 
+        /// <summary>
+        /// Formatter for displaying revenue values as currency
+        /// </summary>
+        public Func<double, string> RevenueFormatter { get; set; }
+
         public VMDashboard()
         {
             _context = new BestTicketContext();
             TicketsOverTimeLabels = new List<string>();
             LoadDataAsync().ConfigureAwait(false);
+            
+            // Initialize the revenue formatter to display values as euros with 2 decimal places
+            RevenueFormatter = value => string.Format("{0:C}", value);
         }
         
         public async Task LoadDataAsync()
