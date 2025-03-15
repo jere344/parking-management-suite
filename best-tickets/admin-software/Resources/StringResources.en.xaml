@@ -34,6 +34,7 @@
     <system:String x:Key="firstName">First Name</system:String>
     <system:String x:Key="lastName">Last Name</system:String>
     <system:String x:Key="phone">Phone</system:String>
+    <system:String x:Key="gateControl">Gate Control</system:String>
 
 
 </ResourceDictionary>

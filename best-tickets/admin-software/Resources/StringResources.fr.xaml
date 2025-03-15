@@ -10,6 +10,7 @@
     <system:String x:Key="lastName">Nom</system:String>
     <system:String x:Key="accountCreationDate">Date de création :</system:String>
     <system:String x:Key="accountDisableDate">Date de désactivation :</system:String>
+    <system:String x:Key="gateControl">Contrôle des portails</system:String>
 
     <system:String x:Key="settings">Paramètres</system:String>
     <system:String x:Key="yourAccount">Votre compte</system:String>

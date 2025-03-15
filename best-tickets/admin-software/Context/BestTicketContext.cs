@@ -20,6 +20,7 @@ public class BestTicketContext : DbContext
     public DbSet<Taxes> Taxe { get; set; }
     public DbSet<PriceBracket> PriceBracket { get; set; }
     public DbSet<Subscription> Subscription { get; set; }
+    public DbSet<Signal> Signal { get; set; }
 
     private bool isDebug = false;
 

@@ -19,6 +19,8 @@
             <local:NumberToMinusPercentageConverter x:Key="NumberToMinusPercentageConverter"/>
             <local:NullToBooleanConverter x:Key="NullToBooleanConverter"/>
             <local:SubscriptionStatusConverter x:Key="SubscriptionStatusConverter"/>
+            <local:TimeSpanToTimeConverter x:Key="TimeSpanToTimeConverter"/>
+            <local:EqualityConverter x:Key="EqualityConverter"/>
             
         </ResourceDictionary>
     </Application.Resources>

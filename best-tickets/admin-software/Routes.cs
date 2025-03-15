@@ -142,5 +142,14 @@ public static class Routes
                 { "Permission", 1 } // permission 1 because guest doesn't need to logout
             }
         },
+        {
+            "Views/ViewGateControl.xaml",
+            new()
+            {
+                { "Title", () => (string)Application.Current.FindResource("gateControl") },
+                { "Icon", PackIconKind.Gate },
+                { "Permission", 1 }
+            }
+        },
     };
 }
