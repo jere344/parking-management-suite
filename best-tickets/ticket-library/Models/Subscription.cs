@@ -9,6 +9,7 @@ public class Subscription : BaseModel
     public int MaxNumberOfUsesPerDay { get; set; }
     public int HospitalId { get; set; }
     public string CardNumber { get; set; }
+    public decimal PricePaid { get; set; }
 
     // Navigation properties
     public virtual ICollection<TicketPayment> TicketPayments { get; set; }

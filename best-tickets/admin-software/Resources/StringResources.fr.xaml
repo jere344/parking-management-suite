@@ -131,4 +131,19 @@
     <system:String x:Key="paymentTime">Paiement</system:String>
     <system:String x:Key="departureTime">Départ</system:String>
     <system:String x:Key="viewPayment">Voir paiement</system:String>
+    <system:String x:Key="dashboard">Tableau de bord</system:String>
+    <!-- New keys -->
+    <system:String x:Key="refresh">Rafraîchir</system:String>
+    <system:String x:Key="totalTickets">Tickets totaux</system:String>
+    <system:String x:Key="paidTickets">Tickets payés</system:String>
+    <system:String x:Key="activeSubscriptions">Abonnements actifs</system:String>
+    <system:String x:Key="totalRevenue">Chiffre d'affaires total</system:String>
+    <system:String x:Key="todayRevenue">Revenu du jour</system:String>
+    <system:String x:Key="ticketsOverTime">Tickets au fil du temps</system:String>
+    <system:String x:Key="ticketStatus">Statut des tickets</system:String>
+    <system:String x:Key="date">Date</system:String>
+    <system:String x:Key="count">Nombre</system:String>
+    <system:String x:Key="revenueByHospital">Revenu par hôpital</system:String>
+    <system:String x:Key="revenue">Revenu</system:String>
+    <system:String x:Key="paymentMethods">Méthodes de paiement</system:String>
 </ResourceDictionary>

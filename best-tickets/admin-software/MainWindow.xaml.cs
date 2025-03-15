@@ -31,6 +31,10 @@ namespace admintickets
             // Every time the NavigationController changes, update the buttons (because automatic binding from XAML is a PAIN without DataContext)
             NavigationController.PropertyChanged += NavigationController_PropertyChanged;
             UpdateNavigationButtons();
+
+            // resize to the screen size
+            this.WindowState = WindowState.Maximized;
+            this.WindowStyle = WindowStyle.SingleBorderWindow;
         }
 
         private void NavigationController_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

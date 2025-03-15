@@ -68,7 +68,8 @@ namespace paymentterminal.ViewModels
                 DateEnd = System.DateTime.Now + selectedTier.Duration,
                 MaxNumberOfUsesPerDay = selectedTier.MaxNumberOfUsesPerDay,
                 HospitalId = SelectedHospital.Id,
-                CardNumber = cardNumber  
+                CardNumber = cardNumber,
+                PricePaid = selectedTier.Price
             };
 
             _context.Subscription.Add(subscription);
