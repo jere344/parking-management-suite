@@ -50,7 +50,6 @@ public class Hospital : BaseModel, INotifyPropertyChanged
         }
     }
 
-    // Add INotifyPropertyChanged implementation if not already in BaseModel
     #region INotifyPropertyChanged Implementation
     public event PropertyChangedEventHandler PropertyChanged;
 
