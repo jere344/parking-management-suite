@@ -16,6 +16,7 @@ app = Flask(__name__)
 # --- Database Setup ---
 # Connection string: note that the database name "best-tickets" is used as provided.
 DATABASE_URI = 'mysql+pymysql://root:@localhost:3306/best-tickets'
+# DATABASE_URI = f'mysql+pymysql://dev-2230460:{PASSWORD}@sql.decinfo-cchic.ca:33306/a24_e80_projetagile_prod_2230460'
 engine = create_engine(DATABASE_URI, echo=True)
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
@@ -182,6 +183,10 @@ def validate_ticket():
     if not ticket.payment_time:
         session.close()
         return jsonify({'valid': False, 'error': 'Ticket not paid'}), 400
+    # check that the ticket hasn't been used yet
+    if ticket.departure_time:
+        session.close()
+        return jsonify({'valid': False, 'error': 'Ticket already used'}), 400
     #and that payment was made less than 30 minutes ago.
     now = datetime.datetime.now(quebec_timezone)
     if not (ticket.creation_time < ticket.payment_time and
@@ -296,9 +301,21 @@ def check_gate_signals():
     session.close()
     return jsonify({'signals': signals_data}), 200
 
+PORT = 5000
 if __name__ == '__main__':
+    print("\n=================================")
+    print("Parking Ticket Server Starting")
+    print(f"Port: {PORT}")
+    print(f"Database: {DATABASE_URI.split('@')[1]}")  # Only show host part for security
+    print("=================================\n")
+    
     # In production, ensure to disable debug mode and serve via a proper WSGI server.
     # app.run(debug=True)
     # for prod :
     import waitress
-    waitress.serve(app, port=5000)
+    print("  Waitress server running...")
+    try:
+        waitress.serve(app, port=PORT, threads=4)
+    except Exception as e:
+        print(f"\n Failed to start server: {str(e)}")
+

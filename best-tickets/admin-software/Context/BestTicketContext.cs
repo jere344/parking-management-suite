@@ -189,6 +189,10 @@ public class BestTicketContext : DbContext
         {
             return null;
         }
+        if (user.IsDisabled)
+        {
+            return null;
+        }
         if (CryptographyHelper.VerifyPassword(password, user.Password))
         {
             App.Current.ConnectedUser = user;

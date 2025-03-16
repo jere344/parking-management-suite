@@ -44,7 +44,7 @@
             
             <StackPanel Orientation="Horizontal" Grid.Row="5" Margin="0,5">
                 <TextBlock Text="Code Reduction:" Width="150" FontWeight="SemiBold"/>
-                <TextBlock Text="{Binding CodeUsedReduction, StringFormat=P}"/>
+                <TextBlock Text="{Binding CodeUsedReduction, StringFormat=N2}"/>
             </StackPanel>
             
             <StackPanel Orientation="Horizontal" Grid.Row="6" Margin="0,5">

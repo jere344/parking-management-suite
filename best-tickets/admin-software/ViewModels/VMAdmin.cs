@@ -105,6 +105,9 @@ public partial class VMAdmin : ObservableObject
         if (!string.IsNullOrEmpty(filterText))
             f = f.Where(a => (a.FirstName + " " + a.LastName).ToLower().Contains(filterText.ToLower())).ToList();
 
+        if (!displayDisabled)
+            f = f.Where(a => a.IsDisabled == false).ToList();
+
         filteredUsers = new ObservableCollection<User>(f);
         OnPropertyChanged(nameof(FilteredUsers));
     }

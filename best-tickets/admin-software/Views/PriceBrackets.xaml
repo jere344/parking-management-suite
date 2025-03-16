@@ -80,25 +80,27 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="35"/>
                     <RowDefinition Height="35"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="35"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="{DynamicResource addNewPriceBracket}" FontSize="18" FontWeight="Bold" Margin="0,0,0,10" Grid.ColumnSpan="4"/>
+                <TextBlock Grid.Row="0" Text="{DynamicResource addNewPriceBracket}" FontSize="18" FontWeight="Bold" Margin="0,0,0,10" Grid.ColumnSpan="4"/>
 
-                <!-- Row 0: Min Duration and Price -->
-                <TextBlock Text="{DynamicResource minDurationLabel}" Width="120" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0"/>
-                <TextBox Text="{Binding NewBracketMinDuration, UpdateSourceTrigger=PropertyChanged}" Width="200" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" 
+                <!-- Row 1: Min Duration and Price -->
+                <TextBlock Text="{DynamicResource minDurationLabel}" Width="120" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
+                <TextBox Text="{Binding NewBracketMinDuration, UpdateSourceTrigger=PropertyChanged}" Width="200" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" 
                          ToolTip="Enter duration as hh:mm:ss"/>
                 
-                <TextBlock Text="{DynamicResource priceLabel}" Width="120" VerticalAlignment="Center" Grid.Row="0" Grid.Column="2"/>
-                <TextBox Text="{Binding NewBracketPrice, UpdateSourceTrigger=PropertyChanged}" Width="200" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Left"/>
+                <TextBlock Text="{DynamicResource priceLabel}" Width="120" VerticalAlignment="Center" Grid.Row="2" Grid.Column="2"/>
+                <TextBox Text="{Binding NewBracketPrice, UpdateSourceTrigger=PropertyChanged}" Width="200" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left"/>
 
-                <!-- Row 1: Hospital and Add Button -->
-                <TextBlock Text="{DynamicResource hospitalLabel}" Width="120" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
-                <ComboBox ItemsSource="{Binding Hospitals}" DisplayMemberPath="Name" SelectedItem="{Binding NewBracketHospital}" Width="200" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"/>
+                <!-- Row 2: Hospital and Add Button -->
+                <TextBlock Text="{DynamicResource hospitalLabel}" Width="120" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0"/>
+                <ComboBox ItemsSource="{Binding Hospitals}" DisplayMemberPath="Name" SelectedItem="{Binding NewBracketHospital}" Width="200" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left"/>
 
                 <Button Content="{DynamicResource addPriceBracket}" Command="{Binding AddBracketCommand}" 
                         Width="200" HorizontalAlignment="Left" 
-                        Style="{StaticResource MaterialDesignRaisedButton}" Grid.Row="1" Grid.Column="3"/>
+                        Style="{StaticResource MaterialDesignRaisedButton}" Grid.Row="3" Grid.Column="3"/>
             </Grid>
         </materialDesign:Card>
     </Grid>

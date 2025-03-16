@@ -160,4 +160,10 @@
     <system:String x:Key="addNewTax">Ajouter une Nouvelle Taxe</system:String>
     <system:String x:Key="amountDecimalLabel">Montant (décimal):</system:String>
     <system:String x:Key="addTax">Ajouter la Taxe</system:String>
+    <system:String x:Key="must_be_connected">Vous devez être connecté pour accéder à cette page</system:String>
+    <system:String x:Key="error">Erreur</system:String>
+    <system:String x:Key="newAccount">Nouveau compte</system:String>
+    <system:String x:Key="newAccountMessage">Le mot de passe du nouveau compte est: </system:String>
+    <system:String x:Key="newAccountMessage2">. Veuillez vous connecter et le changer dès que possible.</system:String>
+    <system:String x:Key="deleteImageMessage">Êtes-vous sûr de vouloir supprimer l'image?</system:String>
 </ResourceDictionary>

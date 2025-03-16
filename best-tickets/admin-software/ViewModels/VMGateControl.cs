@@ -18,6 +18,9 @@ namespace admintickets.ViewModels
         private BestTicketContext context;
         private DispatcherTimer _timer;
         
+        // Private backing field for the command
+        private AsyncRelayCommand _sendSignalCommand;
+        
         #region Properties
         
         private ObservableCollection<Hospital> _hospitals;
@@ -142,10 +145,16 @@ namespace admintickets.ViewModels
         public VMGateControl()
         {
             context = new BestTicketContext();
+            
+            // Initialize the command first
+            _sendSignalCommand = new AsyncRelayCommand(SendSignal, CanSendSignal);
+            
             // Initialize time values from default duration
             HoursValue = (int)Duration.TotalHours;
             MinutesValue = Duration.Minutes;
             SecondsValue = Duration.Seconds;
+            
+            // Load hospitals after command is initialized
             LoadHospitals();
             
             // Initialize timer to update signal status
@@ -172,7 +181,11 @@ namespace admintickets.ViewModels
                 Hospitals = new ObservableCollection<Hospital>(hospitals);
                 
                 if (Hospitals.Count > 0)
+                {
                     SelectedHospital = Hospitals.First();
+                    // Manually notify command that it can execute now
+                    _sendSignalCommand.NotifyCanExecuteChanged();
+                }
             }
             catch (Exception ex)
             {
@@ -201,7 +214,8 @@ namespace admintickets.ViewModels
             }
         }
         
-        public ICommand SendSignalCommand => new AsyncRelayCommand(SendSignal, CanSendSignal);
+        // Replace the property definition with the backing field
+        public ICommand SendSignalCommand => _sendSignalCommand;
         
         private bool CanSendSignal()
         {
@@ -315,6 +329,7 @@ namespace admintickets.ViewModels
         private void UpdateDuration()
         {
             Duration = new TimeSpan(HoursValue, MinutesValue, SecondsValue);
+            _sendSignalCommand.NotifyCanExecuteChanged();
         }
     }
 }

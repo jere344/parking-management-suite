@@ -402,3 +402,7 @@ FodyWeavers.xsd
 
 *info.md
 *.settings.json
+venv/
+dist/
+build/
+*.spec

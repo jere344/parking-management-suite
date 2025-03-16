@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:admintickets"
         xmlns:viewmodel="clr-namespace:admintickets.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow"
+        Title="BestTickets Admin Software"
         Height="450"
         Width="800"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">

@@ -13,6 +13,7 @@ namespace GatesSoftware.Services
         private readonly HttpClient _httpClient = new HttpClient();
         private bool _temporaryOpenState = false;
         private DateTime _temporaryOpenUntil = DateTime.MinValue;
+        private static bool _isErrorWindowOpen = false;
 
         public void SetTemporaryOpenState(TimeSpan duration)
         {
@@ -59,7 +60,24 @@ namespace GatesSoftware.Services
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error checking gate status: {ex.Message}");
+                if (!_isErrorWindowOpen)
+                {
+                    _isErrorWindowOpen = true;
+                    
+                    try
+                    {
+                        MessageBox.Show(
+                            $"Error checking gate status: {ex.Message}",
+                            "Gate Status Error",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error);
+                    }
+                    finally
+                    {
+                        _isErrorWindowOpen = false;
+                    }
+                }
+                
                 return false;
             }
         }
