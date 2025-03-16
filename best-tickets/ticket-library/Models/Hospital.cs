@@ -66,4 +66,5 @@ public class Hospital : BaseModel, INotifyPropertyChanged
     public virtual ICollection<PriceBracket> PriceBrackets { get; set; }
     public virtual ICollection<Code> Codes { get; set; }
     public virtual ICollection<SubscriptionTier> SubscriptionTiers { get; set; }
+    public virtual ICollection<Subscription> Subscriptions { get; set; }
 }

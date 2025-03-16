@@ -120,10 +120,18 @@ public partial class VMAdmin : ObservableObject
             MessageBoxResult result = MessageBox.Show((string)Application.Current.FindResource("deleteImageMessage"), (string)Application.Current.FindResource("deleteImage"), MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.No)
                 return;
-            selectedUser.Picture = string.Empty;
-            context.SaveChanges();
-            OnPropertyChanged(nameof(selectedUser));
-            FilterUsers();
+            
+            try
+            {
+                selectedUser.Picture = string.Empty;
+                context.SaveChanges();
+                OnPropertyChanged(nameof(selectedUser));
+                FilterUsers();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error deleting user image: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 

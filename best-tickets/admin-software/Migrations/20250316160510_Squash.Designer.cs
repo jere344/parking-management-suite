@@ -11,8 +11,8 @@ using admintickets.Context;
 namespace admintickets.Migrations
 {
     [DbContext(typeof(BestTicketContext))]
-    [Migration("20250223231117_LongerTimeSpanSupport")]
-    partial class LongerTimeSpanSupport
+    [Migration("20250316160510_Squash")]
+    partial class Squash
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -48,7 +48,7 @@ namespace admintickets.Migrations
 
                     b.HasIndex("HospitalId");
 
-                    b.ToTable("DiscountCodes");
+                    b.ToTable("DiscountCode");
                 });
 
             modelBuilder.Entity("ticketlibrary.Models.Hospital", b =>
@@ -75,7 +75,30 @@ namespace admintickets.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Hospitals");
+                    b.ToTable("Hospital");
+                });
+
+            modelBuilder.Entity("ticketlibrary.Models.PriceBracket", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int?>("HospitalId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("InternalMinDuration")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HospitalId");
+
+                    b.ToTable("PriceBracket");
                 });
 
             modelBuilder.Entity("ticketlibrary.Models.SessionToken", b =>
@@ -101,7 +124,7 @@ namespace admintickets.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("SessionTokens");
+                    b.ToTable("SessionToken");
                 });
 
             modelBuilder.Entity("ticketlibrary.Models.Signal", b =>
@@ -110,17 +133,13 @@ namespace admintickets.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<TimeSpan>("Duration")
-                        .HasColumnType("time(6)");
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("HospitalId")
                         .HasColumnType("int");
 
                     b.Property<string>("SignalType")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Value")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -137,28 +156,37 @@ namespace admintickets.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<string>("CardNumber")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("DateEnd")
                         .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("DateStart")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<int>("HospitalId")
+                        .HasColumnType("int");
+
                     b.Property<int>("MaxNumberOfUsesPerDay")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("PricePaid")
+                        .HasColumnType("decimal(65,30)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("HospitalId");
 
                     b.ToTable("Subscription");
                 });
 
-            modelBuilder.Entity("ticketlibrary.Models.SubscriptionTiers", b =>
+            modelBuilder.Entity("ticketlibrary.Models.SubscriptionTier", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    b.Property<TimeSpan>("Duration")
-                        .HasColumnType("time(6)");
 
                     b.Property<int?>("HospitalId")
                         .HasColumnType("int");
@@ -181,7 +209,28 @@ namespace admintickets.Migrations
 
                     b.HasIndex("HospitalId");
 
-                    b.ToTable("SubscriptionTiers");
+                    b.ToTable("SubscriptionTier");
+                });
+
+            modelBuilder.Entity("ticketlibrary.Models.Taxes", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Taxe");
                 });
 
             modelBuilder.Entity("ticketlibrary.Models.Ticket", b =>
@@ -202,7 +251,11 @@ namespace admintickets.Migrations
                     b.Property<DateTime?>("PaymentTime")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("TicketPaymentId")
+                    b.Property<string>("TicketNumber")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int?>("TicketPaymentId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -289,14 +342,25 @@ namespace admintickets.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("ticketlibrary.Models.Code", b =>
                 {
                     b.HasOne("ticketlibrary.Models.Hospital", "Hospital")
-                        .WithMany()
-                        .HasForeignKey("HospitalId");
+                        .WithMany("Codes")
+                        .HasForeignKey("HospitalId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Hospital");
+                });
+
+            modelBuilder.Entity("ticketlibrary.Models.PriceBracket", b =>
+                {
+                    b.HasOne("ticketlibrary.Models.Hospital", "Hospital")
+                        .WithMany("PriceBrackets")
+                        .HasForeignKey("HospitalId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Hospital");
                 });
@@ -323,11 +387,23 @@ namespace admintickets.Migrations
                     b.Navigation("Hospital");
                 });
 
-            modelBuilder.Entity("ticketlibrary.Models.SubscriptionTiers", b =>
+            modelBuilder.Entity("ticketlibrary.Models.Subscription", b =>
                 {
                     b.HasOne("ticketlibrary.Models.Hospital", "Hospital")
-                        .WithMany()
-                        .HasForeignKey("HospitalId");
+                        .WithMany("Subscriptions")
+                        .HasForeignKey("HospitalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Hospital");
+                });
+
+            modelBuilder.Entity("ticketlibrary.Models.SubscriptionTier", b =>
+                {
+                    b.HasOne("ticketlibrary.Models.Hospital", "Hospital")
+                        .WithMany("SubscriptionTiers")
+                        .HasForeignKey("HospitalId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Hospital");
                 });
@@ -342,9 +418,7 @@ namespace admintickets.Migrations
 
                     b.HasOne("ticketlibrary.Models.TicketPayment", "TicketPayment")
                         .WithMany()
-                        .HasForeignKey("TicketPaymentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TicketPaymentId");
 
                     b.Navigation("Hospital");
 
@@ -355,11 +429,13 @@ namespace admintickets.Migrations
                 {
                     b.HasOne("ticketlibrary.Models.Code", "CodeUsed")
                         .WithMany("TicketPayments")
-                        .HasForeignKey("CodeUsedId");
+                        .HasForeignKey("CodeUsedId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("ticketlibrary.Models.Subscription", "Subscription")
                         .WithMany("TicketPayments")
-                        .HasForeignKey("SubscriptionId");
+                        .HasForeignKey("SubscriptionId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("CodeUsed");
 
@@ -373,7 +449,15 @@ namespace admintickets.Migrations
 
             modelBuilder.Entity("ticketlibrary.Models.Hospital", b =>
                 {
+                    b.Navigation("Codes");
+
+                    b.Navigation("PriceBrackets");
+
                     b.Navigation("Signals");
+
+                    b.Navigation("SubscriptionTiers");
+
+                    b.Navigation("Subscriptions");
 
                     b.Navigation("Tickets");
                 });

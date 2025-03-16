@@ -81,6 +81,74 @@ public class BestTicketContext : DbContext
     }
 
     /// <summary>
+    /// Configures the model and entity relationships
+    /// </summary>
+    /// <param name="modelBuilder">The builder being used to construct the model for this context</param>
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        // Configure Hospital cascading delete relationships
+        modelBuilder.Entity<Hospital>()
+            .HasMany(h => h.Tickets)
+            .WithOne(t => t.Hospital)
+            .HasForeignKey(t => t.HospitalId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Hospital>()
+            .HasMany(h => h.Subscriptions)
+            .WithOne(s => s.Hospital)
+            .HasForeignKey(s => s.HospitalId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Hospital>()
+            .HasMany(h => h.Codes)
+            .WithOne(c => c.Hospital)
+            .HasForeignKey(c => c.HospitalId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // Configure User relationships
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.SessionTokens)
+            .WithOne(st => st.User)
+            .HasForeignKey(st => st.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+
+        // Configure TicketPayment relationships
+        modelBuilder.Entity<Code>()
+            .HasMany(c => c.TicketPayments)
+            .WithOne(tp => tp.CodeUsed)
+            .HasForeignKey(tp => tp.CodeUsedId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        modelBuilder.Entity<Subscription>()
+            .HasMany(s => s.TicketPayments)
+            .WithOne(tp => tp.Subscription)
+            .HasForeignKey(tp => tp.SubscriptionId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        // Configure other Hospital relationships
+        modelBuilder.Entity<Hospital>()
+            .HasMany(h => h.Signals)
+            .WithOne(s => s.Hospital)
+            .HasForeignKey(s => s.HospitalId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Hospital>()
+            .HasMany(h => h.PriceBrackets)
+            .WithOne(pb => pb.Hospital)
+            .HasForeignKey(pb => pb.HospitalId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Hospital>()
+            .HasMany(h => h.SubscriptionTiers)
+            .WithOne(st => st.Hospital)
+            .HasForeignKey(st => st.HospitalId)
+            .OnDelete(DeleteBehavior.Cascade);
+    }
+
+    /// <summary>
     /// Disposes all active database contexts to prevent concurrent access issues
     /// </summary>
     public static void DisposeActiveContexts()

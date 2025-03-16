@@ -347,7 +347,8 @@ namespace admintickets.Migrations
                 {
                     b.HasOne("ticketlibrary.Models.Hospital", "Hospital")
                         .WithMany("Codes")
-                        .HasForeignKey("HospitalId");
+                        .HasForeignKey("HospitalId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Hospital");
                 });
@@ -356,7 +357,8 @@ namespace admintickets.Migrations
                 {
                     b.HasOne("ticketlibrary.Models.Hospital", "Hospital")
                         .WithMany("PriceBrackets")
-                        .HasForeignKey("HospitalId");
+                        .HasForeignKey("HospitalId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Hospital");
                 });
@@ -386,7 +388,7 @@ namespace admintickets.Migrations
             modelBuilder.Entity("ticketlibrary.Models.Subscription", b =>
                 {
                     b.HasOne("ticketlibrary.Models.Hospital", "Hospital")
-                        .WithMany()
+                        .WithMany("Subscriptions")
                         .HasForeignKey("HospitalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -398,7 +400,8 @@ namespace admintickets.Migrations
                 {
                     b.HasOne("ticketlibrary.Models.Hospital", "Hospital")
                         .WithMany("SubscriptionTiers")
-                        .HasForeignKey("HospitalId");
+                        .HasForeignKey("HospitalId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Hospital");
                 });
@@ -424,11 +427,13 @@ namespace admintickets.Migrations
                 {
                     b.HasOne("ticketlibrary.Models.Code", "CodeUsed")
                         .WithMany("TicketPayments")
-                        .HasForeignKey("CodeUsedId");
+                        .HasForeignKey("CodeUsedId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("ticketlibrary.Models.Subscription", "Subscription")
                         .WithMany("TicketPayments")
-                        .HasForeignKey("SubscriptionId");
+                        .HasForeignKey("SubscriptionId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("CodeUsed");
 
@@ -449,6 +454,8 @@ namespace admintickets.Migrations
                     b.Navigation("Signals");
 
                     b.Navigation("SubscriptionTiers");
+
+                    b.Navigation("Subscriptions");
 
                     b.Navigation("Tickets");
                 });

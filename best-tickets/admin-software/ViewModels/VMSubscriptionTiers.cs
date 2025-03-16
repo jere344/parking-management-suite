@@ -103,9 +103,16 @@ namespace admintickets.ViewModels
 
         public ICommand DeleteTierCommand => new AsyncRelayCommand<SubscriptionTier>(async (tier) =>
         {
-            context.SubscriptionTier.Remove(tier);
-            await context.SaveChangesAsync();
-            await Refresh();
+            try
+            {
+                context.SubscriptionTier.Remove(tier);
+                await context.SaveChangesAsync();
+                await Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error deleting subscription tier: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         });
 
         public ICommand CopyTierCommand => new RelayCommand<SubscriptionTier>((tier) =>

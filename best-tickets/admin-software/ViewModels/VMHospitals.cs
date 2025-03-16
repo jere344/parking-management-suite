@@ -145,9 +145,16 @@ namespace admintickets.ViewModels
             if (MessageBox.Show($"Are you sure you want to delete hospital \"{hospital.Name}\"?",
                 "Confirm Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                context.Hospital.Remove(hospital);
-                await context.SaveChangesAsync();
-                await Refresh();
+                try
+                {
+                    context.Hospital.Remove(hospital);
+                    await context.SaveChangesAsync();
+                    await Refresh();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error deleting hospital: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
