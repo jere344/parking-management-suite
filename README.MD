@@ -1,18 +1,38 @@
 # Best Tickets - Parking Management System
 
+![Version](https://img.shields.io/badge/version-2025.1-blue)
+![.NET](https://img.shields.io/badge/.NET-6.0%20%7C%209.0-purple)
+![MySQL](https://img.shields.io/badge/database-MySQL-orange)
+![License](https://img.shields.io/badge/license-Apache%202.0-green)
+
+## Table of Contents
+- [Project Overview](#project-overview)
+- [System Architecture](#system-architecture)
+- [Components](#components)
+- [Setup Instructions](#setup-instructions)
+- [Features](#features)
+- [Security](#security)
+- [User Roles & Permissions](#user-roles--permissions)
+- [Troubleshooting](#troubleshooting)
+- [Technologies Used](#technologies-used)
+- [License](#license)
+- [Authors](#authors)
+
 ## Project Overview
 
 Best Tickets is a comprehensive parking management system designed primarily for hospitals and other facilities requiring efficient parking ticket handling. The system enables ticket creation, payment processing, subscription management, gate control, and administrative oversight through a suite of interconnected applications.
 
 ## System Architecture
 
-The system consists of four main components:
+The system consists of five main components:
 
-1. **Admin Software** - A central management application for system administrators
-2. **Payment Terminal** - Customer-facing interface for processing ticket payments
-3. **Gates Software** - Controls entry and exit gates
-4. **Ticket Library** - Shared component library
-5. **Ticket Server** - API backend handling data operations
+1. **Admin Software** - A central management application for system administrators (.NET 6.0)
+2. **Payment Terminal** - Customer-facing interface for processing ticket payments (.NET 6.0)
+3. **Gates Software** - Controls entry and exit gates (.NET 9.0)
+4. **Ticket Library** - Shared component library (.NET 6.0)
+5. **Ticket Server** - API backend handling data operations (Python/Flask)
+
+![System Architecture](./assets/graph.png)
 
 The system uses a MySQL database for data storage, with connection strings configured in appsettings.json files.
 
@@ -22,15 +42,15 @@ The system uses a MySQL database for data storage, with connection strings confi
 
 A desktop WPF application built with .NET 6.0 that provides administrators with:
 
-- Dashboard for parking data visualization using LiveCharts
-- Ticket management and reporting
-- Hospital registration and configuration
-- User management
-- Discount code creation and management
-- Subscription tier configuration
-- Price bracket management
-- Tax rate configuration
-- Gate monitoring and control
+- **Dashboard** - Visualization of parking data using LiveCharts
+- **Ticket Management** - View and manage active tickets
+- **Hospital Registration** - Add and configure hospital facilities
+- **User Management** - Create and manage user accounts with role-based permissions
+- **Discount Code Management** - Create and track promotional codes 
+- **Subscription Management** - Configure and manage subscription plans and users
+- **Price Bracket Configuration** - Set up time-based pricing structures
+- **Tax Management** - Configure and track tax rates
+- **Gate Control** - Control entry/exit gates
 
 ### Payment Terminal
 
@@ -151,45 +171,14 @@ A Python Flask API backend that provides:
    - Choose the gate type (entry or exit) depending on the installation location
    - The configuration will be stored in `settings.json` and loaded automatically on subsequent launches
 
-3. **Gate Hardware Integration**:
-   - Connect the gate control hardware to the computer running the software
-   - Hardware-specific configuration may be required depending on your gate controller model
-   - The application will automatically manage the gate opening signals
-
-#### Usage
-1. **Entry Gate Mode**:
-   - The interface provides a "Generate Ticket" button
-   - When pressed, a new ticket is created, the gate opens automatically, and a PDF ticket is generated for printing
-   
-2. **Exit Gate Mode**:
-   - The interface allows inputting a ticket number (format: XXX-XXX-XXX)
-   - The system validates if the ticket has been paid
-   - If valid, the gate opens automatically
-   - Invalid tickets will display an error message
-
-#### Gate Status Monitoring
-- The application displays a color-coded status indicator (green for open, red for closed)
-- The gate status is checked every 5 seconds
-- Gates can be opened automatically by the system for 10 seconds when a valid action is performed
-
-#### Troubleshooting
-- **Connection Issues**: Verify the API_BASE_URL in the .env file and ensure network connectivity
-- **Authentication Failures**: The setup wizard will prompt for the correct password
-- **Gate Control Problems**: Verify physical connections to gate hardware and permissions
-
-#### Security Considerations
-- Keep the gateway password secure
-- If a breach is suspected, the administrator can change the password from the admin software
-- Limit physical access to the computer running the gates software
-- Regularly update credentials according to your organization's security policy
-
-## Key Features
+## Features
 
 ### Ticket Management
 
 - QR-code based ticket generation
 - Multiple payment options
 - Time-based pricing with customizable brackets
+- Detailed ticket tracking and reporting
 
 ### Subscription System
 
@@ -201,7 +190,7 @@ A Python Flask API backend that provides:
 
 - Automated entry gate management
 - Exit validation based on payment status
-- Real-time gate monitoring and manual control
+- Gate status logging and alerts
 
 ### Reporting & Analytics
 
@@ -209,20 +198,64 @@ A Python Flask API backend that provides:
 - Usage statistics and trends visualization
 - Tax calculation and reporting
 
-### Administration
+### Tax Management
 
-- Multi-language support (English and French)
-- Customizable theme and appearance
-- Secure user authentication
-- Hospital-specific configuration
+- Configure tax rates
+- Automatic tax calculation on tickets
+- Tax reporting and summaries
+- Support for multiple tax categories
 
-## Initial Login
+### Hospital Management
+
+- Multi-facility support
+- Hospital-specific configurations
+- Customizable pricing per facility
+
+## Security
+
+### Authentication & Authorization
+
+- Access control
+- Secure password storage using PBKDF2
+- Session management and timeout controls
+
+### Initial Login
 
 The system is initialized with a default administrator account:
 - **Username**: admin
 - **Password**: admin
 
 ⚠️ **IMPORTANT**: For security reasons, you should immediately delete this default account or change its credentials after logging in for the first time.
+
+### Security Best Practices
+
+- Keep the gateway password secure
+- Regularly rotate credentials
+- Limit physical access to terminal computers
+- Implement network security measures for all components
+
+## Troubleshooting
+
+### Common Issues
+
+#### Database Connection Problems
+- Verify connection strings in appsettings.json files
+- Ensure MySQL server is running and accessible
+
+#### Gate Control Issues
+- Verify physical connections to gate hardware
+- Check network connectivity to server
+- Ensure proper credentials in configuration
+
+#### Payment Processing Failures
+- Verify payment terminal network connectivity
+- Check payment gateway configuration
+- Ensure proper permissions are set
+
+#### Server API Errors
+- Check server logs in the ticket-server directory
+- Verify server is running and accessible
+- Check for Python dependency issues
 
 ## Technologies Used
 
@@ -247,7 +280,7 @@ The system is initialized with a default administrator account:
 
 ## License
 
-Version 2.0, January 2004, voir le fichier LICENSE pour plus de détails.
+Apache License Version 2.0, January 2004, see the LICENSE file for more details.
 
 ## Authors
 
@@ -255,4 +288,4 @@ Jeremy Guerin - https://github.com/jere344
 
 ---
 
-*This README was last updated on March 2025*
+*This README was last updated in March 2025*
