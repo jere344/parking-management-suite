@@ -154,4 +154,10 @@
     <system:String x:Key="showing">Showing</system:String>
     <system:String x:Key="of">of</system:String>
     <system:String x:Key="items">items</system:String>
+    <system:String x:Key="taxes">Taxes</system:String>
+    <system:String x:Key="taxManagement">Tax Management</system:String>
+    <system:String x:Key="amount">Amount</system:String>
+    <system:String x:Key="addNewTax">Add New Tax</system:String>
+    <system:String x:Key="amountDecimalLabel">Amount (decimal):</system:String>
+    <system:String x:Key="addTax">Add Tax</system:String>
 </ResourceDictionary>

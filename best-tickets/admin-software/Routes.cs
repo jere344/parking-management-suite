@@ -151,6 +151,15 @@ public static class Routes
                 { "Permission", 1 }
             }
         },
+                {
+            "Views/ViewTaxes.xaml",
+            new()
+            {
+                { "Title", () => (string)Application.Current.FindResource("taxes") },
+                { "Icon", PackIconKind.Cash100 },
+                { "Permission", 1 }
+            }
+        },
         {
             "Views/Logout.xaml",
             new()

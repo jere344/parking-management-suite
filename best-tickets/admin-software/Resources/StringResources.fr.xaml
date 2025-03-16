@@ -154,4 +154,10 @@
     <system:String x:Key="showing">Affichage</system:String>
     <system:String x:Key="of">sur</system:String>
     <system:String x:Key="items">articles</system:String>
+    <system:String x:Key="taxes">Taxes</system:String>
+    <system:String x:Key="taxManagement">Gestion des Taxes</system:String>
+    <system:String x:Key="amount">Montant</system:String>
+    <system:String x:Key="addNewTax">Ajouter une Nouvelle Taxe</system:String>
+    <system:String x:Key="amountDecimalLabel">Montant (décimal):</system:String>
+    <system:String x:Key="addTax">Ajouter la Taxe</system:String>
 </ResourceDictionary>
